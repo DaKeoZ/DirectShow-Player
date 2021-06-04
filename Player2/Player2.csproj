@@ -114,7 +114,6 @@
     <Compile Include="PhysicalConnectorType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VideoCapabilities.cs" />
     <Compile Include="VideoCaptureDevice.cs" />
     <Compile Include="VideoEvents.cs" />
     <Compile Include="VideoInput.cs" />

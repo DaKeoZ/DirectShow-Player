@@ -59,13 +59,8 @@ namespace fr.ipmfrance.webcam
         // recieved byte count
         private long bytesReceived;
 
-        // video and snapshot resolutions to set
-        private VideoCapabilities videoResolution = null;
-
         private Thread thread = null;
         private ManualResetEvent stopEvent = null;
-
-        private VideoCapabilities[] videoCapabilities;
         
 
         private bool needToSetVideoInput = false;
@@ -90,7 +85,6 @@ namespace fr.ipmfrance.webcam
         private VideoInput crossbarVideoInput = VideoInput.Default;
 
         // cache for video/snapshot capabilities and video inputs
-        private static Dictionary<string, VideoCapabilities[]> cacheVideoCapabilities = new Dictionary<string,VideoCapabilities[]>( );
         private static Dictionary<string, VideoInput[]> cacheCrossbarVideoInputs = new Dictionary<string,VideoInput[]>( );
 
         /// <summary>
@@ -235,8 +229,7 @@ namespace fr.ipmfrance.webcam
             set
             {
                 deviceMoniker = value;
-
-                videoCapabilities = null;
+                
                 crossbarVideoInputs = null;
                 isCrossbarAvailable = null;
             }
@@ -302,25 +295,6 @@ namespace fr.ipmfrance.webcam
         }
 
         /// <summary>
-        /// Video resolution to set.
-        /// </summary>
-        /// 
-        /// <remarks><para>The property allows to set one of the video resolutions supported by the camera.
-        /// Use <see cref="VideoCapabilities"/> property to get the list of supported video resolutions.</para>
-        /// 
-        /// <para><note>The property must be set before camera is started to make any effect.</note></para>
-        /// 
-        /// <para>Default value of the property is set to <see langword="null"/>, which means default video
-        /// resolution is used.</para>
-        /// </remarks>
-        /// 
-        public VideoCapabilities VideoResolution
-        {
-            get { return videoResolution; }
-            set { videoResolution = value; }
-        }
-
-        /// <summary>
         /// Video capabilities of the device.
         /// </summary>
         /// 
@@ -331,42 +305,7 @@ namespace fr.ipmfrance.webcam
         /// before starting device or a bit after (but not immediately after).</note></para>
         /// </remarks>
         /// 
-        public VideoCapabilities[] VideoCapabilities
-        {
-            get
-            {
-                if ( videoCapabilities == null )
-                {
-                    lock ( cacheVideoCapabilities )
-                    {
-                        if ( ( !string.IsNullOrEmpty( deviceMoniker ) ) && ( cacheVideoCapabilities.ContainsKey( deviceMoniker ) ) )
-                        {
-                            videoCapabilities = cacheVideoCapabilities[deviceMoniker];
-                            
-                        }
-                    }
-
-                    if ( videoCapabilities == null )
-                    {
-                        if ( !IsRunning )
-                        {
-                            // create graph without playing to get the video/snapshot capabilities only.
-                            // not very clean but it works
-                            WorkerThread( false );
-                        }
-                        else
-                        {
-                            for ( int i = 0; ( i < 500 ) && ( videoCapabilities == null ); i++ )
-                            {
-                                Thread.Sleep( 10 );
-                            }
-                        }
-                    }
-                }
-                // don't return null even capabilities are not provided for some reason
-                return ( videoCapabilities != null ) ? videoCapabilities : new VideoCapabilities[0];
-            }
-        }
+        
 
         /// <summary>
         /// Source COM object of camera capture device.
@@ -967,18 +906,8 @@ namespace fr.ipmfrance.webcam
                 snapshotSampleGrabber.SetOneShot( false );
                 snapshotSampleGrabber.SetCallback( snapshotGrabber, 1 );
 
-                // configure pins
-                GetPinCapabilitiesAndConfigureSizeAndRate( captureGraph, sourceBase,
-                    PinCategory.Capture, videoResolution, ref videoCapabilities );
-
                 // put video/snapshot capabilities into cache
-                lock ( cacheVideoCapabilities )
-                {
-                    if ( ( videoCapabilities != null ) && ( !cacheVideoCapabilities.ContainsKey( deviceMoniker ) ) )
-                    {
-                        cacheVideoCapabilities.Add( deviceMoniker, videoCapabilities );
-                    }
-                }
+                
 
                 if ( runGraph )
                 {
@@ -1125,99 +1054,6 @@ namespace fr.ipmfrance.webcam
             if ( PlayingFinished != null )
             {
                 PlayingFinished( this, reasonToStop );
-            }
-        }
-
-        // Set resolution for the specified stream configuration
-        private void SetResolution( IAMStreamConfig streamConfig, VideoCapabilities resolution )
-        {
-            if ( resolution == null )
-            {
-                return;
-            }
-
-            // iterate through device's capabilities to find mediaType for desired resolution
-            int capabilitiesCount = 0, capabilitySize = 0;
-            AMMediaType newMediaType = null;
-            VideoStreamConfigCaps caps = new VideoStreamConfigCaps( );
-
-            streamConfig.GetNumberOfCapabilities( out capabilitiesCount, out capabilitySize );
-
-            for ( int i = 0; i < capabilitiesCount; i++ )
-            {
-                try
-                {
-                    VideoCapabilities vc = new VideoCapabilities( streamConfig, i );
-
-                    if ( resolution == vc )
-                    {
-                        if ( streamConfig.GetStreamCaps( i, out newMediaType, caps ) == 0 )
-                        {
-                            break;
-                        }
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            // set the new format
-            if ( newMediaType != null )
-            {
-                streamConfig.SetFormat( newMediaType );
-                newMediaType.Dispose( );
-            }
-        }
-
-        // Configure specified pin and collect its capabilities if required
-        private void GetPinCapabilitiesAndConfigureSizeAndRate( ICaptureGraphBuilder2 graphBuilder, IBaseFilter baseFilter,
-            Guid pinCategory, VideoCapabilities resolutionToSet, ref VideoCapabilities[] capabilities )
-        {
-            object streamConfigObject;
-            graphBuilder.FindInterface( pinCategory, MediaType.Video, baseFilter, typeof( IAMStreamConfig ).GUID, out streamConfigObject );
-
-            if ( streamConfigObject != null )
-            {
-                IAMStreamConfig streamConfig = null;
-
-                try
-                {
-                    streamConfig = (IAMStreamConfig) streamConfigObject;
-                }
-                catch ( InvalidCastException )
-                {
-                }
-
-                if ( streamConfig != null )
-                {
-                    if ( capabilities == null )
-                    {
-                        try
-                        {
-                            // get all video capabilities
-                            capabilities = webcam.VideoCapabilities.FromStreamConfig( streamConfig );
-                        }
-                        catch
-                        {
-                        }
-                    }
-
-                    // check if it is required to change capture settings
-                    if ( resolutionToSet != null )
-                    {
-                        SetResolution( streamConfig, resolutionToSet );
-                    }
-                }
-
-                Marshal.ReleaseComObject( streamConfigObject );
-            }
-
-            // if failed resolving capabilities, then just create empty capabilities array,
-            // so we don't try again
-            if ( capabilities == null )
-            {
-                capabilities = new VideoCapabilities[0];
             }
         }
 
