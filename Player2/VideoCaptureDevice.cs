@@ -885,7 +885,6 @@ namespace CleanedProject
         private void WorkerThread( bool runGraph )
         {
             ReasonToFinishPlaying reasonToStop = ReasonToFinishPlaying.StoppedByUser;
-            bool isSapshotSupported = false;
 
             // grabber
             Grabber videoGrabber = new Grabber( this, false );
@@ -999,7 +998,6 @@ namespace CleanedProject
                     {
                         VideoControlFlags caps;
                         videoControl.GetCaps( pinStillImage, out caps );
-                        isSapshotSupported = ( ( caps & VideoControlFlags.ExternalTriggerEnable ) != 0 );
                     }
                 }
 
@@ -1041,22 +1039,6 @@ namespace CleanedProject
                         mediaType.Dispose( );
                     }
 
-                    if ( isSapshotSupported )
-                    {
-                        // render snapshot pin
-                        captureGraph.RenderStream( PinCategory.StillImage, MediaType.Video, sourceBase, null, snapshotGrabberBase );
-
-                        if ( snapshotSampleGrabber.GetConnectedMediaType( mediaType ) == 0 )
-                        {
-                            VideoInfoHeader vih = (VideoInfoHeader) Marshal.PtrToStructure( mediaType.FormatPtr, typeof( VideoInfoHeader ) );
-
-                            snapshotGrabber.Width  = vih.BmiHeader.Width;
-                            snapshotGrabber.Height = vih.BmiHeader.Height;
-
-                            mediaType.Dispose( );
-                        }
-                    }
-
                     // get media control
                     mediaControl = (IMediaControl) graphObject;
 
@@ -1067,12 +1049,6 @@ namespace CleanedProject
 
                     // run
                     mediaControl.Run( );
-
-                    if ( isSapshotSupported )
-                    {
-                        startTime = DateTime.Now;
-                        videoControl.SetMode( pinStillImage, VideoControlFlags.ExternalTriggerEnable );
-                    }
 
                     do
                     {
@@ -1104,11 +1080,6 @@ namespace CleanedProject
                         if ( needToSimulateTrigger )
                         {
                             needToSimulateTrigger = false;
-
-                            if ( isSapshotSupported )
-                            {
-                                videoControl.SetMode( pinStillImage, VideoControlFlags.Trigger );
-                            }
                         }
 
                         if ( needToDisplayPropertyPage )
