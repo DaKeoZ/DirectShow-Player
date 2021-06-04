@@ -80,13 +80,6 @@
             this.localVideoCaptureDeviceToolStripMenuItem.Text = "Local &Video Capture Device";
             this.localVideoCaptureDeviceToolStripMenuItem.Click += new System.EventHandler( this.localVideoCaptureDeviceToolStripMenuItem_Click );
             // 
-            // openMJPEGURLToolStripMenuItem
-            // 
-            this.openMJPEGURLToolStripMenuItem.Name = "openMJPEGURLToolStripMenuItem";
-            this.openMJPEGURLToolStripMenuItem.Size = new System.Drawing.Size( 250, 22 );
-            this.openMJPEGURLToolStripMenuItem.Text = "Open &MJPEG URL";
-            this.openMJPEGURLToolStripMenuItem.Click += new System.EventHandler( this.openMJPEGURLToolStripMenuItem_Click );
-            // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";

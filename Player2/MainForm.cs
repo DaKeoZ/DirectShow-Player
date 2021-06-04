@@ -54,28 +54,6 @@ namespace CleanedProject
             }
         }
 
-        // Open MJPEG URL
-        private void openMJPEGURLToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            URLForm form = new URLForm( );
-
-            form.Description = "Enter URL of an MJPEG video stream:";
-            form.URLs = new string[]
-				{
-					"http://195.243.185.195/axis-cgi/mjpg/video.cgi?camera=4",
-					"http://195.243.185.195/axis-cgi/mjpg/video.cgi?camera=3",
-				};
-
-            if ( form.ShowDialog( this ) == DialogResult.OK )
-            {
-                // create video source
-                MJPEGStream mjpegSource = new MJPEGStream( form.URL );
-
-                // open it
-                OpenVideoSource( mjpegSource );
-            }
-        }
-
         // Capture 1st display in the system
         private void capture1stDisplayToolStripMenuItem_Click( object sender, EventArgs e )
         {
