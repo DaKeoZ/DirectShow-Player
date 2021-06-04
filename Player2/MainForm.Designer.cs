@@ -138,14 +138,6 @@
             // openFileDialog
             // 
             this.openFileDialog.Filter = "AVI files (*.avi)|*.avi|All files (*.*)|*.*";
-            this.openFileDialog.Title = "Opem movie";
-            // 
-            // capture1stDisplayToolStripMenuItem
-            // 
-            this.capture1stDisplayToolStripMenuItem.Name = "capture1stDisplayToolStripMenuItem";
-            this.capture1stDisplayToolStripMenuItem.Size = new System.Drawing.Size( 250, 22 );
-            this.capture1stDisplayToolStripMenuItem.Text = "Capture 1st display";
-            this.capture1stDisplayToolStripMenuItem.Click += new System.EventHandler( this.capture1stDisplayToolStripMenuItem_Click );
             // 
             // MainForm
             // 

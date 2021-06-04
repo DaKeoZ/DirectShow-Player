@@ -54,12 +54,6 @@ namespace CleanedProject
             }
         }
 
-        // Capture 1st display in the system
-        private void capture1stDisplayToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            OpenVideoSource( new ScreenCaptureStream( Screen.AllScreens[0].Bounds, 100 ) );
-        }
-
         // Open video source
         private void OpenVideoSource( IVideoSource source )
         {
