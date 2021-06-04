@@ -4,7 +4,6 @@ D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.csproj.C
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\CleanedProject.VideoCaptureDeviceForm.resources
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\CleanedProject.VideoSourcePlayer.resources
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\CleanedProject.MainForm.resources
-D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\CleanedProject.URLForm.resources
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\bin\Debug\Player2.exe
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\bin\Debug\Player2.pdb
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\bin\Debug\AForge.Controls.dll
