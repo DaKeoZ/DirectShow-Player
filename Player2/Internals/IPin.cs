@@ -29,7 +29,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int Connect( [In] IPin receivePin, [In, MarshalAs( UnmanagedType.LPStruct )] AMMediaType mediaType );
+        int Connect( [In] IntPtr pReceivePin, [In, MarshalAs( UnmanagedType.LPStruct )] AMMediaType mediaType );
 
         /// <summary>
         /// Makes a connection to this pin and is called by a connecting pin.
@@ -41,7 +41,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int ReceiveConnection( [In] IPin receivePin, [In, MarshalAs( UnmanagedType.LPStruct )] AMMediaType mediaType );
+        int ReceiveConnection( [In] IntPtr pReceivePin, [In, MarshalAs( UnmanagedType.LPStruct )] AMMediaType mediaType );
 
         /// <summary>
         /// Breaks the current pin connection.
@@ -61,7 +61,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int ConnectedTo( [Out] out IPin pin );
+        int ConnectedTo( [Out] out IntPtr ppPin);
 
         /// <summary>
         /// Returns the media type of this pin's connection.
@@ -130,7 +130,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int EnumMediaTypes( IntPtr enumerator );
+        int EnumMediaTypes([Out] out IntPtr ppEnum);
 
         /// <summary>
         /// Provides an array of the pins to which this pin internally connects.
@@ -143,7 +143,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int QueryInternalConnections( IntPtr apPin, [In, Out] ref int nPin );
+        int QueryInternalConnections([Out] IntPtr ppPins, [In, Out] ref int nPin );
 
         /// <summary>
         /// Notifies the pin that no additional data is expected.
@@ -184,8 +184,8 @@ namespace fr.ipmfrance.webcam.com
         /// 
         [PreserveSig]
         int NewSegment(
-            long start,
-            long stop,
-            double rate );
+            [In] long tStart,
+            [In] long tStop,
+            [In] double dRate);
     }
 }
