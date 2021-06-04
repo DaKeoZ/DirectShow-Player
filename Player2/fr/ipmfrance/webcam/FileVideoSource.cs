@@ -1,19 +1,13 @@
-// AForge Direct Show Library
-// AForge.NET framework
-// http://www.aforgenet.com/framework/
-//
-// Copyright © AForge.NET, 2009-2011
-// contacts@aforgenet.com
-//
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Threading;
+using System.Runtime.InteropServices;
+using fr.ipmfrance.webcam.com;
 
 namespace fr.ipmfrance.webcam
 {
-    using System;
-    using System.Drawing;
-    using System.Drawing.Imaging;
-    using System.Threading;
-    using System.Runtime.InteropServices;
-    using fr.ipmfrance.webcam.com;
+
 
     /// <summary>
     /// Video source for video files.

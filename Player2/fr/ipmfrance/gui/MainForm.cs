@@ -91,24 +91,10 @@ namespace fr.ipmfrance.gui
             }
         }
 
-        //private void videoSourcePlayer_NewFrame(object sender, ref Bitmap image)
-        //{
-        //    DateTime now = DateTime.Now;
-        //    Graphics g = Graphics.FromImage(image);
-
-        //    SolidBrush brush = new SolidBrush(Color.Red);
-        //    g.DrawString(now.ToString(), this.Font, brush, new PointF(500, 105));
-        //    brush.Dispose();
-
-        //    g.Dispose();
-        //}
-
         private void videoSourcePlayer_NewFrame(object sender, ref Bitmap image)
         {
-
             // Création d'un objet graphics à partir de l'image d'un frame de la vidéo
             Graphics g = Graphics.FromImage(image);
-
             DrawOverlay(g);
             g.Dispose();
         }

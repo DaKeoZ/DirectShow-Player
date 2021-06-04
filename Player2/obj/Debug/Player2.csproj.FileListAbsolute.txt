@@ -29,7 +29,6 @@ D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\fr.ipmfrance.gui
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\fr.ipmfrance.gui.VideoSourcePlayer.resources
 C:\ipmfrance\stagiaire\DirectShow-Player\Player2\bin\Debug\Player2.exe
 C:\ipmfrance\stagiaire\DirectShow-Player\Player2\bin\Debug\Player2.pdb
-C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\Player2.csprojAssemblyReference.cache
 C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\fr.ipmfrance.gui.MainForm.resources
 C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\Player2.Properties.Resources.resources
 C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\fr.ipmfrance.gui.VideoSourcePlayer.resources
