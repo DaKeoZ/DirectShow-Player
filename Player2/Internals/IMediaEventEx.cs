@@ -41,7 +41,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int GetEvent( [Out, MarshalAs( UnmanagedType.I4 )] out DsEvCode lEventCode, [Out] out IntPtr lParam1, [Out] out IntPtr lParam2, int msTimeout );
+        int GetEvent( out DsEvCode lEventCode, out int lParam1, out int lParam2, int msTimeout );
 
         /// <summary>
         /// Waits for the filter graph to render all available data.
@@ -86,7 +86,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int FreeEventParams( [In, MarshalAs( UnmanagedType.I4 )] DsEvCode lEvCode, IntPtr lParam1, IntPtr lParam2 );
+        int FreeEventParams( DsEvCode lEvCode, int lParam1, int lParam2 );
 
         /// <summary>
         /// Registers a window to process event notifications.

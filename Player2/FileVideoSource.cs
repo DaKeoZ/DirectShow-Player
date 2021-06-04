@@ -457,7 +457,7 @@ namespace fr.ipmfrance.webcam
 
                 // get media events' interface
                 mediaEvent = (IMediaEventEx) graphObject;
-                IntPtr p1, p2;
+                int p1, p2;
                 DsEvCode code;
 
                 // run
