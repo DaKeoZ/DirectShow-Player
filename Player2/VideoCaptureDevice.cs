@@ -66,16 +66,11 @@ namespace CleanedProject
 
         // video and snapshot resolutions to set
         private VideoCapabilities videoResolution = null;
-        private VideoCapabilities snapshotResolution = null;
-
-        // provide snapshots or not
-        private bool provideSnapshots = false;
 
         private Thread thread = null;
         private ManualResetEvent stopEvent = null;
 
         private VideoCapabilities[] videoCapabilities;
-        private VideoCapabilities[] snapshotCapabilities;
 
         private bool needToSetVideoInput = false;
         private bool needToSimulateTrigger = false;
@@ -100,7 +95,6 @@ namespace CleanedProject
 
         // cache for video/snapshot capabilities and video inputs
         private static Dictionary<string, VideoCapabilities[]> cacheVideoCapabilities = new Dictionary<string,VideoCapabilities[]>( );
-        private static Dictionary<string, VideoCapabilities[]> cacheSnapshotCapabilities = new Dictionary<string,VideoCapabilities[]>( );
         private static Dictionary<string, VideoInput[]> cacheCrossbarVideoInputs = new Dictionary<string,VideoInput[]>( );
 
         /// <summary>
@@ -185,30 +179,6 @@ namespace CleanedProject
         }
 
         /// <summary>
-        /// Specifies if snapshots should be provided or not.
-        /// </summary>
-        /// 
-        /// <remarks><para>Some USB cameras/devices may have a shutter button, which may result into snapshot if it
-        /// is pressed. So the property specifies if the video source will try providing snapshots or not - it will
-        /// check if the camera supports providing still image snapshots. If camera supports snapshots and the property
-        /// is set to <see langword="true"/>, then snapshots will be provided through <see cref="SnapshotFrame"/>
-        /// event.</para>
-        /// 
-        /// <para>Check supported sizes of snapshots using <see cref="SnapshotCapabilities"/> property and set the
-        /// desired size using <see cref="SnapshotResolution"/> property.</para>
-        /// 
-        /// <para><note>The property must be set before running the video source to take effect.</note></para>
-        /// 
-        /// <para>Default value of the property is set to <see langword="false"/>.</para>
-        /// </remarks>
-        ///
-        public bool ProvideSnapshots
-        {
-            get { return provideSnapshots; }
-            set { provideSnapshots = value; }
-        }
-
-        /// <summary>
         /// New frame event.
         /// </summary>
         /// 
@@ -270,11 +240,7 @@ namespace CleanedProject
             {
                 deviceMoniker = value;
 
-
-                Debug.WriteLine("Salut");
-
                 videoCapabilities = null;
-                snapshotCapabilities = null;
                 crossbarVideoInputs = null;
                 isCrossbarAvailable = null;
             }
@@ -400,25 +366,6 @@ namespace CleanedProject
         }
 
         /// <summary>
-        /// Snapshot resolution to set.
-        /// </summary>
-        /// 
-        /// <remarks><para>The property allows to set one of the snapshot resolutions supported by the camera.
-        /// Use <see cref="SnapshotCapabilities"/> property to get the list of supported snapshot resolutions.</para>
-        /// 
-        /// <para><note>The property must be set before camera is started to make any effect.</note></para>
-        /// 
-        /// <para>Default value of the property is set to <see langword="null"/>, which means default snapshot
-        /// resolution is used.</para>
-        /// </remarks>
-        /// 
-        public VideoCapabilities SnapshotResolution
-        {
-            get { return snapshotResolution; }
-            set { snapshotResolution = value; }
-        }
-
-        /// <summary>
         /// Video capabilities of the device.
         /// </summary>
         /// 
@@ -462,60 +409,6 @@ namespace CleanedProject
                 }
                 // don't return null even capabilities are not provided for some reason
                 return ( videoCapabilities != null ) ? videoCapabilities : new VideoCapabilities[0];
-            }
-        }
-
-        /// <summary>
-        /// Snapshot capabilities of the device.
-        /// </summary>
-        /// 
-        /// <remarks><para>The property provides list of device's snapshot capabilities.</para>
-        /// 
-        /// <para>If the array has zero length, then it means that this device does not support making
-        /// snapshots.</para>
-        /// 
-        /// <para>See documentation to <see cref="ProvideSnapshots"/> for additional information.</para>
-        /// 
-        /// <para><note>It is recomended not to call this property immediately after <see cref="Start"/> method, since
-        /// device may not start yet and provide its information. It is better to call the property
-        /// before starting device or a bit after (but not immediately after).</note></para>
-        /// </remarks>
-        /// 
-        /// <seealso cref="ProvideSnapshots"/>
-        /// 
-        public VideoCapabilities[] SnapshotCapabilities
-        {
-            get
-            {
-                if ( snapshotCapabilities == null )
-                {
-                    lock ( cacheSnapshotCapabilities )
-                    {
-                        if ( ( !string.IsNullOrEmpty( deviceMoniker ) ) && ( cacheSnapshotCapabilities.ContainsKey( deviceMoniker ) ) )
-                        {
-                            snapshotCapabilities = cacheSnapshotCapabilities[deviceMoniker];
-                        }
-                    }
-
-                    if ( snapshotCapabilities == null )
-                    {
-                        if ( !IsRunning )
-                        {
-                            // create graph without playing to get the video/snapshot capabilities only.
-                            // not very clean but it works
-                            WorkerThread( false );
-                        }
-                        else
-                        {
-                            for ( int i = 0; ( i < 500 ) && ( snapshotCapabilities == null ); i++ )
-                            {
-                                Thread.Sleep( 10 );
-                            }
-                        }
-                    }
-                }
-                // don't return null even capabilities are not provided for some reason
-                return ( snapshotCapabilities != null ) ? snapshotCapabilities : new VideoCapabilities[0];
             }
         }
 
@@ -1123,15 +1016,6 @@ namespace CleanedProject
                 // configure pins
                 GetPinCapabilitiesAndConfigureSizeAndRate( captureGraph, sourceBase,
                     PinCategory.Capture, videoResolution, ref videoCapabilities );
-                if ( isSapshotSupported )
-                {
-                    GetPinCapabilitiesAndConfigureSizeAndRate( captureGraph, sourceBase,
-                        PinCategory.StillImage, snapshotResolution, ref snapshotCapabilities );
-                }
-                else
-                {
-                    snapshotCapabilities = new VideoCapabilities[0];
-                }
 
                 // put video/snapshot capabilities into cache
                 lock ( cacheVideoCapabilities )
@@ -1139,13 +1023,6 @@ namespace CleanedProject
                     if ( ( videoCapabilities != null ) && ( !cacheVideoCapabilities.ContainsKey( deviceMoniker ) ) )
                     {
                         cacheVideoCapabilities.Add( deviceMoniker, videoCapabilities );
-                    }
-                }
-                lock ( cacheSnapshotCapabilities )
-                {
-                    if ( ( snapshotCapabilities != null ) && ( !cacheSnapshotCapabilities.ContainsKey( deviceMoniker ) ) )
-                    {
-                        cacheSnapshotCapabilities.Add( deviceMoniker, snapshotCapabilities );
                     }
                 }
 
@@ -1164,7 +1041,7 @@ namespace CleanedProject
                         mediaType.Dispose( );
                     }
 
-                    if ( ( isSapshotSupported ) && ( provideSnapshots ) )
+                    if ( isSapshotSupported )
                     {
                         // render snapshot pin
                         captureGraph.RenderStream( PinCategory.StillImage, MediaType.Video, sourceBase, null, snapshotGrabberBase );
@@ -1191,7 +1068,7 @@ namespace CleanedProject
                     // run
                     mediaControl.Run( );
 
-                    if ( ( isSapshotSupported ) && ( provideSnapshots ) )
+                    if ( isSapshotSupported )
                     {
                         startTime = DateTime.Now;
                         videoControl.SetMode( pinStillImage, VideoControlFlags.ExternalTriggerEnable );
@@ -1228,7 +1105,7 @@ namespace CleanedProject
                         {
                             needToSimulateTrigger = false;
 
-                            if ( ( isSapshotSupported ) && ( provideSnapshots ) )
+                            if ( isSapshotSupported )
                             {
                                 videoControl.SetMode( pinStillImage, VideoControlFlags.Trigger );
                             }
