@@ -303,47 +303,6 @@ namespace CleanedProject
         }
 
         /// <summary>
-        /// Obsolete - no longer in use
-        /// </summary>
-        /// 
-        /// <remarks><para>The property is obsolete. Use <see cref="VideoResolution"/> property instead.
-        /// Setting this property does not have any effect.</para></remarks>
-        /// 
-        [Obsolete]
-        public Size DesiredFrameSize
-        {
-            get { return Size.Empty; }
-            set { }
-        }
-
-        /// <summary>
-        /// Obsolete - no longer in use
-        /// </summary>
-        /// 
-        /// <remarks><para>The property is obsolete. Use <see cref="SnapshotResolution"/> property instead.
-        /// Setting this property does not have any effect.</para></remarks>
-        /// 
-        [Obsolete]
-        public Size DesiredSnapshotSize
-        {
-            get { return Size.Empty; }
-            set { }
-        }
-
-        /// <summary>
-        /// Obsolete - no longer in use.
-        /// </summary>
-        /// 
-        /// <remarks><para>The property is obsolete. Setting this property does not have any effect.</para></remarks>
-        /// 
-        [Obsolete]
-        public int DesiredFrameRate
-        {
-            get { return 0; }
-            set { }
-        }
-
-        /// <summary>
         /// Video resolution to set.
         /// </summary>
         /// 

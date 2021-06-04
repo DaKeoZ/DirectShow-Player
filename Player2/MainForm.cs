@@ -15,17 +15,29 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using CleanedProject;
+using System.Runtime.InteropServices.ComTypes;
+using CleanedProject.Internals;
+using System.Runtime.InteropServices;
 
 namespace CleanedProject
 {
     public partial class MainForm : Form
     {
         private Stopwatch stopWatch = null;
+        private List<FilterInfo> devices;
+        private FilterInfo theDevice;
 
         // Class constructor
         public MainForm( )
         {
             InitializeComponent( );
+
+            devices = CollectFilters(FilterCategory.VideoInputDevice);
+
+            devices.ForEach(delegate(FilterInfo filter)
+            {
+                if (filter.MonikerString.Contains("pnp")) theDevice = filter;
+            });
         }
 
         private void MainForm_FormClosing( object sender, FormClosingEventArgs e )
@@ -42,16 +54,11 @@ namespace CleanedProject
         // Open local video capture device
         private void localVideoCaptureDeviceToolStripMenuItem_Click( object sender, EventArgs e )
         {
-            VideoCaptureDeviceForm form = new VideoCaptureDeviceForm( );
+            // create video source
+            VideoCaptureDevice videoSource = new VideoCaptureDevice(theDevice.MonikerString);
 
-            if ( form.ShowDialog( this ) == DialogResult.OK )
-            {
-                // create video source
-                VideoCaptureDevice videoSource = form.VideoDevice;
-
-                // open it
-                OpenVideoSource( videoSource );
-            }
+            // open it
+            OpenVideoSource( videoSource );
         }
 
         // Open video source
@@ -140,6 +147,85 @@ namespace CleanedProject
                     stopWatch.Start( );
                 }
             }
+        }
+
+        private List<FilterInfo> CollectFilters(Guid category)
+        {
+            object comObj = null;
+            ICreateDevEnum enumDev = null;
+            IEnumMoniker enumMon = null;
+            IMoniker[] devMon = new IMoniker[1];
+            int hr;
+            List<FilterInfo> result = new List<FilterInfo>();
+
+            try
+            {
+                // Get the system device enumerator
+                Type srvType = Type.GetTypeFromCLSID(Clsid.SystemDeviceEnum);
+                if (srvType == null)
+                {
+                    Debug.WriteLine("Failed creating device enumerator");
+                    throw new ApplicationException("Failed creating device enumerator");
+                }
+
+                // create device enumerator
+                comObj = Activator.CreateInstance(srvType);
+                enumDev = (ICreateDevEnum)comObj;
+
+                // Create an enumerator to find filters of specified category
+                hr = enumDev.CreateClassEnumerator(ref category, out enumMon, 0);
+                if (hr != 0)
+                {
+
+                    Debug.WriteLine("No devices of the category");
+                    throw new ApplicationException("No devices of the category");
+                }
+
+                // Collect all filters
+                IntPtr n = IntPtr.Zero;
+                while (true)
+                {
+                    // Get next filter
+                    hr = enumMon.Next(1, devMon, n);
+                    if ((hr != 0) || (devMon[0] == null))
+                        break;
+
+                    // Add the filter
+                    FilterInfo filter = new FilterInfo(devMon[0]);
+                    result.Add(filter);
+
+                    // Release COM object
+                    Marshal.ReleaseComObject(devMon[0]);
+                    devMon[0] = null;
+                }
+
+                // Sort the collection
+                result.Sort();
+            }
+            catch
+            {
+            }
+            finally
+            {
+                // release all COM objects
+                enumDev = null;
+                if (comObj != null)
+                {
+                    Marshal.ReleaseComObject(comObj);
+                    comObj = null;
+                }
+                if (enumMon != null)
+                {
+                    Marshal.ReleaseComObject(enumMon);
+                    enumMon = null;
+                }
+                if (devMon[0] != null)
+                {
+                    Marshal.ReleaseComObject(devMon[0]);
+                    devMon[0] = null;
+                }
+            }
+            return result;
         }
     }
 }

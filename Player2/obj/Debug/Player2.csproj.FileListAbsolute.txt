@@ -27,4 +27,3 @@ D:\Development\IPM_Stage\aforge\Samples\Video\Player2\bin\Debug\AForge.Math.xml
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.csproj.CopyComplete
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.exe
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.pdb
-D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.csprojAssemblyReference.cache

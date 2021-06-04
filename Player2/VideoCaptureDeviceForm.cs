@@ -160,7 +160,6 @@ namespace CleanedProject
                 VideoCapabilities caps = videoCapabilitiesDictionary[(string) videoResolutionsCombo.SelectedItem];
 
                 videoDevice.VideoResolution = caps;
-                Debug.WriteLine(caps.ToString());
                 captureSize = caps.FrameSize;
             }
 
