@@ -35,12 +35,12 @@ namespace fr.ipmfrance.webcam.com
             if ( filter.EnumPins( out pinsEnum ) == 0 )
             {
                 PinDirection pinDir;
-                int n;
+                IntPtr n = IntPtr.Zero;
 
                 try
                 {
                     // get next pin
-                    while ( pinsEnum.Next( 1, pin, out n ) == 0 )
+                    while ( pinsEnum.Next( 1, pin, n ) == 0 )
                     {
                         // query pin`s direction
                         pin[0].QueryDirection( out pinDir );

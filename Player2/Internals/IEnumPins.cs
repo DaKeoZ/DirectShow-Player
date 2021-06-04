@@ -32,7 +32,7 @@ namespace fr.ipmfrance.webcam.com
         [PreserveSig]
         int Next( [In] int cPins,
             [Out, MarshalAs( UnmanagedType.LPArray, SizeParamIndex = 0 )] IPin[] pins,
-            [Out] out int pinsFetched );
+            [In] IntPtr pinsFetched );
 
         /// <summary>
         /// Skips a specified number of pins in the enumeration sequence.
