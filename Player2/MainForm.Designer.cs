@@ -80,13 +80,6 @@
             this.localVideoCaptureDeviceToolStripMenuItem.Text = "Local &Video Capture Device";
             this.localVideoCaptureDeviceToolStripMenuItem.Click += new System.EventHandler( this.localVideoCaptureDeviceToolStripMenuItem_Click );
             // 
-            // openVideofileusingDirectShowToolStripMenuItem
-            // 
-            this.openVideofileusingDirectShowToolStripMenuItem.Name = "openVideofileusingDirectShowToolStripMenuItem";
-            this.openVideofileusingDirectShowToolStripMenuItem.Size = new System.Drawing.Size( 250, 22 );
-            this.openVideofileusingDirectShowToolStripMenuItem.Text = "Open video &file (using DirectShow)";
-            this.openVideofileusingDirectShowToolStripMenuItem.Click += new System.EventHandler( this.openVideofileusingDirectShowToolStripMenuItem_Click );
-            // 
             // openMJPEGURLToolStripMenuItem
             // 
             this.openMJPEGURLToolStripMenuItem.Name = "openMJPEGURLToolStripMenuItem";

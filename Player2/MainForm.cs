@@ -54,19 +54,6 @@ namespace CleanedProject
             }
         }
 
-        // Open video file using DirectShow
-        private void openVideofileusingDirectShowToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            if ( openFileDialog.ShowDialog( ) == DialogResult.OK )
-            {
-                // create video source
-                FileVideoSource fileSource = new FileVideoSource( openFileDialog.FileName );
-
-                // open it
-                OpenVideoSource( fileSource );
-            }
-        }
-
         // Open MJPEG URL
         private void openMJPEGURLToolStripMenuItem_Click( object sender, EventArgs e )
         {
