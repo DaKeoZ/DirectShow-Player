@@ -449,7 +449,7 @@ namespace fr.ipmfrance.webcam
                 if ( !referenceClockEnabled )
                 {
                     IMediaFilter mediaFilter = (IMediaFilter) graphObject;
-                    mediaFilter.SetSyncSource( null );
+                    mediaFilter.SetSyncSource( IntPtr.Zero );
                 }
 
                 // get media control

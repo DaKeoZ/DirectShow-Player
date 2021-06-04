@@ -84,7 +84,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int SetSyncSource( [In] IReferenceClock pClock );
+        int SetSyncSource( [In] IntPtr pClock );
 
         /// <summary>
         /// This method retrieves the current reference clock in use by this filter. 
@@ -96,7 +96,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int GetSyncSource( [Out] out IReferenceClock pClock );
+        int GetSyncSource( [Out] out IntPtr pClock );
     }
 }
 
