@@ -74,7 +74,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int GetState( int milliSecsTimeout, [Out] out int filterState );
+        int GetState([In] int milliSecsTimeout, [Out] out FilterState filterState );
 
         /// <summary>
         /// Sets the reference clock for the filter or the filter graph.
@@ -145,7 +145,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int JoinFilterGraph( [In] IFilterGraph graph, [In, MarshalAs( UnmanagedType.LPWStr )] string name );
+        int JoinFilterGraph( [In] IntPtr graph, [In, MarshalAs( UnmanagedType.LPWStr )] string name );
 
         /// <summary>
         /// Retrieves a string containing vendor information.
