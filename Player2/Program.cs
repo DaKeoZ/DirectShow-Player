@@ -19,7 +19,7 @@ namespace fr.ipmfrance.webcam
                 Debug.WriteLine(Assembly.GetExecutingAssembly().GetTypes()[i]);
             }*/
 
-            //Debug.WriteLine(Assembly.GetExecutingAssembly().GetTypes().Length);
+            Debug.WriteLine(Assembly.GetExecutingAssembly().GetTypes().Length);
             Application.EnableVisualStyles( );
             Application.SetCompatibleTextRenderingDefault( false );
             Application.Run( new gui.MainForm( ) );

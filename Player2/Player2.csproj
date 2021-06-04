@@ -79,7 +79,6 @@
     <Compile Include="Image.cs" />
     <Compile Include="Internals\IAMCameraControl.cs" />
     <Compile Include="Internals\IAMCrossbar.cs" />
-    <Compile Include="Internals\IAMStreamConfig.cs" />
     <Compile Include="Internals\IAMVideoControl.cs" />
     <Compile Include="Internals\IBaseFilter.cs" />
     <Compile Include="Internals\ICaptureGraphBuilder2.cs" />
