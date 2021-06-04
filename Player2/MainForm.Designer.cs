@@ -32,9 +32,6 @@
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip( );
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem( );
             this.localVideoCaptureDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem( );
-            this.openVideofileusingDirectShowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem( );
-            this.openJPEGURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem( );
-            this.openMJPEGURLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem( );
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator( );
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem( );
             this.statusStrip = new System.Windows.Forms.StatusStrip( );
@@ -42,8 +39,6 @@
             this.mainPanel = new System.Windows.Forms.Panel( );
             this.videoSourcePlayer = new VideoSourcePlayer( );
             this.timer = new System.Windows.Forms.Timer( this.components );
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog( );
-            this.capture1stDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem( );
             this.mainMenuStrip.SuspendLayout( );
             this.statusStrip.SuspendLayout( );
             this.mainPanel.SuspendLayout( );
@@ -63,10 +58,6 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange( new System.Windows.Forms.ToolStripItem[] {
             this.localVideoCaptureDeviceToolStripMenuItem,
-            this.openVideofileusingDirectShowToolStripMenuItem,
-            this.openJPEGURLToolStripMenuItem,
-            this.openMJPEGURLToolStripMenuItem,
-            this.capture1stDisplayToolStripMenuItem,
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem} );
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -134,10 +125,6 @@
             // 
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler( this.timer_Tick );
-            // 
-            // openFileDialog
-            // 
-            this.openFileDialog.Filter = "AVI files (*.avi)|*.avi|All files (*.*)|*.*";
             // 
             // MainForm
             // 
