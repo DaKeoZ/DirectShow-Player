@@ -9,7 +9,7 @@
 // kidjan@gmail.com
 //
 
-namespace CleanedProject.Internals
+namespace fr.ipmfrance.webcam.com
 {
     using System;
     using System.Runtime.InteropServices;

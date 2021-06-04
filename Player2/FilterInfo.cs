@@ -1,8 +1,7 @@
-namespace CleanedProject
+namespace fr.ipmfrance.webcam
 {
-    using CleanedProject.Internals;
+    using fr.ipmfrance.webcam.com;
     using System;
-    using System.Diagnostics;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
 

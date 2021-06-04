@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace CleanedProject
+namespace fr.ipmfrance.webcam
 {
     static class Program
     {
@@ -22,7 +22,7 @@ namespace CleanedProject
             //Debug.WriteLine(Assembly.GetExecutingAssembly().GetTypes().Length);
             Application.EnableVisualStyles( );
             Application.SetCompatibleTextRenderingDefault( false );
-            Application.Run( new MainForm( ) );
+            Application.Run( new gui.MainForm( ) );
         }
     }
 }

@@ -8,33 +8,29 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-using CleanedProject;
 using System.Runtime.InteropServices.ComTypes;
-using CleanedProject.Internals;
 using System.Runtime.InteropServices;
+using fr.ipmfrance.webcam;
+using fr.ipmfrance.webcam.com;
 
-namespace CleanedProject
+namespace fr.ipmfrance.gui
 {
     public partial class MainForm : Form
     {
         private Stopwatch stopWatch = null;
-        private List<FilterInfo> devices;
-        private FilterInfo theDevice;
-
-        // Class constructor
+        private List<webcam.FilterInfo> devices;
+        private webcam.FilterInfo theDevice;
+        
         public MainForm( )
         {
             InitializeComponent( );
 
             devices = CollectFilters(FilterCategory.VideoInputDevice);
 
-            devices.ForEach(delegate(FilterInfo filter)
+            devices.ForEach(delegate(webcam.FilterInfo filter)
             {
                 if (filter.MonikerString.Contains("pnp")) theDevice = filter;
             });
@@ -44,53 +40,41 @@ namespace CleanedProject
         {
             CloseCurrentVideoSource( );
         }
-
-        // "Exit" menu item clicked
+        
         private void exitToolStripMenuItem_Click( object sender, EventArgs e )
         {
             this.Close( );
         }
-
-        // Open local video capture device
+        
         private void localVideoCaptureDeviceToolStripMenuItem_Click( object sender, EventArgs e )
         {
-            // create video source
             VideoCaptureDevice videoSource = new VideoCaptureDevice(theDevice.MonikerString);
-
-            // open it
+            
             OpenVideoSource( videoSource );
         }
-
-        // Open video source
+        
         private void OpenVideoSource( IVideoSource source )
         {
-            // set busy cursor
             this.Cursor = Cursors.WaitCursor;
-
-            // stop current video source
+            
             CloseCurrentVideoSource( );
-
-            // start new video source
+            
             videoSourcePlayer.VideoSource = new AsyncVideoSource( source );
             videoSourcePlayer.Start( );
-
-            // reset stop watch
+            
             stopWatch = null;
-
-            // start timer
+            
             timer.Start( );
 
             this.Cursor = Cursors.Default;
         }
-
-        // Close video source if it is running
+        
         private void CloseCurrentVideoSource( )
         {
             if ( videoSourcePlayer.VideoSource != null )
             {
                 videoSourcePlayer.SignalToStop( );
-
-                // wait ~ 3 seconds
+                
                 for ( int i = 0; i < 30; i++ )
                 {
                     if ( !videoSourcePlayer.IsRunning )
@@ -106,29 +90,25 @@ namespace CleanedProject
                 videoSourcePlayer.VideoSource = null;
             }
         }
-
-        // New frame received by the player
+        
         private void videoSourcePlayer_NewFrame( object sender, ref Bitmap image )
         {
             DateTime now = DateTime.Now;
             Graphics g = Graphics.FromImage( image );
-
-            // paint current time
+            
             SolidBrush brush = new SolidBrush( Color.Red );
             g.DrawString( now.ToString( ), this.Font, brush, new PointF( 5, 5 ) );
             brush.Dispose( );
 
             g.Dispose( );
         }
-
-        // On timer event - gather statistics
+        
         private void timer_Tick( object sender, EventArgs e )
         {
             IVideoSource videoSource = videoSourcePlayer.VideoSource;
 
             if ( videoSource != null )
             {
-                // get number of frames since the last timer tick
                 int framesReceived = videoSource.FramesReceived;
 
                 if ( stopWatch == null )
@@ -149,30 +129,27 @@ namespace CleanedProject
             }
         }
 
-        private List<FilterInfo> CollectFilters(Guid category)
+        private List<webcam.FilterInfo> CollectFilters(Guid category)
         {
             object comObj = null;
             ICreateDevEnum enumDev = null;
             IEnumMoniker enumMon = null;
             IMoniker[] devMon = new IMoniker[1];
             int hr;
-            List<FilterInfo> result = new List<FilterInfo>();
+            List<webcam.FilterInfo> result = new List<webcam.FilterInfo>();
 
             try
             {
-                // Get the system device enumerator
                 Type srvType = Type.GetTypeFromCLSID(Clsid.SystemDeviceEnum);
                 if (srvType == null)
                 {
                     Debug.WriteLine("Failed creating device enumerator");
                     throw new ApplicationException("Failed creating device enumerator");
                 }
-
-                // create device enumerator
+                
                 comObj = Activator.CreateInstance(srvType);
                 enumDev = (ICreateDevEnum)comObj;
-
-                // Create an enumerator to find filters of specified category
+                
                 hr = enumDev.CreateClassEnumerator(ref category, out enumMon, 0);
                 if (hr != 0)
                 {
@@ -180,26 +157,21 @@ namespace CleanedProject
                     Debug.WriteLine("No devices of the category");
                     throw new ApplicationException("No devices of the category");
                 }
-
-                // Collect all filters
+                
                 IntPtr n = IntPtr.Zero;
                 while (true)
                 {
-                    // Get next filter
                     hr = enumMon.Next(1, devMon, n);
                     if ((hr != 0) || (devMon[0] == null))
                         break;
 
-                    // Add the filter
-                    FilterInfo filter = new FilterInfo(devMon[0]);
+                    webcam.FilterInfo filter = new webcam.FilterInfo(devMon[0]);
                     result.Add(filter);
-
-                    // Release COM object
+                    
                     Marshal.ReleaseComObject(devMon[0]);
                     devMon[0] = null;
                 }
-
-                // Sort the collection
+                
                 result.Sort();
             }
             catch
@@ -207,7 +179,6 @@ namespace CleanedProject
             }
             finally
             {
-                // release all COM objects
                 enumDev = null;
                 if (comObj != null)
                 {
@@ -227,5 +198,77 @@ namespace CleanedProject
             }
             return result;
         }
+
+        /*private void EnumeratedSupportedFrameSizes( VideoCaptureDevice videoDevice )
+        {
+            this.Cursor = Cursors.WaitCursor;
+
+            videoResolutionsCombo.Items.Clear( );
+            videoInputsCombo.Items.Clear( );
+
+            videoCapabilitiesDictionary.Clear( );
+
+            try
+            {
+                // collect video capabilities
+                VideoCapabilities[] videoCapabilities = videoDevice.VideoCapabilities;
+                int videoResolutionIndex = 0;
+
+                foreach ( VideoCapabilities capabilty in videoCapabilities )
+                {
+                    string item = string.Format(
+                        "{0} x {1}", capabilty.FrameSize.Width, capabilty.FrameSize.Height );
+
+                    if ( !videoResolutionsCombo.Items.Contains( item ) )
+                    {
+                        if ( captureSize == capabilty.FrameSize )
+                        {
+                            videoResolutionIndex = videoResolutionsCombo.Items.Count;
+                        }
+
+                        videoResolutionsCombo.Items.Add( item );
+                    }
+
+                    if ( !videoCapabilitiesDictionary.ContainsKey( item ) )
+                    {
+                        videoCapabilitiesDictionary.Add( item, capabilty );
+                    }
+                }
+
+                if ( videoCapabilities.Length == 0 )
+                {
+                    videoResolutionsCombo.Items.Add( "Not supported" );
+                }
+
+                videoResolutionsCombo.SelectedIndex = videoResolutionIndex;
+
+                // get video inputs
+                availableVideoInputs = videoDevice.AvailableCrossbarVideoInputs;
+                int videoInputIndex = 0;
+
+                foreach ( VideoInput input in availableVideoInputs )
+                {
+                    string item = string.Format( "{0}: {1}", input.Index, input.Type );
+
+                    if ( ( input.Index == videoInput.Index ) && ( input.Type == videoInput.Type ) )
+                    {
+                        videoInputIndex = videoInputsCombo.Items.Count;
+                    }
+
+                    videoInputsCombo.Items.Add( item );
+                }
+
+                if ( availableVideoInputs.Length == 0 )
+                {
+                    videoInputsCombo.Items.Add( "Not supported" );
+                }
+
+                videoInputsCombo.SelectedIndex = videoInputIndex;
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }*/
     }
 }

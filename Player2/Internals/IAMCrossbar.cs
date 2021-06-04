@@ -9,7 +9,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CleanedProject
+namespace fr.ipmfrance.webcam.com
 {
     /// <summary>
     /// The IAMCrossbar interface routes signals from an analog or digital source to a video capture filter.

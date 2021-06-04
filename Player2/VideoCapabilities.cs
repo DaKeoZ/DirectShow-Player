@@ -6,17 +6,14 @@
 // contacts@aforgenet.com
 //
 
-namespace CleanedProject
+namespace fr.ipmfrance.webcam
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Drawing;
     using System.Runtime.InteropServices;
-
-    using AForge.Video;
-    using AForge.Video.DirectShow.Internals;
-    using CleanedProject.Internals;
+    using fr.ipmfrance.webcam.com;
 
     /// <summary>
     /// Capabilities of video device such as frame size and frame rate.

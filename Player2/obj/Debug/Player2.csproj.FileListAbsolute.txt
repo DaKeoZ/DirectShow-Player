@@ -1,9 +1,6 @@
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.Properties.Resources.resources
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.csproj.GenerateResource.cache
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.csproj.CoreCompileInputs.cache
-D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\CleanedProject.VideoCaptureDeviceForm.resources
-D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\CleanedProject.VideoSourcePlayer.resources
-D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\CleanedProject.MainForm.resources
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\bin\Debug\Player2.exe
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\bin\Debug\Player2.pdb
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\bin\Debug\AForge.Controls.dll
@@ -27,3 +24,6 @@ D:\Development\IPM_Stage\aforge\Samples\Video\Player2\bin\Debug\AForge.Math.xml
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.csproj.CopyComplete
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.exe
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.pdb
+D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.csprojAssemblyReference.cache
+D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\fr.ipmfrance.gui.MainForm.resources
+D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\fr.ipmfrance.gui.VideoSourcePlayer.resources

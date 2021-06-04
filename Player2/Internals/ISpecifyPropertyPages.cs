@@ -5,9 +5,8 @@
 // andrew.kirillov@gmail.com
 //
 
-namespace CleanedProject
+namespace fr.ipmfrance.webcam.com
 {
-    using CleanedProject.Internals;
     using System;
     using System.Runtime.InteropServices;
 

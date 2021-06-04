@@ -6,19 +6,14 @@
 // contacts@aforgenet.com
 //
 
+using fr.ipmfrance.webcam;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Data;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
-using AForge.Video;
-
-namespace CleanedProject
+namespace fr.ipmfrance.gui
 {
     using Point = System.Drawing.Point;
 
@@ -395,7 +390,7 @@ namespace CleanedProject
         {
             lock ( sync )
             {
-                return ( currentFrame == null ) ? null : Image.Clone( currentFrame );
+                return ( currentFrame == null ) ? null : webcam.Image.Clone( currentFrame );
             }
         }
 
@@ -531,7 +526,7 @@ namespace CleanedProject
                          ( currentFrame.PixelFormat == PixelFormat.Format48bppRgb ) ||
                          ( currentFrame.PixelFormat == PixelFormat.Format64bppArgb ) )
                     {
-                        convertedFrame = Image.Convert16bppTo8bpp( currentFrame );
+                        convertedFrame = webcam.Image.Convert16bppTo8bpp( currentFrame );
                     }
                 }
 

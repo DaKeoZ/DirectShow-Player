@@ -6,7 +6,7 @@
 // andrew.kirillov@aforgenet.com
 //
 
-namespace CleanedProject
+namespace fr.ipmfrance.webcam
 {
     using System;
 

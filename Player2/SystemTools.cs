@@ -6,7 +6,7 @@
 // contacts@aforgenet.com
 //
 
-namespace CleanedProject
+namespace fr.ipmfrance.webcam
 {
     using System;
     using System.Runtime.InteropServices;

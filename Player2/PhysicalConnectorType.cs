@@ -6,7 +6,7 @@
 // contacts@aforgenet.com
 //
 
-namespace CleanedProject
+namespace fr.ipmfrance.webcam
 {
     /// <summary>
     /// Specifies the physical type of pin (audio or video).

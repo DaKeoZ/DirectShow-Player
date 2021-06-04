@@ -6,17 +6,14 @@
 // contacts@aforgenet.com
 //
 
-namespace CleanedProject
+namespace fr.ipmfrance.webcam
 {
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.Threading;
     using System.Runtime.InteropServices;
-
-    using AForge.Video;
-    using AForge.Video.DirectShow.Internals;
-    using CleanedProject.Internals;
+    using fr.ipmfrance.webcam.com;
 
     /// <summary>
     /// Video source for video files.

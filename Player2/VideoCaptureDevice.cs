@@ -6,7 +6,7 @@
 // contacts@aforgenet.com
 //
 
-namespace CleanedProject
+namespace fr.ipmfrance.webcam
 {
     using System;
     using System.Collections.Generic;
@@ -14,8 +14,7 @@ namespace CleanedProject
     using System.Drawing.Imaging;
     using System.Threading;
     using System.Runtime.InteropServices;
-    using CleanedProject.Internals;
-    using System.Diagnostics;
+    using fr.ipmfrance.webcam.com;
 
     /// <summary>
     /// Video source for local video capture device (for example USB webcam).
@@ -1197,7 +1196,7 @@ namespace CleanedProject
                         try
                         {
                             // get all video capabilities
-                            capabilities = CleanedProject.VideoCapabilities.FromStreamConfig( streamConfig );
+                            capabilities = webcam.VideoCapabilities.FromStreamConfig( streamConfig );
                         }
                         catch
                         {
