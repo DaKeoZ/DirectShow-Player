@@ -129,7 +129,8 @@ namespace fr.ipmfrance.webcam
 
                 // read FriendlyName
                 object val = "";
-                int hr = bag.Read( "FriendlyName", ref val, IntPtr.Zero );
+                // TODO Change null to IErrorLog instance
+                int hr = bag.Read( "FriendlyName", out val, null );
                 if ( hr != 0 )
                     Marshal.ThrowExceptionForHR( hr );
 

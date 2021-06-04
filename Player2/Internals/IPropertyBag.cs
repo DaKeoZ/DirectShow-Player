@@ -33,8 +33,8 @@ namespace fr.ipmfrance.webcam.com
         [PreserveSig]
         int Read(
             [In, MarshalAs( UnmanagedType.LPWStr )] string propertyName,
-            [In, Out, MarshalAs( UnmanagedType.Struct )] ref object pVar,
-            [In] IntPtr pErrorLog );
+            [Out, MarshalAs( UnmanagedType.Struct )] out object pVar,
+            [In] IErrorLog pErrorLog );
 
         /// <summary>
         /// Write property to property bag.

@@ -85,6 +85,7 @@
     <Compile Include="Internals\ICreateDevEnum.cs" />
     <Compile Include="Internals\IEnumFilters.cs" />
     <Compile Include="Internals\IEnumPins.cs" />
+    <Compile Include="Internals\IErrorLog.cs" />
     <Compile Include="Internals\IFilterGraph.cs" />
     <Compile Include="Internals\IFilterGraph2.cs" />
     <Compile Include="Internals\IGraphBuilder.cs" />
