@@ -188,7 +188,6 @@ namespace CleanedProject
             this.Cursor = Cursors.WaitCursor;
 
             videoResolutionsCombo.Items.Clear( );
-            snapshotResolutionsCombo.Items.Clear( );
             videoInputsCombo.Items.Clear( );
 
             videoCapabilitiesDictionary.Clear( );

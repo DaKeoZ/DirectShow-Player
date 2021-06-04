@@ -34,8 +34,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox( );
             this.videoInputsCombo = new System.Windows.Forms.ComboBox( );
             this.label3 = new System.Windows.Forms.Label( );
-            this.snapshotsLabel = new System.Windows.Forms.Label( );
-            this.snapshotResolutionsCombo = new System.Windows.Forms.ComboBox( );
             this.videoResolutionsCombo = new System.Windows.Forms.ComboBox( );
             this.label2 = new System.Windows.Forms.Label( );
             this.label1 = new System.Windows.Forms.Label( );
@@ -79,8 +77,6 @@
             // 
             this.groupBox1.Controls.Add( this.videoInputsCombo );
             this.groupBox1.Controls.Add( this.label3 );
-            this.groupBox1.Controls.Add( this.snapshotsLabel );
-            this.groupBox1.Controls.Add( this.snapshotResolutionsCombo );
             this.groupBox1.Controls.Add( this.videoResolutionsCombo );
             this.groupBox1.Controls.Add( this.label2 );
             this.groupBox1.Controls.Add( this.label1 );
@@ -110,24 +106,6 @@
             this.label3.Size = new System.Drawing.Size( 63, 13 );
             this.label3.TabIndex = 16;
             this.label3.Text = "Video input:";
-            // 
-            // snapshotsLabel
-            // 
-            this.snapshotsLabel.AutoSize = true;
-            this.snapshotsLabel.Location = new System.Drawing.Point( 275, 70 );
-            this.snapshotsLabel.Name = "snapshotsLabel";
-            this.snapshotsLabel.Size = new System.Drawing.Size( 101, 13 );
-            this.snapshotsLabel.TabIndex = 15;
-            this.snapshotsLabel.Text = "Snapshot resoluton:";
-            // 
-            // snapshotResolutionsCombo
-            // 
-            this.snapshotResolutionsCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.snapshotResolutionsCombo.FormattingEnabled = true;
-            this.snapshotResolutionsCombo.Location = new System.Drawing.Point( 275, 85 );
-            this.snapshotResolutionsCombo.Name = "snapshotResolutionsCombo";
-            this.snapshotResolutionsCombo.Size = new System.Drawing.Size( 150, 21 );
-            this.snapshotResolutionsCombo.TabIndex = 14;
             // 
             // videoResolutionsCombo
             // 
@@ -195,8 +173,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label snapshotsLabel;
-        private System.Windows.Forms.ComboBox snapshotResolutionsCombo;
         private System.Windows.Forms.ComboBox videoResolutionsCombo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox videoInputsCombo;
