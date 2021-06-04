@@ -52,7 +52,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int EnumFilters( [Out] out IntPtr enumerator );
+        int EnumFilters( [Out] out IEnumFilters enumerator );
 
         /// <summary>
         /// Finds a filter that was added with a specified name.
