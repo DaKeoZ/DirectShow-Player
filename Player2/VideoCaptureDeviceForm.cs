@@ -40,43 +40,9 @@ namespace CleanedProject
 
         // supported capabilities of video and snapshots
         private Dictionary<string, VideoCapabilities> videoCapabilitiesDictionary = new Dictionary<string, VideoCapabilities>( );
-        private Dictionary<string, VideoCapabilities> snapshotCapabilitiesDictionary = new Dictionary<string, VideoCapabilities>( );
 
         // available video inputs
         private VideoInput[] availableVideoInputs = null;
-
-        // flag telling if user wants to configure snapshots as well
-        private bool configureSnapshots = false;
-
-        /// <summary>
-        /// Specifies if snapshot configuration should be done or not.
-        /// </summary>
-        /// 
-        /// <remarks><para>The property specifies if the dialog form should
-        /// allow configuration of snapshot sizes (if selected video source supports
-        /// snapshots). If the property is set to <see langword="true"/>, then
-        /// the form will provide additional combo box enumerating supported
-        /// snapshot sizes. Otherwise the combo boxes will be hidden.
-        /// </para>
-        /// 
-        /// <para>If the property is set to <see langword="true"/> and selected
-        /// device supports snapshots, then <see cref="VideoCaptureDevice.ProvideSnapshots"/>
-        /// property of the <see cref="VideoDevice">configured device</see> is set to
-        /// <see langword="true"/>.</para>
-        /// 
-        /// <para>Default value of the property is set to <see langword="false"/>.</para>
-        /// </remarks>
-        /// 
-        public bool ConfigureSnapshots
-        {
-            get { return configureSnapshots; }
-            set
-            {
-                configureSnapshots = value;
-                snapshotsLabel.Visible = value;
-                snapshotResolutionsCombo.Visible = value;
-            }
-        }
 
         /// <summary>
         /// Provides configured video device.
@@ -93,7 +59,6 @@ namespace CleanedProject
 
         private string videoDeviceMoniker = string.Empty;
         private Size captureSize = new Size( 0, 0 );
-        private Size snapshotSize = new Size( 0, 0 );
         private VideoInput videoInput = VideoInput.Default;
 
         /// <summary>
@@ -125,20 +90,6 @@ namespace CleanedProject
         }
 
         /// <summary>
-        /// Snapshot frame size of the selected device.
-        /// </summary>
-        /// 
-        /// <remarks><para>The property allows to get snapshot size of the selected device
-        /// on form completion or set the size to be selected by default on form loading
-        /// (if <see cref="ConfigureSnapshots"/> property is set <see langword="true"/>).</para>
-        /// </remarks>
-        public Size SnapshotSize
-        {
-            get { return snapshotSize; }
-            set { snapshotSize = value; }
-        }
-
-        /// <summary>
         /// Video input to use with video capture card.
         /// </summary>
         /// 
@@ -158,7 +109,6 @@ namespace CleanedProject
         public VideoCaptureDeviceForm( )
         {
             InitializeComponent( );
-            ConfigureSnapshots = false;
 
             // show device list
 			try
@@ -215,20 +165,6 @@ namespace CleanedProject
                 captureSize = caps.FrameSize;
             }
 
-            if ( configureSnapshots )
-            {
-                // set snapshots size
-                if ( snapshotCapabilitiesDictionary.Count != 0 )
-                {
-                    VideoCapabilities caps = snapshotCapabilitiesDictionary[(string) snapshotResolutionsCombo.SelectedItem];
-
-                    videoDevice.ProvideSnapshots = true;
-                    videoDevice.SnapshotResolution = caps;
-
-                    snapshotSize = caps.FrameSize;
-                }
-            }
-
             if ( availableVideoInputs.Length != 0 )
             {
                 videoInput = availableVideoInputs[videoInputsCombo.SelectedIndex];
@@ -256,7 +192,6 @@ namespace CleanedProject
             videoInputsCombo.Items.Clear( );
 
             videoCapabilitiesDictionary.Clear( );
-            snapshotCapabilitiesDictionary.Clear( );
 
             try
             {
@@ -291,38 +226,6 @@ namespace CleanedProject
                 }
 
                 videoResolutionsCombo.SelectedIndex = videoResolutionIndex;
-
-
-                if ( configureSnapshots )
-                {
-                    // collect snapshot capabilities
-                    VideoCapabilities[] snapshotCapabilities = videoDevice.SnapshotCapabilities;
-                    int snapshotResolutionIndex = 0;
-
-                    foreach ( VideoCapabilities capabilty in snapshotCapabilities )
-                    {
-                        string item = string.Format(
-                            "{0} x {1}", capabilty.FrameSize.Width, capabilty.FrameSize.Height );
-
-                        if ( !snapshotResolutionsCombo.Items.Contains( item ) )
-                        {
-                            if ( snapshotSize == capabilty.FrameSize )
-                            {
-                                snapshotResolutionIndex = snapshotResolutionsCombo.Items.Count;
-                            }
-
-                            snapshotResolutionsCombo.Items.Add( item );
-                            snapshotCapabilitiesDictionary.Add( item, capabilty );
-                        }
-                    }
-
-                    if ( snapshotCapabilities.Length == 0 )
-                    {
-                        snapshotResolutionsCombo.Items.Add( "Not supported" );
-                    }
-
-                    snapshotResolutionsCombo.SelectedIndex = snapshotResolutionIndex;
-                }
 
                 // get video inputs
                 availableVideoInputs = videoDevice.AvailableCrossbarVideoInputs;

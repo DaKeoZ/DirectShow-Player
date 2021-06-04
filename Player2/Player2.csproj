@@ -161,7 +161,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ScreenCaptureStream.cs" />
     <Compile Include="SystemTools.cs" />
   </ItemGroup>
   <ItemGroup>
