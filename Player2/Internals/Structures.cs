@@ -48,7 +48,7 @@ namespace fr.ipmfrance.webcam.com
     /// 
     [ComVisible( false ),
     StructLayout( LayoutKind.Sequential )]
-    internal class AMMediaType : IDisposable
+    public class AMMediaType : IDisposable
     {
         /// <summary>
         /// Globally unique identifier (GUID) that specifies the major type of the media sample.

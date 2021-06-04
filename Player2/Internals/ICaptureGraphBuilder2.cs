@@ -58,7 +58,7 @@ namespace fr.ipmfrance.webcam.com
             [In, MarshalAs( UnmanagedType.LPStruct )] Guid type,
             [In, MarshalAs( UnmanagedType.LPWStr )] string fileName,
             [Out] out IBaseFilter baseFilter,
-            [Out] out IntPtr fileSinkFilter
+            [Out] out IFileSinkFilter fileSinkFilter
             );
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace fr.ipmfrance.webcam.com
         /// 
         [PreserveSig]
         int FindInterface(
-            [In, MarshalAs( UnmanagedType.LPStruct )] Guid category,
-            [In, MarshalAs( UnmanagedType.LPStruct )] Guid type,
+            [In, MarshalAs( UnmanagedType.LPStruct )] DsGuid category,
+            [In, MarshalAs( UnmanagedType.LPStruct )] DsGuid type,
             [In] IBaseFilter baseFilter,
             [In, MarshalAs( UnmanagedType.LPStruct )] Guid interfaceID ,
             [Out, MarshalAs( UnmanagedType.IUnknown )] out object retInterface
@@ -96,8 +96,8 @@ namespace fr.ipmfrance.webcam.com
         /// 
         [PreserveSig]
         int RenderStream(
-            [In, MarshalAs( UnmanagedType.LPStruct )] Guid category,
-            [In, MarshalAs( UnmanagedType.LPStruct )] Guid mediaType,
+            [In, MarshalAs( UnmanagedType.LPStruct )] DsGuid category,
+            [In, MarshalAs( UnmanagedType.LPStruct )] DsGuid mediaType,
             [In, MarshalAs( UnmanagedType.IUnknown )] object source,
             [In] IBaseFilter compressor,
             [In] IBaseFilter renderer
@@ -122,10 +122,10 @@ namespace fr.ipmfrance.webcam.com
         [PreserveSig]
         int ControlStream(
             [In, MarshalAs( UnmanagedType.LPStruct )] Guid category,
-            [In, MarshalAs( UnmanagedType.LPStruct )] Guid mediaType,
+            [In, MarshalAs( UnmanagedType.LPStruct )] DsGuid mediaType,
             [In, MarshalAs( UnmanagedType.Interface )] IBaseFilter filter,
-            [In] long start,
-            [In] long stop,
+            [In] DsLong start,
+            [In] DsLong stop,
             [In] short startCookie,
             [In] short stopCookie
             );
@@ -161,7 +161,7 @@ namespace fr.ipmfrance.webcam.com
             [In, MarshalAs( UnmanagedType.LPWStr )] string oldFileName,
             [In, MarshalAs( UnmanagedType.LPWStr )] string newFileName,
             [In, MarshalAs( UnmanagedType.Bool )] bool allowEscAbort,
-            [In] IntPtr callback
+            [In] IAMCopyCaptureFileProgress callback
             );
 
         /// <summary>
@@ -182,8 +182,8 @@ namespace fr.ipmfrance.webcam.com
         int FindPin(
             [In, MarshalAs( UnmanagedType.IUnknown )] object source,
             [In] PinDirection pinDirection,
-            [In, MarshalAs( UnmanagedType.LPStruct )] Guid category,
-            [In, MarshalAs( UnmanagedType.LPStruct )] Guid mediaType,
+            [In, MarshalAs( UnmanagedType.LPStruct )] DsGuid category,
+            [In, MarshalAs( UnmanagedType.LPStruct )] DsGuid mediaType,
             [In, MarshalAs( UnmanagedType.Bool )] bool unconnected,
             [In] int index,
             [Out, MarshalAs( UnmanagedType.Interface )] out IPin pin

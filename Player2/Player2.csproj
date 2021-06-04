@@ -77,7 +77,10 @@
     <Compile Include="FileVideoSource.cs" />
     <Compile Include="FilterInfo.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="Internals\DsGuid.cs" />
+    <Compile Include="Internals\DsLong.cs" />
     <Compile Include="Internals\IAMCameraControl.cs" />
+    <Compile Include="Internals\IAMCopyCaptureFileProgress.cs" />
     <Compile Include="Internals\IAMCrossbar.cs" />
     <Compile Include="Internals\IAMVideoControl.cs" />
     <Compile Include="Internals\IBaseFilter.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="Internals\IEnumFilters.cs" />
     <Compile Include="Internals\IEnumPins.cs" />
     <Compile Include="Internals\IErrorLog.cs" />
+    <Compile Include="Internals\IFileSinkFilter.cs" />
     <Compile Include="Internals\IFilterGraph.cs" />
     <Compile Include="Internals\IFilterGraph2.cs" />
     <Compile Include="Internals\IGraphBuilder.cs" />
