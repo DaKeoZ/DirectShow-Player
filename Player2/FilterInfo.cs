@@ -1,10 +1,3 @@
-// AForge Direct Show Library
-// AForge.NET framework
-//
-// Copyright © Andrew Kirillov, 2008
-// andrew.kirillov@gmail.com
-//
-
 namespace CleanedProject
 {
     using CleanedProject.Internals;

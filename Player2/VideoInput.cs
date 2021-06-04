@@ -28,9 +28,9 @@ namespace CleanedProject
         /// <summary>
         /// Type of the video input.
         /// </summary>
-        public readonly CleanedProject.PhysicalConnectorType Type;
+        public readonly PhysicalConnectorType Type;
 
-        internal VideoInput( int index, CleanedProject.PhysicalConnectorType type )
+        internal VideoInput( int index, PhysicalConnectorType type )
         {
             Index = index;
             Type = type;
@@ -39,9 +39,9 @@ namespace CleanedProject
         /// <summary>
         /// Default video input. Used to specify that it should not be changed.
         /// </summary>
-        public static CleanedProject.VideoInput Default
+        public static VideoInput Default
         {
-            get { return new CleanedProject.VideoInput( -1, CleanedProject.PhysicalConnectorType.Default ); }
+            get { return new VideoInput( -1, PhysicalConnectorType.Default ); }
         }
     }
 }
