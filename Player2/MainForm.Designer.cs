@@ -87,13 +87,6 @@
             this.openVideofileusingDirectShowToolStripMenuItem.Text = "Open video &file (using DirectShow)";
             this.openVideofileusingDirectShowToolStripMenuItem.Click += new System.EventHandler( this.openVideofileusingDirectShowToolStripMenuItem_Click );
             // 
-            // openJPEGURLToolStripMenuItem
-            // 
-            this.openJPEGURLToolStripMenuItem.Name = "openJPEGURLToolStripMenuItem";
-            this.openJPEGURLToolStripMenuItem.Size = new System.Drawing.Size( 250, 22 );
-            this.openJPEGURLToolStripMenuItem.Text = "Open JPEG &URL";
-            this.openJPEGURLToolStripMenuItem.Click += new System.EventHandler( this.openJPEGURLToolStripMenuItem_Click );
-            // 
             // openMJPEGURLToolStripMenuItem
             // 
             this.openMJPEGURLToolStripMenuItem.Name = "openMJPEGURLToolStripMenuItem";

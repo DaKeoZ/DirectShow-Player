@@ -45,7 +45,7 @@ namespace CleanedProject.Internals
         /// 
         /// <returns>Returns <b>S_OK</b> on success.</returns>
         /// 
-        [DllImport( "ole32.dll", CharSet = CharSet.Unicode )]
+        [DllImport( "ole32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern
         int MkParseDisplayName( IBindCtx pbc, string szUserName,
             ref int pchEaten, out IMoniker ppmk );

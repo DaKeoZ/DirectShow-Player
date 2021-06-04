@@ -67,27 +67,6 @@ namespace CleanedProject
             }
         }
 
-        // Open JPEG URL
-        private void openJPEGURLToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            URLForm form = new URLForm( );
-
-            form.Description = "Enter URL of an updating JPEG from a web camera:";
-            form.URLs = new string[]
-				{
-					"http://195.243.185.195/axis-cgi/jpg/image.cgi?camera=1",
-				};
-
-            if ( form.ShowDialog( this ) == DialogResult.OK )
-            {
-                // create video source
-                JPEGStream jpegSource = new JPEGStream( form.URL );
-
-                // open it
-                OpenVideoSource( jpegSource );
-            }
-        }
-
         // Open MJPEG URL
         private void openMJPEGURLToolStripMenuItem_Click( object sender, EventArgs e )
         {

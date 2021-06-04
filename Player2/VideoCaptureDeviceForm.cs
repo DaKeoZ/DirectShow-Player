@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -210,6 +211,7 @@ namespace CleanedProject
                 VideoCapabilities caps = videoCapabilitiesDictionary[(string) videoResolutionsCombo.SelectedItem];
 
                 videoDevice.VideoResolution = caps;
+                Debug.WriteLine(caps.ToString());
                 captureSize = caps.FrameSize;
             }
 

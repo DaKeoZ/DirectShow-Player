@@ -69,7 +69,7 @@ namespace CleanedProject
         private int framesProcessed;
 
         // moniker string of video capture device
-        private string deviceMoniker;
+        private string deviceMoniker = @"@device:pnp:\\?\usb#vid_0408&pid_a060&mi_00#6&391c16c1&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global";
         // received frames count
         private int framesReceived;
         // recieved byte count

@@ -111,6 +111,9 @@ namespace CleanedProject
                     Debug.WriteLine(moniker);
 
                     Marshal.ReleaseComObject(moniker);
+                } else
+                {
+                    Marshal.GetLastWin32Error();
                 }
                 Debug.WriteLine(bindCtx + " -- ");
                 Marshal.ReleaseComObject(bindCtx);
