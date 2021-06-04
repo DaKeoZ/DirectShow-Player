@@ -12,7 +12,6 @@ namespace fr.ipmfrance.webcam
     using System.IO;
     using System.Drawing;
     using System.Drawing.Imaging;
-    using AForge;
 
     /// <summary>
     /// Core image relatad methods.

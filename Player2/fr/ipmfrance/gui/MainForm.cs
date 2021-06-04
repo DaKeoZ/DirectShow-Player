@@ -23,108 +23,127 @@ namespace fr.ipmfrance.gui
         private Stopwatch stopWatch = null;
         private List<webcam.FilterInfo> devices;
         private webcam.FilterInfo theDevice;
-        
-        public MainForm( )
+
+        public MainForm()
         {
-            InitializeComponent( );
+            InitializeComponent();
 
             devices = CollectFilters(FilterCategory.VideoInputDevice);
 
-            devices.ForEach(delegate(webcam.FilterInfo filter)
+            devices.ForEach(delegate (webcam.FilterInfo filter)
             {
                 if (filter.MonikerString.Contains("pnp")) theDevice = filter;
             });
         }
 
-        private void MainForm_FormClosing( object sender, FormClosingEventArgs e )
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CloseCurrentVideoSource( );
+            CloseCurrentVideoSource();
         }
-        
-        private void exitToolStripMenuItem_Click( object sender, EventArgs e )
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close( );
+            this.Close();
         }
-        
-        private void localVideoCaptureDeviceToolStripMenuItem_Click( object sender, EventArgs e )
+
+        private void localVideoCaptureDeviceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             VideoCaptureDevice videoSource = new VideoCaptureDevice(theDevice.MonikerString);
-            
-            OpenVideoSource( videoSource );
+
+            OpenVideoSource(videoSource);
         }
-        
-        private void OpenVideoSource( IVideoSource source )
+
+        private void OpenVideoSource(IVideoSource source)
         {
             this.Cursor = Cursors.WaitCursor;
-            
-            CloseCurrentVideoSource( );
-            
-            videoSourcePlayer.VideoSource = new AsyncVideoSource( source );
-            videoSourcePlayer.Start( );
-            
+
+            CloseCurrentVideoSource();
+
+            videoSourcePlayer.VideoSource = new AsyncVideoSource(source);
+            videoSourcePlayer.Start();
+
             stopWatch = null;
-            
-            timer.Start( );
+
+            timer.Start();
 
             this.Cursor = Cursors.Default;
         }
-        
-        private void CloseCurrentVideoSource( )
+
+        private void CloseCurrentVideoSource()
         {
-            if ( videoSourcePlayer.VideoSource != null )
+            if (videoSourcePlayer.VideoSource != null)
             {
-                videoSourcePlayer.SignalToStop( );
-                
-                for ( int i = 0; i < 30; i++ )
+                videoSourcePlayer.SignalToStop();
+
+                for (int i = 0; i < 30; i++)
                 {
-                    if ( !videoSourcePlayer.IsRunning )
+                    if (!videoSourcePlayer.IsRunning)
                         break;
-                    System.Threading.Thread.Sleep( 100 );
+                    System.Threading.Thread.Sleep(100);
                 }
 
-                if ( videoSourcePlayer.IsRunning )
+                if (videoSourcePlayer.IsRunning)
                 {
-                    videoSourcePlayer.Stop( );
+                    videoSourcePlayer.Stop();
                 }
 
                 videoSourcePlayer.VideoSource = null;
             }
         }
-        
-        private void videoSourcePlayer_NewFrame( object sender, ref Bitmap image )
-        {
-            DateTime now = DateTime.Now;
-            Graphics g = Graphics.FromImage( image );
-            
-            SolidBrush brush = new SolidBrush( Color.Red );
-            g.DrawString( now.ToString( ), this.Font, brush, new PointF( 5, 5 ) );
-            brush.Dispose( );
 
-            g.Dispose( );
+        //private void videoSourcePlayer_NewFrame(object sender, ref Bitmap image)
+        //{
+        //    DateTime now = DateTime.Now;
+        //    Graphics g = Graphics.FromImage(image);
+
+        //    SolidBrush brush = new SolidBrush(Color.Red);
+        //    g.DrawString(now.ToString(), this.Font, brush, new PointF(500, 105));
+        //    brush.Dispose();
+
+        //    g.Dispose();
+        //}
+
+        private void videoSourcePlayer_NewFrame(object sender, ref Bitmap image)
+        {
+
+            // Création d'un objet graphics à partir de l'image d'un frame de la vidéo
+            Graphics g = Graphics.FromImage(image);
+
+            DrawOverlay(g);
+            g.Dispose();
         }
-        
-        private void timer_Tick( object sender, EventArgs e )
+
+        private void DrawOverlay(Graphics g)
+        {
+            SolidBrush brush = new SolidBrush(Color.Red);
+            DateTime now = DateTime.Now;
+            g.DrawString(now.ToString(), this.Font, brush, new PointF(505, 105));
+            g.DrawString("Hello World", this.Font, brush, new PointF(505, 125));
+            brush.Dispose();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
         {
             IVideoSource videoSource = videoSourcePlayer.VideoSource;
 
-            if ( videoSource != null )
+            if (videoSource != null)
             {
                 int framesReceived = videoSource.FramesReceived;
 
-                if ( stopWatch == null )
+                if (stopWatch == null)
                 {
-                    stopWatch = new Stopwatch( );
-                    stopWatch.Start( );
+                    stopWatch = new Stopwatch();
+                    stopWatch.Start();
                 }
                 else
                 {
-                    stopWatch.Stop( );
+                    stopWatch.Stop();
 
                     float fps = 1000.0f * framesReceived / stopWatch.ElapsedMilliseconds;
-                    fpsLabel.Text = fps.ToString( "F2" ) + " fps";
+                    fpsLabel.Text = fps.ToString("F2") + " fps";
 
-                    stopWatch.Reset( );
-                    stopWatch.Start( );
+                    stopWatch.Reset();
+                    stopWatch.Start();
                 }
             }
         }
@@ -146,10 +165,10 @@ namespace fr.ipmfrance.gui
                     Debug.WriteLine("Failed creating device enumerator");
                     throw new ApplicationException("Failed creating device enumerator");
                 }
-                
+
                 comObj = Activator.CreateInstance(srvType);
                 enumDev = (ICreateDevEnum)comObj;
-                
+
                 hr = enumDev.CreateClassEnumerator(ref category, out enumMon, 0);
                 if (hr != 0)
                 {
@@ -157,7 +176,7 @@ namespace fr.ipmfrance.gui
                     Debug.WriteLine("No devices of the category");
                     throw new ApplicationException("No devices of the category");
                 }
-                
+
                 IntPtr n = IntPtr.Zero;
                 while (true)
                 {
@@ -167,11 +186,11 @@ namespace fr.ipmfrance.gui
 
                     webcam.FilterInfo filter = new webcam.FilterInfo(devMon[0]);
                     result.Add(filter);
-                    
+
                     Marshal.ReleaseComObject(devMon[0]);
                     devMon[0] = null;
                 }
-                
+
                 result.Sort();
             }
             catch

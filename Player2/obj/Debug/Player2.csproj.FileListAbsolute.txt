@@ -27,3 +27,13 @@ D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.pdb
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\Player2.csprojAssemblyReference.cache
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\fr.ipmfrance.gui.MainForm.resources
 D:\Development\IPM_Stage\aforge\Samples\Video\Player2\obj\Debug\fr.ipmfrance.gui.VideoSourcePlayer.resources
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\bin\Debug\Player2.exe
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\bin\Debug\Player2.pdb
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\Player2.csprojAssemblyReference.cache
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\fr.ipmfrance.gui.MainForm.resources
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\Player2.Properties.Resources.resources
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\fr.ipmfrance.gui.VideoSourcePlayer.resources
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\Player2.csproj.GenerateResource.cache
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\Player2.csproj.CoreCompileInputs.cache
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\Player2.exe
+C:\ipmfrance\stagiaire\DirectShow-Player\Player2\obj\Debug\Player2.pdb
