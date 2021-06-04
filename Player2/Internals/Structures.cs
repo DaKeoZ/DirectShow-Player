@@ -32,6 +32,14 @@ namespace fr.ipmfrance.webcam.com
         Output
     }
 
+    [Flags]
+    [ComVisible(false)]
+    public enum AMRenderExFlags
+    {
+        None = 0,
+        RenderToExistingRenderers = 1
+    }
+
     // AM_MEDIA_TYPE
 
     /// <summary>

@@ -233,7 +233,7 @@ namespace fr.ipmfrance.webcam.com
         [PreserveSig]
         int ReconnectEx(
             [In] IPin pin,
-            [In, MarshalAs( UnmanagedType.LPStruct )] AMMediaType mediaType
+            [In] AMMediaType mediaType
             );
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace fr.ipmfrance.webcam.com
         [PreserveSig]
         int RenderEx(
             [In] IPin outputPin,
-            [In] int flags,
+            [In] AMRenderExFlags dwFlags,
             [In] IntPtr context
             );
 
