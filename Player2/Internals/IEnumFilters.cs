@@ -33,7 +33,7 @@ namespace fr.ipmfrance.webcam.com
         [PreserveSig]
         int Next( [In] int cFilters,
             [Out, MarshalAs( UnmanagedType.LPArray, SizeParamIndex = 0 )] IBaseFilter[] filters,
-            [Out] out int filtersFetched );
+            [In] IntPtr pcFetched);
 
         /// <summary>
         /// Skips a specified number of filters in the enumeration sequence.
