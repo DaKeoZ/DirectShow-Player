@@ -1,0 +1,13 @@
+F:\Development\IPM_Stage\cam\IPMFranceCam\bin\Release\install.bat
+F:\Development\IPM_Stage\cam\IPMFranceCam\bin\Release\uninstall.bat
+F:\Development\IPM_Stage\cam\IPMFranceCam\bin\Release\IPMFranceCam.dll.config
+F:\Development\IPM_Stage\cam\IPMFranceCam\bin\Release\IPMFranceCam.dll
+F:\Development\IPM_Stage\cam\IPMFranceCam\bin\Release\IPMFranceCam.pdb
+F:\Development\IPM_Stage\cam\IPMFranceCam\obj\Release\IPMFranceCam.csprojAssemblyReference.cache
+F:\Development\IPM_Stage\cam\IPMFranceCam\obj\Release\ExampleFilters.AboutForm.resources
+F:\Development\IPM_Stage\cam\IPMFranceCam\obj\Release\VirtualCam.Properties.Resources.resources
+F:\Development\IPM_Stage\cam\IPMFranceCam\obj\Release\IPMFranceCam.csproj.GenerateResource.cache
+F:\Development\IPM_Stage\cam\IPMFranceCam\obj\Release\IPMFranceCam.csproj.CoreCompileInputs.cache
+F:\Development\IPM_Stage\cam\IPMFranceCam\obj\Release\IPMFranceCam.dll
+F:\Development\IPM_Stage\cam\IPMFranceCam\obj\Release\IPMFranceCam.pdb
+F:\Development\IPM_Stage\cam\IPMFranceCam\bin\Release\IPMFranceCam.tlb
