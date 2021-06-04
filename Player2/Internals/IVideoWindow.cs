@@ -94,7 +94,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int put_AutoShow( [In, MarshalAs( UnmanagedType.Bool )] bool autoShow );
+        int put_AutoShow( int autoShow );
 
         /// <summary>
         /// Queries whether the video renderer automatically shows the video window when it receives video data.
@@ -105,7 +105,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int get_AutoShow( [Out, MarshalAs( UnmanagedType.Bool )] out bool autoShow );
+        int get_AutoShow( out int autoShow );
 
         /// <summary>
         /// Shows, hides, minimizes, or maximizes the video window.
@@ -138,7 +138,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int put_BackgroundPalette( [In, MarshalAs( UnmanagedType.Bool )] bool backgroundPalette );
+        int put_BackgroundPalette( int backgroundPalette );
 
         /// <summary>
         /// Queries whether the video window realizes its palette in the background.
@@ -149,7 +149,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int get_BackgroundPalette( [Out, MarshalAs( UnmanagedType.Bool )] out bool backgroundPalette );
+        int get_BackgroundPalette( out int backgroundPalette );
 
         /// <summary>
         /// Shows or hides the video window.
@@ -160,7 +160,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int put_Visible( [In, MarshalAs( UnmanagedType.Bool )] bool visible );
+        int put_Visible( int visible );
 
         /// <summary>
         /// Queries whether the video window is visible.
@@ -171,7 +171,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int get_Visible( [Out, MarshalAs( UnmanagedType.Bool )] out bool visible );
+        int get_Visible( out int visible );
 
         /// <summary>
         /// Sets the video window's x-coordinate.
@@ -337,7 +337,7 @@ namespace fr.ipmfrance.webcam.com
         /// 
         [PreserveSig]
         int get_FullScreenMode(
-            [Out, MarshalAs( UnmanagedType.Bool )] out bool fullScreenMode );
+            out int fullScreenMode );
 
         /// <summary>
         /// Enables or disables full-screen mode.
@@ -348,7 +348,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int put_FullScreenMode( [In, MarshalAs( UnmanagedType.Bool )] bool fullScreenMode );
+        int put_FullScreenMode( int fullScreenMode );
 
         /// <summary>
         /// Places the video window at the top of the Z order.
@@ -450,7 +450,7 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int HideCursor( [In, MarshalAs( UnmanagedType.Bool )] bool hideCursor );
+        int HideCursor( int hideCursor );
 
         /// <summary>
         /// Queries whether the cursor is hidden.
@@ -461,6 +461,6 @@ namespace fr.ipmfrance.webcam.com
         /// <returns>Return's <b>HRESULT</b> error code.</returns>
         /// 
         [PreserveSig]
-        int IsCursorHidden( [Out, MarshalAs( UnmanagedType.Bool )] out bool hideCursor );
+        int IsCursorHidden( out int hideCursor );
     }
 }

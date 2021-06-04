@@ -401,30 +401,17 @@ namespace fr.ipmfrance.webcam.com
     StructLayout( LayoutKind.Sequential )]
     internal struct CAUUID
     {
-        /// <summary>
-        /// Size of the array pointed to by <b>pElems</b>.
-        /// </summary>
         public int cElems;
-
-        /// <summary>
-        /// Pointer to an array of UUID values, each of which specifies UUID.
-        /// </summary>
         public IntPtr pElems;
 
-        /// <summary>
-        /// Performs manual marshaling of <b>pElems</b> to retrieve an array of Guid objects.
-        /// </summary>
-        /// 
-        /// <returns>A managed representation of <b>pElems</b>.</returns>
-        /// 
-        public Guid[] ToGuidArray( )
+        public Guid[] ToGuidArray()
         {
-            Guid[] retval = new Guid[cElems];
+            Guid[] retval = new Guid[this.cElems];
 
-            for ( int i = 0; i < cElems; i++ )
+            for (int i = 0; i < this.cElems; i++)
             {
-                IntPtr ptr = new IntPtr( pElems.ToInt64( ) + i * Marshal.SizeOf( typeof( Guid ) ) );
-                retval[i] = (Guid) Marshal.PtrToStructure( ptr, typeof( Guid ) );
+                IntPtr ptr = new IntPtr(this.pElems.ToInt64() + (Marshal.SizeOf(typeof(Guid)) * i));
+                retval[i] = (Guid)Marshal.PtrToStructure(ptr, typeof(Guid));
             }
 
             return retval;

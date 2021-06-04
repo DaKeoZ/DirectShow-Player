@@ -436,7 +436,7 @@ namespace fr.ipmfrance.webcam
 
                     // configure video window
                     IVideoWindow window = (IVideoWindow) graphObject;
-                    window.put_AutoShow( false );
+                    window.put_AutoShow( 0 );
                     window = null;
                 }
 
