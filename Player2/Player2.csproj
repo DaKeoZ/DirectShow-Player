@@ -77,7 +77,6 @@
     <Compile Include="CameraControlProperty.cs" />
     <Compile Include="FileVideoSource.cs" />
     <Compile Include="FilterInfo.cs" />
-    <Compile Include="FilterInfoCollection.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Internals\IAMCameraControl.cs" />
     <Compile Include="Internals\IAMCrossbar.cs" />

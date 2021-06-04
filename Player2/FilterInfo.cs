@@ -90,33 +90,23 @@ namespace CleanedProject
             IBindCtx bindCtx = null;
             IMoniker moniker = null;
 
-            Debug.WriteLine(filterMoniker);
-
             int n = 0;
 
             // create bind context
             if ( Win32.CreateBindCtx( 0, out bindCtx ) == 0 )
             {
-                Debug.WriteLine("CreateBindCtx = True");
                 // convert moniker`s string to a moniker
                 if ( Win32.MkParseDisplayName( bindCtx, filterMoniker, ref n, out moniker ) == 0 )
                 {
-                    Debug.WriteLine("MkParseDisplayName = True");
                     // get device base filter
                     Guid filterId = typeof( IBaseFilter ).GUID;
-                    Debug.WriteLine(filterId);
                     moniker.BindToObject( null, null, ref filterId, out filterObject );
-                    Debug.WriteLine(filterId);
-                    Debug.WriteLine(filterObject);
-                    Debug.WriteLine(moniker);
 
                     Marshal.ReleaseComObject( moniker );
                 }
-                Debug.WriteLine(bindCtx);
                 Marshal.ReleaseComObject( bindCtx );
             }
-
-            Debug.WriteLine(filterObject);
+            
             return filterObject;
         }
 

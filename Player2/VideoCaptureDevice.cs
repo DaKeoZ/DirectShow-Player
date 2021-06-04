@@ -14,12 +14,8 @@ namespace CleanedProject
     using System.Drawing.Imaging;
     using System.Threading;
     using System.Runtime.InteropServices;
-
-    using AForge.Video;
-    using AForge.Video.DirectShow.Internals;
-    using System.IO;
-    using System.Diagnostics;
     using CleanedProject.Internals;
+    using System.Diagnostics;
 
     /// <summary>
     /// Video source for local video capture device (for example USB webcam).
@@ -71,6 +67,7 @@ namespace CleanedProject
         private ManualResetEvent stopEvent = null;
 
         private VideoCapabilities[] videoCapabilities;
+        
 
         private bool needToSetVideoInput = false;
         private bool needToSimulateTrigger = false;
@@ -387,6 +384,7 @@ namespace CleanedProject
                         if ( ( !string.IsNullOrEmpty( deviceMoniker ) ) && ( cacheVideoCapabilities.ContainsKey( deviceMoniker ) ) )
                         {
                             videoCapabilities = cacheVideoCapabilities[deviceMoniker];
+                            
                         }
                     }
 
