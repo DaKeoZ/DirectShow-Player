@@ -73,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncVideoSource.cs" />
-    <Compile Include="ByteArrayUtils.cs" />
     <Compile Include="CameraControlProperty.cs" />
     <Compile Include="FileVideoSource.cs" />
     <Compile Include="FilterInfo.cs" />
