@@ -1,5 +1,9 @@
-﻿using fr.ipmfrance.webcam.tools;
+﻿using fr.ipmfrance.webcam.com;
+using fr.ipmfrance.webcam.tools;
+using fr.ipmfrance.webcam.win32;
+using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace fr.ipmfrance.webcam
@@ -7,7 +11,7 @@ namespace fr.ipmfrance.webcam
 
     public class AsyncVideoSource
     {
-        private readonly VideoCaptureDevice nestedVideoSource = null;
+      //  private readonly VideoCaptureDevice nestedVideoSource = null;
         private Bitmap lastVideoFrame = null;
         private Thread imageProcessingThread = null;
         private AutoResetEvent isNewFrameAvailable = null;
@@ -16,28 +20,12 @@ namespace fr.ipmfrance.webcam
 
         public event NewFrameEventHandler NewFrame;
 
-        public event VideoSourceErrorEventHandler VideoSourceError
-        {
-            add { nestedVideoSource.VideoSourceErrorCapture += value; }
-            remove { nestedVideoSource.VideoSourceErrorCapture -= value; }
-        }
-
-        public event PlayingFinishedEventHandler PlayingFinished
-        {
-            add { nestedVideoSource.PlayingFinishedCapture += value; }
-            remove { nestedVideoSource.PlayingFinishedCapture -= value; }
-        }
-
-        public int FramesReceived
-        {
-            get { return nestedVideoSource.FramesReceivedCapture; }
-        }
 
         public bool IsRunning
         {
             get
             {
-                bool isRunning = nestedVideoSource.IsRunningCapture;
+                bool isRunning = IsRunningCapture;
 
                 if (!isRunning)
                 {
@@ -50,8 +38,8 @@ namespace fr.ipmfrance.webcam
 
         public AsyncVideoSource(FilterInfo filterInfo)
         {
-            nestedVideoSource = new VideoCaptureDevice();
-            nestedVideoSource.SetDeviceMoniker(filterInfo.MonikerString);
+//            nestedVideoSource = new VideoCaptureDevice();
+            SetDeviceMoniker(filterInfo.MonikerString);
         }
 
         public void Start()
@@ -65,26 +53,26 @@ namespace fr.ipmfrance.webcam
                 imageProcessingThread = new Thread(new ThreadStart(imageProcessingThread_Worker));
                 imageProcessingThread.Start();
 
-                nestedVideoSource.NewFrameCapture += new NewFrameEventHandler(nestedVideoSource_NewFrame);
-                nestedVideoSource.StartCapture();
+                NewFrameCapture += new NewFrameEventHandler(nestedVideoSource_NewFrame);
+                StartCapture();
             }
         }
 
         public void SignalToStop()
         {
-            nestedVideoSource.SignalToStopCapture();
+            SignalToStopCapture();
             Free();
         }
 
         public void WaitForStop()
         {
-            nestedVideoSource.WaitForStopCapture();
+            WaitForStopCapture();
             Free();
         }
 
         public void Stop()
         {
-            nestedVideoSource.StopCapture();
+            StopCapture();
             Free();
         }
 
@@ -92,7 +80,7 @@ namespace fr.ipmfrance.webcam
         {
             if (imageProcessingThread != null)
             {
-                nestedVideoSource.NewFrameCapture -= new NewFrameEventHandler(nestedVideoSource_NewFrame);
+                NewFrameCapture -= new NewFrameEventHandler(nestedVideoSource_NewFrame);
 
                 isProcessingThreadAvailable.WaitOne();
                 lastVideoFrame = null;
@@ -151,5 +139,312 @@ namespace fr.ipmfrance.webcam
                 isProcessingThreadAvailable.Set();
             }
         }
+
+        private string deviceMonikerCapture;
+        private int framesReceivedCapture;
+        private Thread threadCapture = null;
+        private ManualResetEvent stopEventCapture = null;
+        private object sourceObjectCapture = null;
+        private object syncCapture = new object();
+
+
+
+        public void SetDeviceMoniker(string deviceMoniker)
+        {
+            deviceMonikerCapture = deviceMoniker;
+        }
+
+        public int FramesReceived
+        {
+            get
+            {
+                int frames = framesReceivedCapture;
+                framesReceivedCapture = 0;
+                return frames;
+            }
+        }
+
+        public bool IsRunningCapture
+        {
+            get
+            {
+                if (threadCapture != null)
+                {
+                    if (threadCapture.Join(0) == false)
+                    {
+                        return true;
+                    }
+                    FreeCapture();
+                }
+                return false;
+            }
+        }
+
+
+        public void StartCapture()
+        {
+            if (!IsRunningCapture)
+            {
+                if (string.IsNullOrEmpty(deviceMonikerCapture))
+                {
+                    throw new ArgumentException("Video source is not specified.");
+                }
+
+                framesReceivedCapture = 0;
+                //            bytesReceived = 0;
+
+                stopEventCapture = new ManualResetEvent(false);
+
+                lock (syncCapture)
+                {
+                    threadCapture = new Thread(new ThreadStart(WorkerThread));
+                    threadCapture.Name = deviceMonikerCapture;
+                    threadCapture.Start();
+                }
+            }
+        }
+
+        public void SignalToStopCapture()
+        {
+            if (threadCapture != null)
+            {
+                stopEventCapture.Set();
+            }
+        }
+
+        public void WaitForStopCapture()
+        {
+            if (threadCapture != null)
+            {
+                threadCapture.Join();
+                FreeCapture();
+            }
+        }
+
+        public void StopCapture()
+        {
+            if (this.IsRunningCapture)
+            {
+                threadCapture.Abort();
+                WaitForStopCapture();
+            }
+        }
+
+        private void FreeCapture()
+        {
+            threadCapture = null;
+            stopEventCapture.Close();
+            stopEventCapture = null;
+        }
+
+        public event VideoSourceErrorEventHandler VideoSourceError;
+
+        public event PlayingFinishedEventHandler PlayingFinished;
+
+        //public event VideoSourceErrorEventHandler VideoSourceError
+        //{
+        //    add { nestedVideoSource.VideoSourceErrorCapture += value; }
+        //    remove { nestedVideoSource.VideoSourceErrorCapture -= value; }
+        //}
+
+        //public event PlayingFinishedEventHandler PlayingFinished
+        //{
+        //    add { nestedVideoSource.PlayingFinishedCapture += value; }
+        //    remove { nestedVideoSource.PlayingFinishedCapture -= value; }
+        //}
+
+        //public int FramesReceived
+        //{
+        //    get { return nestedVideoSource.FramesReceivedCapture; }
+        //}
+
+
+        private void WorkerThread()
+        {
+            ReasonToFinishPlaying reasonToStop = ReasonToFinishPlaying.StoppedByUser;
+
+            Grabber videoGrabber = new Grabber(this);
+
+            object captureGraphObject = null;
+            object graphObject = null;
+            object videoGrabberObject = null;
+            object crossbarObject = null;
+
+            ICaptureGraphBuilder2 captureGraph = null;
+            IFilterGraph2 graph = null;
+            IBaseFilter sourceBase = null;
+            IBaseFilter videoGrabberBase = null;
+            ISampleGrabber videoSampleGrabber = null;
+            IMediaControl mediaControl = null;
+            IAMVideoControl videoControl = null;
+            IMediaEventEx mediaEvent = null;
+            IPin pinStillImage = null;
+            try
+            {
+                captureGraphObject = ComFactory.Create(Clsid.CaptureGraphBuilder2);
+                captureGraph = (ICaptureGraphBuilder2)captureGraphObject;
+
+                graphObject = ComFactory.Create(Clsid.FilterGraph);
+                graph = (IFilterGraph2)graphObject;
+
+                captureGraph.SetFiltergraph((IGraphBuilder)graph);
+
+                sourceObjectCapture = FilterInfo.CreateFilter(deviceMonikerCapture);
+                if (sourceObjectCapture == null)
+                {
+                    throw new ApplicationException("Failed creating device object for moniker");
+                }
+
+                sourceBase = (IBaseFilter)sourceObjectCapture;
+
+                try
+                {
+                    videoControl = (IAMVideoControl)sourceObjectCapture;
+                }
+                catch
+                {
+                }
+
+                videoGrabberObject = ComFactory.Create(Clsid.SampleGrabber);
+
+                videoSampleGrabber = (ISampleGrabber)videoGrabberObject;
+                videoGrabberBase = (IBaseFilter)videoGrabberObject;
+
+                graph.AddFilter(sourceBase, "source");
+                graph.AddFilter(videoGrabberBase, "grabber_video");
+
+                AMMediaType mediaType = SetVideoRGB24(videoSampleGrabber);
+
+                if (videoControl != null)
+                {
+                    captureGraph.FindPin(sourceObjectCapture, PinDirection.Output,
+                        PinCategory.StillImage, MediaType.Video, false, 0, out pinStillImage);
+                    if (pinStillImage != null)
+                    {
+                        VideoControlFlags caps;
+                        videoControl.GetCaps(pinStillImage, out caps);
+                    }
+                }
+
+                videoSampleGrabber.SetBufferSamples(false);
+                videoSampleGrabber.SetOneShot(false);
+                videoSampleGrabber.SetCallback(videoGrabber, 1);
+
+                captureGraph.RenderStream(PinCategory.Capture, MediaType.Video, sourceBase, null, videoGrabberBase);
+
+                if (videoSampleGrabber.GetConnectedMediaType(mediaType) == 0)
+                {
+                    VideoInfoHeader vih = (VideoInfoHeader)Marshal.PtrToStructure(mediaType.FormatPtr, typeof(VideoInfoHeader));
+                    videoGrabber.Width = vih.BmiHeader.Width;
+                    videoGrabber.Height = vih.BmiHeader.Height;
+                    mediaType.Dispose();
+                }
+
+                mediaControl = (IMediaControl)graphObject;
+                mediaEvent = (IMediaEventEx)graphObject;
+                int p1, p2;
+                DsEvCode code;
+                mediaControl.Run();
+
+                do
+                {
+                    if (mediaEvent != null)
+                    {
+                        if (mediaEvent.GetEvent(out code, out p1, out p2, 0) >= 0)
+                        {
+                            mediaEvent.FreeEventParams(code, p1, p2);
+
+                            if (code == DsEvCode.DeviceLost)
+                            {
+                                reasonToStop = ReasonToFinishPlaying.DeviceLost;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                while (!stopEventCapture.WaitOne(100, false));
+
+                mediaControl.Stop();
+
+            }
+            catch (Exception exception)
+            {
+                if (VideoSourceError != null)
+                {
+                    VideoSourceError(this, new VideoSourceErrorEventArgs(exception.Message));
+                }
+            }
+            finally
+            {
+                captureGraph = null;
+                graph = null;
+                sourceBase = null;
+                mediaControl = null;
+                videoControl = null;
+                mediaEvent = null;
+                pinStillImage = null;
+                videoGrabberBase = null;
+                videoSampleGrabber = null;
+
+                if (graphObject != null)
+                {
+                    Marshal.ReleaseComObject(graphObject);
+                    graphObject = null;
+                }
+                if (sourceObjectCapture != null)
+                {
+                    Marshal.ReleaseComObject(sourceObjectCapture);
+                    sourceObjectCapture = null;
+                }
+                if (videoGrabberObject != null)
+                {
+                    Marshal.ReleaseComObject(videoGrabberObject);
+                    videoGrabberObject = null;
+                }
+                if (captureGraphObject != null)
+                {
+                    Marshal.ReleaseComObject(captureGraphObject);
+                    captureGraphObject = null;
+                }
+                if (crossbarObject != null)
+                {
+                    Marshal.ReleaseComObject(crossbarObject);
+                    crossbarObject = null;
+                }
+            }
+
+            if (PlayingFinished != null)
+            {
+                PlayingFinished(this, reasonToStop);
+            }
+        }
+
+        private static AMMediaType SetVideoRGB24(ISampleGrabber videoSampleGrabber)
+        {
+            AMMediaType mediaType = new AMMediaType();
+            mediaType.MajorType = MediaType.Video;
+            mediaType.SubType = MediaSubType.RGB24;
+            videoSampleGrabber.SetMediaType(mediaType);
+            return mediaType;
+        }
+
+        public event NewFrameEventHandler NewFrameCapture;
+
+        public bool isNewFrameExists()
+        {
+            return (NewFrameCapture != null);
+        }
+
+        public void OnNewFrameCapture(Bitmap image)
+        {
+            framesReceivedCapture++;
+
+            if ((!stopEventCapture.WaitOne(0, false)) && (NewFrameCapture != null))
+            {
+                NewFrameCapture(this, new NewFrameEventArgs(image));
+            }
+        }
+
     }
 }
