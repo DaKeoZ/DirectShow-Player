@@ -9,6 +9,12 @@ namespace fr.ipmfrance.webcam
 {
     public class VideoCaptureDevice
     {
+        public void SetDeviceMoniker(string deviceMoniker)
+        {
+            this.deviceMoniker = deviceMoniker;
+        }
+
+
         private string deviceMoniker;
         private int framesReceived;
         private long bytesReceived;
@@ -47,10 +53,6 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        public VideoCaptureDevice(string deviceMoniker)
-        {
-            this.deviceMoniker = deviceMoniker;
-        }
 
         public void StartCapture()
         {
@@ -278,11 +280,11 @@ namespace fr.ipmfrance.webcam
             return mediaType;
         }
 
-        public event NewFrameEventHandler NewFrame;
+        public event NewFrameEventHandler NewFrameCapture;
 
         public bool isNewFrameExists()
         {
-            return (NewFrame != null);
+            return (NewFrameCapture != null);
         }
 
         public void OnNewFrameCapture(Bitmap image)
@@ -290,9 +292,9 @@ namespace fr.ipmfrance.webcam
             framesReceived++;
             bytesReceived += image.Width * image.Height * (Bitmap.GetPixelFormatSize(image.PixelFormat) >> 3);
 
-            if ((!stopEvent.WaitOne(0, false)) && (NewFrame != null))
+            if ((!stopEvent.WaitOne(0, false)) && (NewFrameCapture != null))
             {
-                NewFrame(this, new NewFrameEventArgs(image));
+                NewFrameCapture(this, new NewFrameEventArgs(image));
             }
         }
 

@@ -50,7 +50,8 @@ namespace fr.ipmfrance.webcam
 
         public AsyncVideoSource(FilterInfo filterInfo)
         {
-            this.nestedVideoSource = new VideoCaptureDevice(filterInfo.MonikerString); ;
+            nestedVideoSource = new VideoCaptureDevice();
+            nestedVideoSource.SetDeviceMoniker(filterInfo.MonikerString);
         }
 
         public void Start()
@@ -64,7 +65,7 @@ namespace fr.ipmfrance.webcam
                 imageProcessingThread = new Thread(new ThreadStart(imageProcessingThread_Worker));
                 imageProcessingThread.Start();
 
-                nestedVideoSource.NewFrame += new NewFrameEventHandler(nestedVideoSource_NewFrame);
+                nestedVideoSource.NewFrameCapture += new NewFrameEventHandler(nestedVideoSource_NewFrame);
                 nestedVideoSource.StartCapture();
             }
         }
@@ -91,7 +92,7 @@ namespace fr.ipmfrance.webcam
         {
             if (imageProcessingThread != null)
             {
-                nestedVideoSource.NewFrame -= new NewFrameEventHandler(nestedVideoSource_NewFrame);
+                nestedVideoSource.NewFrameCapture -= new NewFrameEventHandler(nestedVideoSource_NewFrame);
 
                 isProcessingThreadAvailable.WaitOne();
                 lastVideoFrame = null;
