@@ -8,8 +8,7 @@ namespace fr.ipmfrance.webcam
     /// </summary>
     /// 
     /// <param name="sender">Sender object.</param>
-    /// <param name="eventArgs">Event arguments.</param>
-    /// 
+    /// <param name="eventArgs">Event arguments.</param>    
     public delegate void NewFrameEventHandler( object sender, NewFrameEventArgs eventArgs );
 
     /// <summary>
@@ -17,8 +16,7 @@ namespace fr.ipmfrance.webcam
     /// </summary>
     /// 
     /// <param name="sender">Sender object.</param>
-    /// <param name="eventArgs">Event arguments.</param>
-    /// 
+    /// <param name="eventArgs">Event arguments.</param>    
     public delegate void VideoSourceErrorEventHandler( object sender, VideoSourceErrorEventArgs eventArgs );
 
     /// <summary>
@@ -26,8 +24,7 @@ namespace fr.ipmfrance.webcam
     /// </summary>
     /// 
     /// <param name="sender">Sender object.</param>
-    /// <param name="reason">Reason of finishing video playing.</param>
-    /// 
+    /// <param name="reason">Reason of finishing video playing.</param>    
     public delegate void PlayingFinishedEventHandler( object sender, ReasonToFinishPlaying reason );
 
     /// <summary>
@@ -35,8 +32,7 @@ namespace fr.ipmfrance.webcam
     /// </summary>
     /// 
     /// <remarks><para>When video source class fire the <see cref="IVideoSource.PlayingFinished"/> event, they
-    /// need to specify reason of finishing video playing. For example, it may be end of stream reached.</para></remarks>
-    /// 
+    /// need to specify reason of finishing video playing. For example, it may be end of stream reached.</para></remarks>    
     public enum ReasonToFinishPlaying
     {
         /// <summary>

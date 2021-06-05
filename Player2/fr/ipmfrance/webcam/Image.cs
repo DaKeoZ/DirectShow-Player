@@ -5,7 +5,6 @@ using fr.ipmfrance.win32;
 
 namespace fr.ipmfrance.webcam
 {
-
     /// <summary>
     /// Core image relatad methods.
     /// </summary>
@@ -64,8 +63,7 @@ namespace fr.ipmfrance.webcam
         /// <remarks>The method creates new 8 bpp grayscale image and initializes its palette.
         /// Grayscale image is represented as
         /// <see cref="System.Drawing.Imaging.PixelFormat">Format8bppIndexed</see>
-        /// image with palette initialized to 256 gradients of gray color.</remarks>
-        /// 
+        /// image with palette initialized to 256 gradients of gray color.</remarks>        
         public static Bitmap CreateGrayscaleImage(int width, int height)
         {
             // create new image
@@ -86,13 +84,14 @@ namespace fr.ipmfrance.webcam
         /// <see cref="System.Drawing.Imaging.PixelFormat">Format8bppIndexed</see>
         /// image with 256 gradients of gray color.</remarks>
         /// 
-        /// <exception cref="UnsupportedImageFormatException">Provided image is not 8 bpp indexed image.</exception>
-        /// 
+        /// <exception cref="UnsupportedImageFormatException">Provided image is not 8 bpp indexed image.</exception>        
         public static void SetGrayscalePalette(Bitmap image)
         {
             // check pixel format
             if (image.PixelFormat != PixelFormat.Format8bppIndexed)
+            {
                 throw new Exception("Source image is not 8 bpp image.");
+            }
 
             // get palette
             ColorPalette cp = image.Palette;
@@ -123,7 +122,9 @@ namespace fr.ipmfrance.webcam
         {
             // copy image if pixel format is the same
             if (source.PixelFormat == format)
+            {
                 return Clone(source);
+            }
 
             int width = source.Width;
             int height = source.Height;
