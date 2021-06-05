@@ -103,7 +103,6 @@
     <Compile Include="fr\ipmfrance\gui\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="fr\ipmfrance\webcam\PhysicalConnectorType.cs" />
     <Compile Include="fr\ipmfrance\webcam\tools\WebcamHelper.cs" />
     <Compile Include="fr\ipmfrance\win32\NativeAPI.cs" />
     <Compile Include="Program.cs" />
