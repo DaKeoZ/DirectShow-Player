@@ -1,15 +1,7 @@
-﻿// AForge Direct Show Library
-// AForge.NET framework
-// http://www.aforgenet.com/framework/
-//
-// Copyright © AForge.NET, 2009-2013
-// contacts@aforgenet.com
-//
+﻿using System;
 
 namespace fr.ipmfrance.webcam
 {
-    using System;
-
     /// <summary>
     /// The enumeration specifies a setting on a camera.
     /// </summary>
@@ -43,25 +35,5 @@ namespace fr.ipmfrance.webcam
         /// Focus control.
         /// </summary>
         Focus
-    }
-
-    /// <summary>
-    /// The enumeration defines whether a camera setting is controlled manually or automatically.
-    /// </summary>
-    [Flags]
-    public enum CameraControlFlags
-    {
-        /// <summary>
-        /// No control flag.
-        /// </summary>
-        None = 0x0,
-        /// <summary>
-        /// Auto control Flag.
-        /// </summary>
-        Auto = 0x0001,
-        /// <summary>
-        /// Manual control Flag.
-        /// </summary>
-        Manual = 0x0002
     }
 }
