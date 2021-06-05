@@ -17,10 +17,6 @@ namespace fr.ipmfrance.webcam
         private Thread thread = null;
         private ManualResetEvent stopEvent = null;
         private bool needToSetVideoInput = false;
-        private bool needToSimulateTrigger = false;
-        private bool needToDisplayPropertyPage = false;
-        private bool needToDisplayCrossBarPropertyPage = false;
-        private IntPtr parentWindowForPropertyPage = IntPtr.Zero;
         private object sourceObject = null;
         private object sync = new object();
         private bool? isCrossbarAvailable = null;
@@ -276,32 +272,6 @@ namespace fr.ipmfrance.webcam
                             }
                         }
 
-                        if (needToSimulateTrigger)
-                        {
-                            needToSimulateTrigger = false;
-                        }
-
-                        //if (needToDisplayPropertyPage)
-                        //{
-                        //    needToDisplayPropertyPage = false;
-                        //    DisplayPropertyPage(parentWindowForPropertyPage, sourceObject);
-
-                        //    if (crossbar != null)
-                        //    {
-                        //        crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
-                        //    }
-                        //}
-
-                        //if (needToDisplayCrossBarPropertyPage)
-                        //{
-                        //    needToDisplayCrossBarPropertyPage = false;
-
-                        //    if (crossbar != null)
-                        //    {
-                        //        DisplayPropertyPage(parentWindowForPropertyPage, crossbar);
-                        //        crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
-                        //    }
-                        //}
                     }
                     while (!stopEvent.WaitOne(100, false));
 
@@ -362,21 +332,21 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        private void DisplayPropertyPage(IntPtr parentWindow, object sourceObject)
-        {
-            try
-            {
-                ISpecifyPropertyPages pPropPages = (ISpecifyPropertyPages)sourceObject;
-                CAUUID caGUID;
-                pPropPages.GetPages(out caGUID);
-                FilterInfo filterInfo = new FilterInfo(deviceMoniker);
-                Win32.OleCreatePropertyFrame(parentWindow, 0, 0, filterInfo.Name, 1, ref sourceObject, caGUID.cElems, caGUID.pElems, 0, 0, IntPtr.Zero);
-                Marshal.FreeCoTaskMem(caGUID.pElems);
-            }
-            catch
-            {
-            }
-        }
+        //private void DisplayPropertyPage(IntPtr parentWindow, object sourceObject)
+        //{
+        //    try
+        //    {
+        //        ISpecifyPropertyPages pPropPages = (ISpecifyPropertyPages)sourceObject;
+        //        CAUUID caGUID;
+        //        pPropPages.GetPages(out caGUID);
+        //        FilterInfo filterInfo = new FilterInfo(deviceMoniker);
+        //        Win32.OleCreatePropertyFrame(parentWindow, 0, 0, filterInfo.Name, 1, ref sourceObject, caGUID.cElems, caGUID.pElems, 0, 0, IntPtr.Zero);
+        //        Marshal.FreeCoTaskMem(caGUID.pElems);
+        //    }
+        //    catch
+        //    {
+        //    }
+        //}
 
         private VideoInput GetCurrentCrossbarInput(IAMCrossbar crossbar)
         {
