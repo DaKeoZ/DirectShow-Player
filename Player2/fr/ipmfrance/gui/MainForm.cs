@@ -48,17 +48,16 @@ namespace fr.ipmfrance.gui
 
         private void localVideoCaptureDeviceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            VideoCaptureDevice videoSource = new VideoCaptureDevice(theDevice.MonikerString);
-
-            OpenVideoSource(videoSource);
+            OpenVideoSource();
         }
 
-        private void OpenVideoSource(VideoCaptureDevice source)
+        private void OpenVideoSource()
         {
             this.Cursor = Cursors.WaitCursor;
 
             CloseCurrentVideoSource();
 
+            VideoCaptureDevice source = new VideoCaptureDevice(theDevice.MonikerString);
             videoSourcePlayer.VideoSource = new AsyncVideoSource(source);
             videoSourcePlayer.Start();
 
