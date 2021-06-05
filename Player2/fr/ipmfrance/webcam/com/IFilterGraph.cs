@@ -1,9 +1,5 @@
-// AForge Direct Show Library
-// AForge.NET framework
-//
-// Copyright © Andrew Kirillov, 2007
-// andrew.kirillov@gmail.com
-//
+using System;
+using System.Runtime.InteropServices;
 
 namespace fr.ipmfrance.webcam.com
 {
@@ -18,7 +14,7 @@ namespace fr.ipmfrance.webcam.com
     [ComImport,
     Guid( "56A8689F-0AD4-11CE-B03A-0020AF0BA770" ),
     InterfaceType( ComInterfaceType.InterfaceIsIUnknown )]
-    internal interface IFilterGraph
+    public interface IFilterGraph
     {
         /// <summary>
         /// Adds a filter to the graph and gives it a name.

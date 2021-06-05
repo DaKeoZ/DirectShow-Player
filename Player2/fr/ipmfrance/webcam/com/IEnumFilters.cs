@@ -1,9 +1,5 @@
-// AForge Direct Show Library
-// AForge.NET framework
-//
-// Copyright © Andrew Kirillov, 2007-2008
-// andrew.kirillov@gmail.com
-//
+using System;
+using System.Runtime.InteropServices;
 
 namespace fr.ipmfrance.webcam.com
 {
@@ -18,7 +14,7 @@ namespace fr.ipmfrance.webcam.com
     [ComImport,
     Guid( "56A86893-0AD4-11CE-B03A-0020AF0BA770" ),
     InterfaceType( ComInterfaceType.InterfaceIsIUnknown )]
-    internal interface IEnumFilters
+    public interface IEnumFilters
     {
         /// <summary>
         /// Retrieves the specified number of filters in the enumeration sequence.

@@ -1,14 +1,8 @@
-// AForge Direct Show Library
-// AForge.NET framework
-//
-// Copyright © Andrew Kirillov, 2007
-// andrew.kirillov@gmail.com
-//
+using System;
+using System.Runtime.InteropServices;
 
 namespace fr.ipmfrance.webcam.com
 {
-    using System;
-    using System.Runtime.InteropServices;
 
     /// <summary>
     /// This interface is exposed by all input and output pins of DirectShow filters.
@@ -17,7 +11,7 @@ namespace fr.ipmfrance.webcam.com
     [ComImport,
     Guid( "56A86891-0AD4-11CE-B03A-0020AF0BA770" ),
     InterfaceType( ComInterfaceType.InterfaceIsIUnknown )]
-    internal interface IPin
+    public interface IPin
     {
         /// <summary>
         /// Connects the pin to another pin.

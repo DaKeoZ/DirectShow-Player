@@ -1,16 +1,9 @@
-// AForge Direct Show Library
-// AForge.NET framework
-// http://www.aforgenet.com/framework/
-//
-// Copyright © AForge.NET, 2009-2013
-// contacts@aforgenet.com
-//
+using System;
+using System.Runtime.InteropServices;
 
 namespace fr.ipmfrance.webcam.com
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Drawing;
+
 
     // PIN_DIRECTION
 
@@ -19,7 +12,7 @@ namespace fr.ipmfrance.webcam.com
     /// </summary>
     /// 
     [ComVisible( false )]
-    internal enum PinDirection
+    public enum PinDirection
     {
         /// <summary>
         /// Input pin.
@@ -148,7 +141,7 @@ namespace fr.ipmfrance.webcam.com
     /// 
     [ComVisible( false ),
     StructLayout( LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode )]
-    internal struct PinInfo
+    public struct PinInfo
     {
         /// <summary>
         /// Owning filter.
@@ -170,7 +163,7 @@ namespace fr.ipmfrance.webcam.com
     // FILTER_INFO
     [ComVisible( false ),
     StructLayout( LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode )]
-    internal struct FilterInfo
+    public struct FilterInfo
     {
         /// <summary>
         /// Filter's name.
@@ -497,7 +490,7 @@ namespace fr.ipmfrance.webcam.com
     /// <summary>
     /// Specifies a filter's state or the state of the filter graph.
     /// </summary>
-    internal enum FilterState
+    public enum FilterState
     {
         /// <summary>
         /// Stopped. The filter is not processing data.
