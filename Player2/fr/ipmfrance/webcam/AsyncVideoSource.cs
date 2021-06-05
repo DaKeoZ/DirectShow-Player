@@ -31,41 +31,41 @@ namespace fr.ipmfrance.webcam
             remove { nestedVideoSource.PlayingFinished -= value; }
         }
 
-        public VideoCaptureDevice NestedVideoSource
-        {
-            get { return nestedVideoSource; }
-        }
+        //public VideoCaptureDevice NestedVideoSource
+        //{
+        //    get { return nestedVideoSource; }
+        //}
 
-        public bool SkipFramesIfBusy
-        {
-            get { return skipFramesIfBusy; }
-            set { skipFramesIfBusy = value; }
-        }
+        //public bool SkipFramesIfBusy
+        //{
+        //    get { return skipFramesIfBusy; }
+        //    set { skipFramesIfBusy = value; }
+        //}
 
-        public string Source
-        {
-            get { return nestedVideoSource.Source; }
-        }
+        //public string Source
+        //{
+        //    get { return nestedVideoSource.Source; }
+        //}
 
         public int FramesReceived
         {
             get { return nestedVideoSource.FramesReceived; }
         }
 
-        public long BytesReceived
-        {
-            get { return nestedVideoSource.BytesReceived; }
-        }
+        //public long BytesReceived
+        //{
+        //    get { return nestedVideoSource.BytesReceived; }
+        //}
 
-        public int FramesProcessed
-        {
-            get
-            {
-                int frames = framesProcessed;
-                framesProcessed = 0;
-                return frames;
-            }
-        }
+        //public int FramesProcessed
+        //{
+        //    get
+        //    {
+        //        int frames = framesProcessed;
+        //        framesProcessed = 0;
+        //        return frames;
+        //    }
+        //}
 
         public bool IsRunning
         {
@@ -87,11 +87,11 @@ namespace fr.ipmfrance.webcam
             this.nestedVideoSource = new VideoCaptureDevice(filterInfo.MonikerString); ;
         }
 
-        public AsyncVideoSource(VideoCaptureDevice nestedVideoSource, bool skipFramesIfBusy)
-        {
-            this.nestedVideoSource = nestedVideoSource;
-            this.skipFramesIfBusy = skipFramesIfBusy;
-        }
+        //public AsyncVideoSource(VideoCaptureDevice nestedVideoSource, bool skipFramesIfBusy)
+        //{
+        //    this.nestedVideoSource = nestedVideoSource;
+        //    this.skipFramesIfBusy = skipFramesIfBusy;
+        //}
 
         public void Start()
         {
@@ -192,9 +192,5 @@ namespace fr.ipmfrance.webcam
                 isProcessingThreadAvailable.Set();
             }
         }
-
-
-
-
     }
 }
