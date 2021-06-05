@@ -54,7 +54,7 @@ namespace fr.ipmfrance.gui
     public partial class VideoSourcePlayer : Control
     {
         // video source to play
-        private AsyncVideoSource videoSource = null;
+        private IPMWebcam videoSource = null;
         // last received frame from the video source
         private Bitmap currentFrame = null;
         // converted version of the current frame (in the case if current frame is a 16 bpp 
@@ -150,7 +150,7 @@ namespace fr.ipmfrance.gui
         /// <exception cref="Exception">Video source can not be changed while current video source is still running.</exception>
         /// 
         [Browsable(false)]
-        public AsyncVideoSource VideoSource
+        public IPMWebcam VideoSource
         {
             get { return videoSource; }
             set

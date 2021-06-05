@@ -7,7 +7,7 @@ namespace fr.ipmfrance.webcam
 {
     public class Grabber : ISampleGrabberCB
     {
-        private AsyncVideoSource parent;
+        private IPMWebcam parent;
         private int width, height;
 
         public int Width
@@ -21,7 +21,7 @@ namespace fr.ipmfrance.webcam
             set { height = value; }
         }
 
-        public Grabber(AsyncVideoSource parent)
+        public Grabber(IPMWebcam parent)
         {
             this.parent = parent;
         }

@@ -48,7 +48,7 @@ namespace fr.ipmfrance.gui
 
             CloseCurrentVideoSource();
 
-            videoSourcePlayer.VideoSource = new AsyncVideoSource(theDevice);
+            videoSourcePlayer.VideoSource = new IPMWebcam(theDevice);
             videoSourcePlayer.Start();
 
             stopWatch = null;
@@ -99,7 +99,7 @@ namespace fr.ipmfrance.gui
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            AsyncVideoSource videoSource = videoSourcePlayer.VideoSource;
+            IPMWebcam videoSource = videoSourcePlayer.VideoSource;
 
             if (videoSource != null)
             {

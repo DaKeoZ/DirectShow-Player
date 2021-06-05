@@ -9,16 +9,18 @@ using System.Threading;
 namespace fr.ipmfrance.webcam
 {
 
-    public class AsyncVideoSource
+    public class IPMWebcam
     {
-        private Bitmap lastVideoFrame = null;
         private Thread imageProcessingThread = null;
+        private Thread threadCapture = null;
+
+        private Bitmap lastVideoFrame = null;
         private AutoResetEvent isNewFrameAvailable = null;
         private AutoResetEvent isProcessingThreadAvailable = null;
         private bool skipFramesIfBusy = false;
         private string deviceMonikerCapture;
         private int framesReceivedCapture;
-        private Thread threadCapture = null;
+
         private ManualResetEvent stopEventCapture = null;
         private object sourceObjectCapture = null;
         private object syncCapture = new object();
@@ -30,7 +32,7 @@ namespace fr.ipmfrance.webcam
 
         public event PlayingFinishedEventHandler PlayingFinished;
 
-        public AsyncVideoSource(FilterInfo filterInfo)
+        public IPMWebcam(FilterInfo filterInfo)
         {
             deviceMonikerCapture = filterInfo.MonikerString;
         }
@@ -286,17 +288,6 @@ namespace fr.ipmfrance.webcam
 
                 AMMediaType mediaType = SetVideoRGB24(videoSampleGrabber);
 
-                //if (videoControl != null)
-                //{
-                //    captureGraph.FindPin(sourceObjectCapture, PinDirection.Output,
-                //        PinCategory.StillImage, MediaType.Video, false, 0, out pinStillImage);
-                //    if (pinStillImage != null)
-                //    {
-                //        VideoControlFlags caps;
-                //        videoControl.GetCaps(pinStillImage, out caps);
-                //    }
-                //}
-
                 videoSampleGrabber.SetBufferSamples(false);
                 videoSampleGrabber.SetOneShot(false);
                 videoSampleGrabber.SetCallback(videoGrabber, 1);
@@ -354,7 +345,6 @@ namespace fr.ipmfrance.webcam
                 mediaControl = null;
                 videoControl = null;
                 mediaEvent = null;
-                pinStillImage = null;
                 videoGrabberBase = null;
                 videoSampleGrabber = null;
 
