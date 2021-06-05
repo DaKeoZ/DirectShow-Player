@@ -17,7 +17,7 @@ namespace fr.ipmfrance.webcam
 
         private string deviceMoniker;
         private int framesReceived;
-        private long bytesReceived;
+//        private long bytesReceived;
         private Thread thread = null;
         private ManualResetEvent stopEvent = null;
         private object sourceObject = null;
@@ -64,7 +64,7 @@ namespace fr.ipmfrance.webcam
                 }
 
                 framesReceived = 0;
-                bytesReceived = 0;
+    //            bytesReceived = 0;
 
                 stopEvent = new ManualResetEvent(false);
 
@@ -290,7 +290,7 @@ namespace fr.ipmfrance.webcam
         public void OnNewFrameCapture(Bitmap image)
         {
             framesReceived++;
-            bytesReceived += image.Width * image.Height * (Bitmap.GetPixelFormatSize(image.PixelFormat) >> 3);
+    //        bytesReceived += image.Width * image.Height * (Bitmap.GetPixelFormatSize(image.PixelFormat) >> 3);
 
             if ((!stopEvent.WaitOne(0, false)) && (NewFrameCapture != null))
             {
