@@ -23,7 +23,7 @@ namespace fr.ipmfrance.webcam
         private object sourceObject = null;
         private object sync = new object();
         private bool? isCrossbarAvailable = null;
-        private VideoInput[] crossbarVideoInputs = null;
+//        private VideoInput[] crossbarVideoInputs = null;
         private VideoInput crossbarVideoInput = VideoInput.Default;
         private static Dictionary<string, VideoInput[]> cacheCrossbarVideoInputs = new Dictionary<string, VideoInput[]>();
 
@@ -39,7 +39,7 @@ namespace fr.ipmfrance.webcam
             set
             {
                 deviceMoniker = value;
-                crossbarVideoInputs = null;
+//                crossbarVideoInputs = null;
                 isCrossbarAvailable = null;
             }
         }
@@ -175,14 +175,18 @@ namespace fr.ipmfrance.webcam
             {
                 Type type = Type.GetTypeFromCLSID(Clsid.CaptureGraphBuilder2);
                 if (type == null)
+                {
                     throw new ApplicationException("Failed creating capture graph builder");
+                }
 
                 captureGraphObject = Activator.CreateInstance(type);
                 captureGraph = (ICaptureGraphBuilder2)captureGraphObject;
 
                 type = Type.GetTypeFromCLSID(Clsid.FilterGraph);
                 if (type == null)
+                {
                     throw new ApplicationException("Failed creating filter graph");
+                }
 
                 graphObject = Activator.CreateInstance(type);
                 graph = (IFilterGraph2)graphObject;
@@ -191,7 +195,9 @@ namespace fr.ipmfrance.webcam
 
                 sourceObject = FilterInfo.CreateFilter(deviceMoniker);
                 if (sourceObject == null)
+                {
                     throw new ApplicationException("Failed creating device object for moniker");
+                }
 
                 sourceBase = (IBaseFilter)sourceObject;
 
@@ -205,7 +211,9 @@ namespace fr.ipmfrance.webcam
 
                 type = Type.GetTypeFromCLSID(Clsid.SampleGrabber);
                 if (type == null)
+                {
                     throw new ApplicationException("Failed creating sample grabber");
+                }
 
                 videoGrabberObject = Activator.CreateInstance(type);
                 videoSampleGrabber = (ISampleGrabber)videoGrabberObject;
@@ -226,7 +234,7 @@ namespace fr.ipmfrance.webcam
                     crossbar = (IAMCrossbar)crossbarObject;
                 }
                 isCrossbarAvailable = (crossbar != null);
-                crossbarVideoInputs = ColletCrossbarVideoInputs(crossbar);
+        //        crossbarVideoInputs = ColletCrossbarVideoInputs(crossbar);
 
                 if (videoControl != null)
                 {
