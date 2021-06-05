@@ -11,15 +11,29 @@ namespace fr.ipmfrance.webcam
 
     public class AsyncVideoSource
     {
-      //  private readonly VideoCaptureDevice nestedVideoSource = null;
         private Bitmap lastVideoFrame = null;
         private Thread imageProcessingThread = null;
         private AutoResetEvent isNewFrameAvailable = null;
         private AutoResetEvent isProcessingThreadAvailable = null;
         private bool skipFramesIfBusy = false;
+        private string deviceMonikerCapture;
+        private int framesReceivedCapture;
+        private Thread threadCapture = null;
+        private ManualResetEvent stopEventCapture = null;
+        private object sourceObjectCapture = null;
+        private object syncCapture = new object();
+
 
         public event NewFrameEventHandler NewFrame;
 
+        public event VideoSourceErrorEventHandler VideoSourceError;
+
+        public event PlayingFinishedEventHandler PlayingFinished;
+
+        public AsyncVideoSource(FilterInfo filterInfo)
+        {
+            deviceMonikerCapture = filterInfo.MonikerString;
+        }
 
         public bool IsRunning
         {
@@ -34,12 +48,6 @@ namespace fr.ipmfrance.webcam
 
                 return isRunning;
             }
-        }
-
-        public AsyncVideoSource(FilterInfo filterInfo)
-        {
-//            nestedVideoSource = new VideoCaptureDevice();
-            SetDeviceMoniker(filterInfo.MonikerString);
         }
 
         public void Start()
@@ -140,20 +148,6 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        private string deviceMonikerCapture;
-        private int framesReceivedCapture;
-        private Thread threadCapture = null;
-        private ManualResetEvent stopEventCapture = null;
-        private object sourceObjectCapture = null;
-        private object syncCapture = new object();
-
-
-
-        public void SetDeviceMoniker(string deviceMoniker)
-        {
-            deviceMonikerCapture = deviceMoniker;
-        }
-
         public int FramesReceived
         {
             get
@@ -191,7 +185,6 @@ namespace fr.ipmfrance.webcam
                 }
 
                 framesReceivedCapture = 0;
-                //            bytesReceived = 0;
 
                 stopEventCapture = new ManualResetEvent(false);
 
@@ -236,28 +229,6 @@ namespace fr.ipmfrance.webcam
             stopEventCapture.Close();
             stopEventCapture = null;
         }
-
-        public event VideoSourceErrorEventHandler VideoSourceError;
-
-        public event PlayingFinishedEventHandler PlayingFinished;
-
-        //public event VideoSourceErrorEventHandler VideoSourceError
-        //{
-        //    add { nestedVideoSource.VideoSourceErrorCapture += value; }
-        //    remove { nestedVideoSource.VideoSourceErrorCapture -= value; }
-        //}
-
-        //public event PlayingFinishedEventHandler PlayingFinished
-        //{
-        //    add { nestedVideoSource.PlayingFinishedCapture += value; }
-        //    remove { nestedVideoSource.PlayingFinishedCapture -= value; }
-        //}
-
-        //public int FramesReceived
-        //{
-        //    get { return nestedVideoSource.FramesReceivedCapture; }
-        //}
-
 
         private void WorkerThread()
         {
