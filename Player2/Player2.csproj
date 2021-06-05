@@ -97,7 +97,6 @@
     <Compile Include="fr\ipmfrance\webcam\com\Tools.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\Uuids.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\Win32.cs" />
-    <Compile Include="fr\ipmfrance\webcam\IVideoSource.cs" />
     <Compile Include="fr\ipmfrance\gui\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
