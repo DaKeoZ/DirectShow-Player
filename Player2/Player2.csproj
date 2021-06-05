@@ -70,7 +70,6 @@
     <Compile Include="fr\ipmfrance\webcam\com\DsLong.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\IAMCameraControl.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\IAMCopyCaptureFileProgress.cs" />
-    <Compile Include="fr\ipmfrance\webcam\com\IAMCrossbar.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\IAMVideoControl.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\IBaseFilter.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\ICaptureGraphBuilder2.cs" />
