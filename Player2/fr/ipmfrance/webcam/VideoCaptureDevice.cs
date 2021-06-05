@@ -8,7 +8,7 @@ using fr.ipmfrance.webcam.com;
 
 namespace fr.ipmfrance.webcam
 {
-    public class VideoCaptureDevice : IVideoSource
+    public class VideoCaptureDevice 
     {
         private string deviceMoniker;
         private int framesReceived;

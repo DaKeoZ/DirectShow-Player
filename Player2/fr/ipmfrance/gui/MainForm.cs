@@ -53,7 +53,7 @@ namespace fr.ipmfrance.gui
             OpenVideoSource(videoSource);
         }
 
-        private void OpenVideoSource(IVideoSource source)
+        private void OpenVideoSource(VideoCaptureDevice source)
         {
             this.Cursor = Cursors.WaitCursor;
 

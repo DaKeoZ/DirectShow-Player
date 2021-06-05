@@ -8,7 +8,7 @@ namespace fr.ipmfrance.webcam
 
     public class AsyncVideoSource : IVideoSource
     {
-        private readonly IVideoSource nestedVideoSource = null;
+        private readonly VideoCaptureDevice nestedVideoSource = null;
         private Bitmap lastVideoFrame = null;
         private Thread imageProcessingThread = null;
         private AutoResetEvent isNewFrameAvailable = null;
@@ -30,7 +30,7 @@ namespace fr.ipmfrance.webcam
             remove { nestedVideoSource.PlayingFinished -= value; }
         }
 
-        public IVideoSource NestedVideoSource
+        public VideoCaptureDevice NestedVideoSource
         {
             get { return nestedVideoSource; }
         }
@@ -81,12 +81,12 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        public AsyncVideoSource(IVideoSource nestedVideoSource)
+        public AsyncVideoSource(VideoCaptureDevice nestedVideoSource)
         {
             this.nestedVideoSource = nestedVideoSource;
         }
 
-        public AsyncVideoSource(IVideoSource nestedVideoSource, bool skipFramesIfBusy)
+        public AsyncVideoSource(VideoCaptureDevice nestedVideoSource, bool skipFramesIfBusy)
         {
             this.nestedVideoSource = nestedVideoSource;
             this.skipFramesIfBusy = skipFramesIfBusy;
