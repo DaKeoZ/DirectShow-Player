@@ -206,11 +206,11 @@ namespace fr.ipmfrance.webcam
 
                 videoSampleGrabber.SetMediaType(mediaType);
 
-                captureGraph.FindInterface(FindDirection.UpstreamOnly, Guid.Empty, sourceBase, typeof(IAMCrossbar).GUID, out crossbarObject);
-                if (crossbarObject != null)
-                {
-                    crossbar = (IAMCrossbar)crossbarObject;
-                }
+                //captureGraph.FindInterface(FindDirection.UpstreamOnly, Guid.Empty, sourceBase, typeof(IAMCrossbar).GUID, out crossbarObject);
+                //if (crossbarObject != null)
+                //{
+                //    crossbar = (IAMCrossbar)crossbarObject;
+                //}
                 isCrossbarAvailable = (crossbar != null);
 
                 if (videoControl != null)
