@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace fr.ipmfrance.webcam
+namespace fr.ipmfrance.webcam.win32
 {
     public static class ComFactory
     {
