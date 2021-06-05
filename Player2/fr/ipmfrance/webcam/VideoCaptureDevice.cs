@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Runtime.InteropServices;
@@ -22,17 +21,17 @@ namespace fr.ipmfrance.webcam
 
         public event PlayingFinishedEventHandler PlayingFinished;
 
-        public virtual string Source
-        {
-            get
-            {
-                return deviceMoniker;
-            }
-            set
-            {
-                deviceMoniker = value;
-            }
-        }
+        //public virtual string Source
+        //{
+        //    get
+        //    {
+        //        return deviceMoniker;
+        //    }
+        //    set
+        //    {
+        //        deviceMoniker = value;
+        //    }
+        //}
 
         public int FramesReceived
         {
@@ -44,15 +43,15 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        public long BytesReceived
-        {
-            get
-            {
-                long bytes = bytesReceived;
-                bytesReceived = 0;
-                return bytes;
-            }
-        }
+        //public long BytesReceived
+        //{
+        //    get
+        //    {
+        //        long bytes = bytesReceived;
+        //        bytesReceived = 0;
+        //        return bytes;
+        //    }
+        //}
 
         public bool IsRunning
         {
