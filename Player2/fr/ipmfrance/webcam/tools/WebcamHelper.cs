@@ -23,7 +23,7 @@ namespace fr.ipmfrance.webcam.tools
                 if (filter.MonikerString.Contains("pnp"))
                 {
                     theDevice = filter;
-                  
+
                 }
             });
             return theDevice;

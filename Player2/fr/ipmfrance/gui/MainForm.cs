@@ -48,8 +48,7 @@ namespace fr.ipmfrance.gui
 
             CloseCurrentVideoSource();
 
-            VideoCaptureDevice source = new VideoCaptureDevice(theDevice.MonikerString);
-            videoSourcePlayer.VideoSource = new AsyncVideoSource(source);
+            videoSourcePlayer.VideoSource = new AsyncVideoSource(theDevice);
             videoSourcePlayer.Start();
 
             stopWatch = null;

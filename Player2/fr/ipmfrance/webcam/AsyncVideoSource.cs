@@ -81,9 +81,9 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        public AsyncVideoSource(VideoCaptureDevice nestedVideoSource)
+        public AsyncVideoSource(FilterInfo filterInfo)
         {
-            this.nestedVideoSource = nestedVideoSource;
+            this.nestedVideoSource = new VideoCaptureDevice(filterInfo.MonikerString); ;
         }
 
         public AsyncVideoSource(VideoCaptureDevice nestedVideoSource, bool skipFramesIfBusy)
