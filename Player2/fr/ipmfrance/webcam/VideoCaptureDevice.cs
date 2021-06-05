@@ -27,7 +27,10 @@ namespace fr.ipmfrance.webcam
 
         public virtual string Source
         {
-            get { return deviceMoniker; }
+            get
+            {
+                return deviceMoniker;
+            }
             set
             {
                 deviceMoniker = value;
@@ -61,8 +64,9 @@ namespace fr.ipmfrance.webcam
                 if (thread != null)
                 {
                     if (thread.Join(0) == false)
+                    {
                         return true;
-
+                    }
                     Free();
                 }
                 return false;
@@ -110,7 +114,6 @@ namespace fr.ipmfrance.webcam
             if (thread != null)
             {
                 thread.Join();
-
                 Free();
             }
         }
@@ -127,17 +130,11 @@ namespace fr.ipmfrance.webcam
         private void Free()
         {
             thread = null;
-
             stopEvent.Close();
             stopEvent = null;
         }
 
         private void WorkerThread()
-        {
-            WorkerThread(true);
-        }
-
-        private void WorkerThread(bool runGraph)
         {
             ReasonToFinishPlaying reasonToStop = ReasonToFinishPlaying.StoppedByUser;
 
@@ -208,45 +205,43 @@ namespace fr.ipmfrance.webcam
                 videoSampleGrabber.SetOneShot(false);
                 videoSampleGrabber.SetCallback(videoGrabber, 1);
 
-                if (runGraph)
+                captureGraph.RenderStream(PinCategory.Capture, MediaType.Video, sourceBase, null, videoGrabberBase);
+
+                if (videoSampleGrabber.GetConnectedMediaType(mediaType) == 0)
                 {
-                    captureGraph.RenderStream(PinCategory.Capture, MediaType.Video, sourceBase, null, videoGrabberBase);
+                    VideoInfoHeader vih = (VideoInfoHeader)Marshal.PtrToStructure(mediaType.FormatPtr, typeof(VideoInfoHeader));
+                    videoGrabber.Width = vih.BmiHeader.Width;
+                    videoGrabber.Height = vih.BmiHeader.Height;
+                    mediaType.Dispose();
+                }
 
-                    if (videoSampleGrabber.GetConnectedMediaType(mediaType) == 0)
+                mediaControl = (IMediaControl)graphObject;
+                mediaEvent = (IMediaEventEx)graphObject;
+                int p1, p2;
+                DsEvCode code;
+                mediaControl.Run();
+
+                do
+                {
+                    if (mediaEvent != null)
                     {
-                        VideoInfoHeader vih = (VideoInfoHeader)Marshal.PtrToStructure(mediaType.FormatPtr, typeof(VideoInfoHeader));
-                        videoGrabber.Width = vih.BmiHeader.Width;
-                        videoGrabber.Height = vih.BmiHeader.Height;
-                        mediaType.Dispose();
-                    }
-
-                    mediaControl = (IMediaControl)graphObject;
-                    mediaEvent = (IMediaEventEx)graphObject;
-                    int p1, p2;
-                    DsEvCode code;
-                    mediaControl.Run();
-
-                    do
-                    {
-                        if (mediaEvent != null)
+                        if (mediaEvent.GetEvent(out code, out p1, out p2, 0) >= 0)
                         {
-                            if (mediaEvent.GetEvent(out code, out p1, out p2, 0) >= 0)
-                            {
-                                mediaEvent.FreeEventParams(code, p1, p2);
+                            mediaEvent.FreeEventParams(code, p1, p2);
 
-                                if (code == DsEvCode.DeviceLost)
-                                {
-                                    reasonToStop = ReasonToFinishPlaying.DeviceLost;
-                                    break;
-                                }
+                            if (code == DsEvCode.DeviceLost)
+                            {
+                                reasonToStop = ReasonToFinishPlaying.DeviceLost;
+                                break;
                             }
                         }
                     }
-
-                    while (!stopEvent.WaitOne(100, false));
-
-                    mediaControl.Stop();
                 }
+
+                while (!stopEvent.WaitOne(100, false));
+
+                mediaControl.Stop();
+
             }
             catch (Exception exception)
             {
