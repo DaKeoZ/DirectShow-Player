@@ -1,15 +1,8 @@
-// AForge Direct Show Library
-// AForge.NET framework
-//
-// Copyright © Andrew Kirillov, 2007
-// andrew.kirillov@gmail.com
-//
+using System;
+using System.Runtime.InteropServices;
 
 namespace fr.ipmfrance.webcam.com
 {
-    using System;
-    using System.Runtime.InteropServices;
-
     /// <summary>
     /// The interface provides methods for controlling the flow of data through the filter graph.
     /// It includes methods for running, pausing, and stopping the graph.
@@ -18,7 +11,7 @@ namespace fr.ipmfrance.webcam.com
     [ComImport,
     Guid( "56A868B1-0AD4-11CE-B03A-0020AF0BA770" ),
     InterfaceType( ComInterfaceType.InterfaceIsDual )]
-    internal interface IMediaControl
+    public interface IMediaControl
     {
         /// <summary>
         /// Runs all the filters in the filter graph.

@@ -1,14 +1,8 @@
-﻿// AForge.NET framework
-// http://www.aforgenet.com/framework/
-//
-// Copyright © AForge.NET, 2009-2011
-// contacts@aforgenet.com
-//
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace fr.ipmfrance.webcam.com
 {
-    using System;
-    using System.Runtime.InteropServices;
 
     /// <summary>
     /// The interface inherits contains methods for retrieving event notifications and for overriding the

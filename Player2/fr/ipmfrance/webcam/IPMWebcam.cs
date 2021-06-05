@@ -251,7 +251,6 @@ namespace fr.ipmfrance.webcam
             IMediaControl mediaControl = null;
             IAMVideoControl videoControl = null;
             IMediaEventEx mediaEvent = null;
-            //IPin pinStillImage = null;
             try
             {
                 captureGraphObject = ComFactory.Create(Clsid.CaptureGraphBuilder2);
@@ -324,7 +323,6 @@ namespace fr.ipmfrance.webcam
                         }
                     }
                 }
-
                 while (!stopEventCapture.WaitOne(100, false));
 
                 mediaControl.Stop();
