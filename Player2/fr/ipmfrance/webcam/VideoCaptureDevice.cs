@@ -17,11 +17,11 @@ namespace fr.ipmfrance.webcam
         private object sourceObject = null;
         private object sync = new object();
 
-        public event VideoSourceErrorEventHandler VideoSourceError;
+        public event VideoSourceErrorEventHandler VideoSourceErrorCapture;
 
-        public event PlayingFinishedEventHandler PlayingFinished;
+        public event PlayingFinishedEventHandler PlayingFinishedCapture;
 
-        public int FramesReceived
+        public int FramesReceivedCapture
         {
             get
             {
@@ -31,7 +31,7 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        public bool IsRunning
+        public bool IsRunningCapture
         {
             get
             {
@@ -41,7 +41,7 @@ namespace fr.ipmfrance.webcam
                     {
                         return true;
                     }
-                    Free();
+                    FreeCapture();
                 }
                 return false;
             }
@@ -52,9 +52,9 @@ namespace fr.ipmfrance.webcam
             this.deviceMoniker = deviceMoniker;
         }
 
-        public void Start()
+        public void StartCapture()
         {
-            if (!IsRunning)
+            if (!IsRunningCapture)
             {
                 if (string.IsNullOrEmpty(deviceMoniker))
                 {
@@ -75,7 +75,7 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        public void SignalToStop()
+        public void SignalToStopCapture()
         {
             if (thread != null)
             {
@@ -83,25 +83,25 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        public void WaitForStop()
+        public void WaitForStopCapture()
         {
             if (thread != null)
             {
                 thread.Join();
-                Free();
+                FreeCapture();
             }
         }
 
-        public void Stop()
+        public void StopCapture()
         {
-            if (this.IsRunning)
+            if (this.IsRunningCapture)
             {
                 thread.Abort();
-                WaitForStop();
+                WaitForStopCapture();
             }
         }
 
-        private void Free()
+        private void FreeCapture()
         {
             thread = null;
             stopEvent.Close();
@@ -219,9 +219,9 @@ namespace fr.ipmfrance.webcam
             }
             catch (Exception exception)
             {
-                if (VideoSourceError != null)
+                if (VideoSourceErrorCapture != null)
                 {
-                    VideoSourceError(this, new VideoSourceErrorEventArgs(exception.Message));
+                    VideoSourceErrorCapture(this, new VideoSourceErrorEventArgs(exception.Message));
                 }
             }
             finally
@@ -263,9 +263,9 @@ namespace fr.ipmfrance.webcam
                 }
             }
 
-            if (PlayingFinished != null)
+            if (PlayingFinishedCapture != null)
             {
-                PlayingFinished(this, reasonToStop);
+                PlayingFinishedCapture(this, reasonToStop);
             }
         }
 
@@ -285,7 +285,7 @@ namespace fr.ipmfrance.webcam
             return (NewFrame != null);
         }
 
-        public void OnNewFrame(Bitmap image)
+        public void OnNewFrameCapture(Bitmap image)
         {
             framesReceived++;
             bytesReceived += image.Width * image.Height * (Bitmap.GetPixelFormatSize(image.PixelFormat) >> 3);

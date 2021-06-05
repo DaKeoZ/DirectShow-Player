@@ -13,32 +13,31 @@ namespace fr.ipmfrance.webcam
         private AutoResetEvent isNewFrameAvailable = null;
         private AutoResetEvent isProcessingThreadAvailable = null;
         private bool skipFramesIfBusy = false;
-   //     private int framesProcessed;
 
         public event NewFrameEventHandler NewFrame;
 
         public event VideoSourceErrorEventHandler VideoSourceError
         {
-            add { nestedVideoSource.VideoSourceError += value; }
-            remove { nestedVideoSource.VideoSourceError -= value; }
+            add { nestedVideoSource.VideoSourceErrorCapture += value; }
+            remove { nestedVideoSource.VideoSourceErrorCapture -= value; }
         }
 
         public event PlayingFinishedEventHandler PlayingFinished
         {
-            add { nestedVideoSource.PlayingFinished += value; }
-            remove { nestedVideoSource.PlayingFinished -= value; }
+            add { nestedVideoSource.PlayingFinishedCapture += value; }
+            remove { nestedVideoSource.PlayingFinishedCapture -= value; }
         }
 
         public int FramesReceived
         {
-            get { return nestedVideoSource.FramesReceived; }
+            get { return nestedVideoSource.FramesReceivedCapture; }
         }
 
         public bool IsRunning
         {
             get
             {
-                bool isRunning = nestedVideoSource.IsRunning;
+                bool isRunning = nestedVideoSource.IsRunningCapture;
 
                 if (!isRunning)
                 {
@@ -66,25 +65,25 @@ namespace fr.ipmfrance.webcam
                 imageProcessingThread.Start();
 
                 nestedVideoSource.NewFrame += new NewFrameEventHandler(nestedVideoSource_NewFrame);
-                nestedVideoSource.Start();
+                nestedVideoSource.StartCapture();
             }
         }
 
         public void SignalToStop()
         {
-            nestedVideoSource.SignalToStop();
+            nestedVideoSource.SignalToStopCapture();
             Free();
         }
 
         public void WaitForStop()
         {
-            nestedVideoSource.WaitForStop();
+            nestedVideoSource.WaitForStopCapture();
             Free();
         }
 
         public void Stop()
         {
-            nestedVideoSource.Stop();
+            nestedVideoSource.StopCapture();
             Free();
         }
 

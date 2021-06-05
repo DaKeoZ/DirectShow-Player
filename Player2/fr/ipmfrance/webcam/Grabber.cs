@@ -59,7 +59,7 @@ namespace fr.ipmfrance.webcam
                 }
 
                 image.UnlockBits(imageData);
-                parent.OnNewFrame(image);
+                parent.OnNewFrameCapture(image);
 
                 image.Dispose();
             }
