@@ -1,4 +1,4 @@
-﻿using System;
+﻿using fr.ipmfrance.win32;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
@@ -235,7 +235,7 @@ namespace fr.ipmfrance.webcam
                 new Rectangle(0, 0, width, height),
                 ImageLockMode.ReadWrite, destination.PixelFormat);
 
-            SystemTools.CopyUnmanagedMemory(destinationData.Scan0, sourceData.Scan0, height * sourceData.Stride);
+            NativeAPI.CopyUnmanagedMemory(destinationData.Scan0, sourceData.Scan0, height * sourceData.Stride);
 
             destination.UnlockBits(destinationData);
 

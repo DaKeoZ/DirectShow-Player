@@ -1,15 +1,8 @@
-﻿// AForge Core Library
-// AForge.NET framework
-// http://www.aforgenet.com/framework/
-//
-// Copyright © AForge.NET, 2007-2011
-// contacts@aforgenet.com
-//
+﻿using System;
+using System.Runtime.InteropServices;
 
-namespace fr.ipmfrance.webcam
+namespace fr.ipmfrance.win32
 {
-    using System;
-    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Set of systems tools.
@@ -20,7 +13,7 @@ namespace fr.ipmfrance.webcam
     /// implementation is different on different platform, like .NET and Mono.</para>
     /// </remarks>
     /// 
-    public static class SystemTools
+    public static class NativeAPI
     {
         /// <summary>
         /// Copy block of unmanaged memory.
@@ -61,29 +54,7 @@ namespace fr.ipmfrance.webcam
         /// 
         public static unsafe byte* CopyUnmanagedMemory( byte* dst, byte* src, int count )
         {
-#if !MONO
             return memcpy( dst, src, count );
-#else
-            int countUint = count >> 2;
-            int countByte = count & 3;
-
-            uint* dstUint = (uint*) dst;
-            uint* srcUint = (uint*) src;
-
-            while ( countUint-- != 0 )
-            {
-                *dstUint++ = *srcUint++;
-            }
-
-            byte* dstByte = (byte*) dstUint;
-            byte* srcByte = (byte*) srcUint;
-
-            while ( countByte-- != 0 )
-            {
-                *dstByte++ = *srcByte++;
-            }
-            return dst;
-#endif
         }
 
         /// <summary>
@@ -117,36 +88,10 @@ namespace fr.ipmfrance.webcam
         /// 
         public static unsafe byte* SetUnmanagedMemory( byte* dst, int filler, int count )
         {
-#if !MONO
+
             return memset( dst, filler, count );
-#else
-            int countUint = count >> 2;
-            int countByte = count & 3;
-
-            byte fillerByte = (byte) filler;
-            uint fiilerUint = (uint) filler | ( (uint) filler << 8 ) |
-                                              ( (uint) filler << 16 );// |
-                                              //( (uint) filler << 24 );
-
-            uint* dstUint = (uint*) dst;
-
-            while ( countUint-- != 0 )
-            {
-                *dstUint++ = fiilerUint;
-            }
-
-            byte* dstByte = (byte*) dstUint;
-
-            while ( countByte-- != 0 )
-            {
-                *dstByte++ = fillerByte;
-            }
-            return dst;
-#endif
         }
 
-
-#if !MONO
         // Win32 memory copy function
         [DllImport( "ntdll.dll", CallingConvention = CallingConvention.Cdecl )]
         private static unsafe extern byte* memcpy(
@@ -159,6 +104,6 @@ namespace fr.ipmfrance.webcam
             byte* dst,
             int filler,
             int count );
-#endif
+
     }
 }
