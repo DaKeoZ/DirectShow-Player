@@ -281,27 +281,27 @@ namespace fr.ipmfrance.webcam
                             needToSimulateTrigger = false;
                         }
 
-                        if (needToDisplayPropertyPage)
-                        {
-                            needToDisplayPropertyPage = false;
-                            DisplayPropertyPage(parentWindowForPropertyPage, sourceObject);
+                        //if (needToDisplayPropertyPage)
+                        //{
+                        //    needToDisplayPropertyPage = false;
+                        //    DisplayPropertyPage(parentWindowForPropertyPage, sourceObject);
 
-                            if (crossbar != null)
-                            {
-                                crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
-                            }
-                        }
+                        //    if (crossbar != null)
+                        //    {
+                        //        crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
+                        //    }
+                        //}
 
-                        if (needToDisplayCrossBarPropertyPage)
-                        {
-                            needToDisplayCrossBarPropertyPage = false;
+                        //if (needToDisplayCrossBarPropertyPage)
+                        //{
+                        //    needToDisplayCrossBarPropertyPage = false;
 
-                            if (crossbar != null)
-                            {
-                                DisplayPropertyPage(parentWindowForPropertyPage, crossbar);
-                                crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
-                            }
-                        }
+                        //    if (crossbar != null)
+                        //    {
+                        //        DisplayPropertyPage(parentWindowForPropertyPage, crossbar);
+                        //        crossbarVideoInput = GetCurrentCrossbarInput(crossbar);
+                        //    }
+                        //}
                     }
                     while (!stopEvent.WaitOne(100, false));
 
