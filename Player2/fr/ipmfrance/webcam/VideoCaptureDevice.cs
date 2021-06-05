@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading;
 using System.Runtime.InteropServices;
 using fr.ipmfrance.webcam.com;
@@ -18,8 +17,6 @@ namespace fr.ipmfrance.webcam
         private ManualResetEvent stopEvent = null;
         private object sourceObject = null;
         private object sync = new object();
-        private VideoInput crossbarVideoInput = VideoInput.Default;
-        private static Dictionary<string, VideoInput[]> cacheCrossbarVideoInputs = new Dictionary<string, VideoInput[]>();
 
         public event VideoSourceErrorEventHandler VideoSourceError;
 

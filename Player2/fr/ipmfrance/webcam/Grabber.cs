@@ -1,9 +1,7 @@
 ﻿using fr.ipmfrance.webcam.com;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Text;
 
 namespace fr.ipmfrance.webcam
 {

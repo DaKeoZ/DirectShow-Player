@@ -111,7 +111,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="fr\ipmfrance\webcam\VideoCaptureDevice.cs" />
     <Compile Include="fr\ipmfrance\webcam\VideoEvents.cs" />
-    <Compile Include="fr\ipmfrance\webcam\VideoInput.cs" />
     <Compile Include="fr\ipmfrance\gui\VideoSourcePlayer.cs">
       <SubType>Component</SubType>
     </Compile>
