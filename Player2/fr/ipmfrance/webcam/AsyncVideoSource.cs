@@ -1,7 +1,5 @@
 ﻿using fr.ipmfrance.webcam.tools;
-using fr.ipmfrance.win32;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading;
 
 namespace fr.ipmfrance.webcam
@@ -15,7 +13,7 @@ namespace fr.ipmfrance.webcam
         private AutoResetEvent isNewFrameAvailable = null;
         private AutoResetEvent isProcessingThreadAvailable = null;
         private bool skipFramesIfBusy = false;
-        private int framesProcessed;
+   //     private int framesProcessed;
 
         public event NewFrameEventHandler NewFrame;
 
@@ -31,41 +29,10 @@ namespace fr.ipmfrance.webcam
             remove { nestedVideoSource.PlayingFinished -= value; }
         }
 
-        //public VideoCaptureDevice NestedVideoSource
-        //{
-        //    get { return nestedVideoSource; }
-        //}
-
-        //public bool SkipFramesIfBusy
-        //{
-        //    get { return skipFramesIfBusy; }
-        //    set { skipFramesIfBusy = value; }
-        //}
-
-        //public string Source
-        //{
-        //    get { return nestedVideoSource.Source; }
-        //}
-
         public int FramesReceived
         {
             get { return nestedVideoSource.FramesReceived; }
         }
-
-        //public long BytesReceived
-        //{
-        //    get { return nestedVideoSource.BytesReceived; }
-        //}
-
-        //public int FramesProcessed
-        //{
-        //    get
-        //    {
-        //        int frames = framesProcessed;
-        //        framesProcessed = 0;
-        //        return frames;
-        //    }
-        //}
 
         public bool IsRunning
         {
@@ -87,17 +54,10 @@ namespace fr.ipmfrance.webcam
             this.nestedVideoSource = new VideoCaptureDevice(filterInfo.MonikerString); ;
         }
 
-        //public AsyncVideoSource(VideoCaptureDevice nestedVideoSource, bool skipFramesIfBusy)
-        //{
-        //    this.nestedVideoSource = nestedVideoSource;
-        //    this.skipFramesIfBusy = skipFramesIfBusy;
-        //}
-
         public void Start()
         {
             if (!IsRunning)
             {
-                framesProcessed = 0;
 
                 isNewFrameAvailable = new AutoResetEvent(false);
                 isProcessingThreadAvailable = new AutoResetEvent(true);
@@ -187,7 +147,6 @@ namespace fr.ipmfrance.webcam
 
                 lastVideoFrame.Dispose();
                 lastVideoFrame = null;
-                framesProcessed++;
 
                 isProcessingThreadAvailable.Set();
             }

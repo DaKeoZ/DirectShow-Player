@@ -21,18 +21,6 @@ namespace fr.ipmfrance.webcam
 
         public event PlayingFinishedEventHandler PlayingFinished;
 
-        //public virtual string Source
-        //{
-        //    get
-        //    {
-        //        return deviceMoniker;
-        //    }
-        //    set
-        //    {
-        //        deviceMoniker = value;
-        //    }
-        //}
-
         public int FramesReceived
         {
             get
@@ -42,16 +30,6 @@ namespace fr.ipmfrance.webcam
                 return frames;
             }
         }
-
-        //public long BytesReceived
-        //{
-        //    get
-        //    {
-        //        long bytes = bytesReceived;
-        //        bytesReceived = 0;
-        //        return bytes;
-        //    }
-        //}
 
         public bool IsRunning
         {
