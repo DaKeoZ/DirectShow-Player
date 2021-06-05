@@ -11,17 +11,16 @@ namespace fr.ipmfrance.webcam
     {
         public void SetDeviceMoniker(string deviceMoniker)
         {
-            this.deviceMoniker = deviceMoniker;
+            deviceMonikerCapture = deviceMoniker;
         }
 
-
-        private string deviceMoniker;
-        private int framesReceived;
+        private string deviceMonikerCapture;
+        private int framesReceivedCapture;
 //        private long bytesReceived;
-        private Thread thread = null;
-        private ManualResetEvent stopEvent = null;
-        private object sourceObject = null;
-        private object sync = new object();
+        private Thread threadCapture = null;
+        private ManualResetEvent stopEventCapture = null;
+        private object sourceObjectCapture = null;
+        private object syncCapture = new object();
 
         public event VideoSourceErrorEventHandler VideoSourceErrorCapture;
 
@@ -31,8 +30,8 @@ namespace fr.ipmfrance.webcam
         {
             get
             {
-                int frames = framesReceived;
-                framesReceived = 0;
+                int frames = framesReceivedCapture;
+                framesReceivedCapture = 0;
                 return frames;
             }
         }
@@ -41,9 +40,9 @@ namespace fr.ipmfrance.webcam
         {
             get
             {
-                if (thread != null)
+                if (threadCapture != null)
                 {
-                    if (thread.Join(0) == false)
+                    if (threadCapture.Join(0) == false)
                     {
                         return true;
                     }
@@ -58,38 +57,38 @@ namespace fr.ipmfrance.webcam
         {
             if (!IsRunningCapture)
             {
-                if (string.IsNullOrEmpty(deviceMoniker))
+                if (string.IsNullOrEmpty(deviceMonikerCapture))
                 {
                     throw new ArgumentException("Video source is not specified.");
                 }
 
-                framesReceived = 0;
+                framesReceivedCapture = 0;
     //            bytesReceived = 0;
 
-                stopEvent = new ManualResetEvent(false);
+                stopEventCapture = new ManualResetEvent(false);
 
-                lock (sync)
+                lock (syncCapture)
                 {
-                    thread = new Thread(new ThreadStart(WorkerThread));
-                    thread.Name = deviceMoniker;
-                    thread.Start();
+                    threadCapture = new Thread(new ThreadStart(WorkerThread));
+                    threadCapture.Name = deviceMonikerCapture;
+                    threadCapture.Start();
                 }
             }
         }
 
         public void SignalToStopCapture()
         {
-            if (thread != null)
+            if (threadCapture != null)
             {
-                stopEvent.Set();
+                stopEventCapture.Set();
             }
         }
 
         public void WaitForStopCapture()
         {
-            if (thread != null)
+            if (threadCapture != null)
             {
-                thread.Join();
+                threadCapture.Join();
                 FreeCapture();
             }
         }
@@ -98,16 +97,16 @@ namespace fr.ipmfrance.webcam
         {
             if (this.IsRunningCapture)
             {
-                thread.Abort();
+                threadCapture.Abort();
                 WaitForStopCapture();
             }
         }
 
         private void FreeCapture()
         {
-            thread = null;
-            stopEvent.Close();
-            stopEvent = null;
+            threadCapture = null;
+            stopEventCapture.Close();
+            stopEventCapture = null;
         }
 
         private void WorkerThread()
@@ -140,17 +139,17 @@ namespace fr.ipmfrance.webcam
 
                 captureGraph.SetFiltergraph((IGraphBuilder)graph);
 
-                sourceObject = FilterInfo.CreateFilter(deviceMoniker);
-                if (sourceObject == null)
+                sourceObjectCapture = FilterInfo.CreateFilter(deviceMonikerCapture);
+                if (sourceObjectCapture == null)
                 {
                     throw new ApplicationException("Failed creating device object for moniker");
                 }
 
-                sourceBase = (IBaseFilter)sourceObject;
+                sourceBase = (IBaseFilter)sourceObjectCapture;
 
                 try
                 {
-                    videoControl = (IAMVideoControl)sourceObject;
+                    videoControl = (IAMVideoControl)sourceObjectCapture;
                 }
                 catch
                 {
@@ -168,7 +167,7 @@ namespace fr.ipmfrance.webcam
 
                 if (videoControl != null)
                 {
-                    captureGraph.FindPin(sourceObject, PinDirection.Output,
+                    captureGraph.FindPin(sourceObjectCapture, PinDirection.Output,
                         PinCategory.StillImage, MediaType.Video, false, 0, out pinStillImage);
                     if (pinStillImage != null)
                     {
@@ -214,7 +213,7 @@ namespace fr.ipmfrance.webcam
                     }
                 }
 
-                while (!stopEvent.WaitOne(100, false));
+                while (!stopEventCapture.WaitOne(100, false));
 
                 mediaControl.Stop();
 
@@ -243,10 +242,10 @@ namespace fr.ipmfrance.webcam
                     Marshal.ReleaseComObject(graphObject);
                     graphObject = null;
                 }
-                if (sourceObject != null)
+                if (sourceObjectCapture != null)
                 {
-                    Marshal.ReleaseComObject(sourceObject);
-                    sourceObject = null;
+                    Marshal.ReleaseComObject(sourceObjectCapture);
+                    sourceObjectCapture = null;
                 }
                 if (videoGrabberObject != null)
                 {
@@ -289,10 +288,10 @@ namespace fr.ipmfrance.webcam
 
         public void OnNewFrameCapture(Bitmap image)
         {
-            framesReceived++;
+            framesReceivedCapture++;
     //        bytesReceived += image.Width * image.Height * (Bitmap.GetPixelFormatSize(image.PixelFormat) >> 3);
 
-            if ((!stopEvent.WaitOne(0, false)) && (NewFrameCapture != null))
+            if ((!stopEventCapture.WaitOne(0, false)) && (NewFrameCapture != null))
             {
                 NewFrameCapture(this, new NewFrameEventArgs(image));
             }
