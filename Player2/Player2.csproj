@@ -61,8 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="fr\ipmfrance\webcam\AsyncVideoSource.cs" />
+    <Compile Include="fr\ipmfrance\webcam\CameraControlFlags.cs" />
     <Compile Include="fr\ipmfrance\webcam\CameraControlProperty.cs" />
-    <Compile Include="fr\ipmfrance\webcam\FileVideoSource.cs" />
     <Compile Include="fr\ipmfrance\webcam\FilterInfo.cs" />
     <Compile Include="fr\ipmfrance\webcam\Image.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\DsGuid.cs" />
@@ -104,6 +104,8 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="fr\ipmfrance\webcam\PhysicalConnectorType.cs" />
+    <Compile Include="fr\ipmfrance\webcam\tools\WebcamHelper.cs" />
+    <Compile Include="fr\ipmfrance\win32\NativeAPI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="fr\ipmfrance\webcam\VideoCaptureDevice.cs" />
@@ -141,7 +143,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="fr\ipmfrance\webcam\SystemTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
