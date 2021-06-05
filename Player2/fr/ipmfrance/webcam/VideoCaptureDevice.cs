@@ -8,7 +8,7 @@ using fr.ipmfrance.webcam.com;
 
 namespace fr.ipmfrance.webcam
 {
-    public class VideoCaptureDevice 
+    public class VideoCaptureDevice
     {
         private string deviceMoniker;
         private int framesReceived;
@@ -21,55 +21,11 @@ namespace fr.ipmfrance.webcam
         private bool needToDisplayCrossBarPropertyPage = false;
         private IntPtr parentWindowForPropertyPage = IntPtr.Zero;
         private object sourceObject = null;
-        private DateTime startTime = new DateTime();
         private object sync = new object();
         private bool? isCrossbarAvailable = null;
         private VideoInput[] crossbarVideoInputs = null;
         private VideoInput crossbarVideoInput = VideoInput.Default;
         private static Dictionary<string, VideoInput[]> cacheCrossbarVideoInputs = new Dictionary<string, VideoInput[]>();
-
-        public VideoInput CrossbarVideoInput
-        {
-            get { return crossbarVideoInput; }
-            set
-            {
-                needToSetVideoInput = true;
-                crossbarVideoInput = value;
-            }
-        }
-
-        public VideoInput[] AvailableCrossbarVideoInputs
-        {
-            get
-            {
-                if (crossbarVideoInputs == null)
-                {
-                    lock (cacheCrossbarVideoInputs)
-                    {
-                        if ((!string.IsNullOrEmpty(deviceMoniker)) && (cacheCrossbarVideoInputs.ContainsKey(deviceMoniker)))
-                        {
-                            crossbarVideoInputs = cacheCrossbarVideoInputs[deviceMoniker];
-                        }
-                    }
-
-                    if (crossbarVideoInputs == null)
-                    {
-                        if (!IsRunning)
-                        {
-                            WorkerThread(false);
-                        }
-                        else
-                        {
-                            for (int i = 0; (i < 500) && (crossbarVideoInputs == null); i++)
-                            {
-                                Thread.Sleep(10);
-                            }
-                        }
-                    }
-                }
-                return (crossbarVideoInputs != null) ? crossbarVideoInputs : new VideoInput[0];
-            }
-        }
 
         public event NewFrameEventHandler NewFrame;
 
@@ -83,7 +39,6 @@ namespace fr.ipmfrance.webcam
             set
             {
                 deviceMoniker = value;
-
                 crossbarVideoInputs = null;
                 isCrossbarAvailable = null;
             }
@@ -124,17 +79,6 @@ namespace fr.ipmfrance.webcam
             }
         }
 
-        public object SourceObject
-        {
-            get { return sourceObject; }
-        }
-
-        public VideoCaptureDevice()
-        {
-
-
-        }
-
         public VideoCaptureDevice(string deviceMoniker)
         {
             this.deviceMoniker = deviceMoniker;
@@ -145,7 +89,9 @@ namespace fr.ipmfrance.webcam
             if (!IsRunning)
             {
                 if (string.IsNullOrEmpty(deviceMoniker))
+                {
                     throw new ArgumentException("Video source is not specified.");
+                }
 
                 framesReceived = 0;
                 bytesReceived = 0;
