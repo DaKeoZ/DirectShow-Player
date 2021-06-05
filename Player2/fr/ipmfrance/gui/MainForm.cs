@@ -99,7 +99,7 @@ namespace fr.ipmfrance.gui
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            IVideoSource videoSource = videoSourcePlayer.VideoSource;
+            AsyncVideoSource videoSource = videoSourcePlayer.VideoSource;
 
             if (videoSource != null)
             {

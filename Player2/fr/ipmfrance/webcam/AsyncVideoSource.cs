@@ -6,7 +6,7 @@ using System.Threading;
 namespace fr.ipmfrance.webcam
 {
 
-    public class AsyncVideoSource : IVideoSource
+    public class AsyncVideoSource
     {
         private readonly VideoCaptureDevice nestedVideoSource = null;
         private Bitmap lastVideoFrame = null;
