@@ -20,21 +20,20 @@ namespace fr.ipmfrance.webcam
         private bool skipFramesIfBusy = false;
         private string deviceMonikerCapture;
         private int framesReceivedCapture;
+        private IOverlay overlay;
 
         private ManualResetEvent stopEventCapture = null;
         private object sourceObjectCapture = null;
         private object syncCapture = new object();
 
-
         public event NewFrameEventHandler NewFrame;
-
         public event VideoSourceErrorEventHandler VideoSourceError;
-
         public event PlayingFinishedEventHandler PlayingFinished;
 
         public IPMWebcam(FilterInfo filterInfo)
         {
             deviceMonikerCapture = filterInfo.MonikerString;
+            overlay = OverlayFactory.Create();
         }
 
         public bool IsRunning
@@ -109,7 +108,9 @@ namespace fr.ipmfrance.webcam
         private void nestedVideoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             if (NewFrame == null)
+            {
                 return;
+            }
 
             if (skipFramesIfBusy)
             {
@@ -140,6 +141,10 @@ namespace fr.ipmfrance.webcam
 
                 if (NewFrame != null)
                 {
+                    Graphics g = Graphics.FromImage(lastVideoFrame);
+                    overlay.Draw(g);
+                    g.Dispose();
+
                     NewFrame(this, new NewFrameEventArgs(lastVideoFrame));
                 }
 
