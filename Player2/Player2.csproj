@@ -95,7 +95,6 @@
     <Compile Include="fr\ipmfrance\webcam\com\ISpecifyPropertyPages.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\IVideoWindow.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\Structures.cs" />
-    <Compile Include="fr\ipmfrance\webcam\com\Tools.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\Uuids.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\Win32.cs" />
     <Compile Include="fr\ipmfrance\gui\MainForm.cs">
