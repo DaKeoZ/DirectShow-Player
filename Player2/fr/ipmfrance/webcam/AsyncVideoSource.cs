@@ -249,7 +249,7 @@ namespace fr.ipmfrance.webcam
             IMediaControl mediaControl = null;
             IAMVideoControl videoControl = null;
             IMediaEventEx mediaEvent = null;
-            IPin pinStillImage = null;
+            //IPin pinStillImage = null;
             try
             {
                 captureGraphObject = ComFactory.Create(Clsid.CaptureGraphBuilder2);
@@ -286,16 +286,16 @@ namespace fr.ipmfrance.webcam
 
                 AMMediaType mediaType = SetVideoRGB24(videoSampleGrabber);
 
-                if (videoControl != null)
-                {
-                    captureGraph.FindPin(sourceObjectCapture, PinDirection.Output,
-                        PinCategory.StillImage, MediaType.Video, false, 0, out pinStillImage);
-                    if (pinStillImage != null)
-                    {
-                        VideoControlFlags caps;
-                        videoControl.GetCaps(pinStillImage, out caps);
-                    }
-                }
+                //if (videoControl != null)
+                //{
+                //    captureGraph.FindPin(sourceObjectCapture, PinDirection.Output,
+                //        PinCategory.StillImage, MediaType.Video, false, 0, out pinStillImage);
+                //    if (pinStillImage != null)
+                //    {
+                //        VideoControlFlags caps;
+                //        videoControl.GetCaps(pinStillImage, out caps);
+                //    }
+                //}
 
                 videoSampleGrabber.SetBufferSamples(false);
                 videoSampleGrabber.SetOneShot(false);
