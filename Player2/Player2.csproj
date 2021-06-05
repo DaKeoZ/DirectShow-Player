@@ -63,6 +63,7 @@
     <Compile Include="fr\ipmfrance\webcam\AsyncVideoSource.cs" />
     <Compile Include="fr\ipmfrance\webcam\CameraControlFlags.cs" />
     <Compile Include="fr\ipmfrance\webcam\CameraControlProperty.cs" />
+    <Compile Include="fr\ipmfrance\webcam\ComFactory.cs" />
     <Compile Include="fr\ipmfrance\webcam\FilterInfo.cs" />
     <Compile Include="fr\ipmfrance\webcam\Image.cs" />
     <Compile Include="fr\ipmfrance\webcam\com\DsGuid.cs" />

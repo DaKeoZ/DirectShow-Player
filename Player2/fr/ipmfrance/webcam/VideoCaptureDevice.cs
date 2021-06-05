@@ -23,7 +23,6 @@ namespace fr.ipmfrance.webcam
         private object sourceObject = null;
         private object sync = new object();
         private bool? isCrossbarAvailable = null;
-//        private VideoInput[] crossbarVideoInputs = null;
         private VideoInput crossbarVideoInput = VideoInput.Default;
         private static Dictionary<string, VideoInput[]> cacheCrossbarVideoInputs = new Dictionary<string, VideoInput[]>();
 
@@ -39,7 +38,6 @@ namespace fr.ipmfrance.webcam
             set
             {
                 deviceMoniker = value;
-//                crossbarVideoInputs = null;
                 isCrossbarAvailable = null;
             }
         }
@@ -173,22 +171,10 @@ namespace fr.ipmfrance.webcam
 
             try
             {
-                Type type = Type.GetTypeFromCLSID(Clsid.CaptureGraphBuilder2);
-                if (type == null)
-                {
-                    throw new ApplicationException("Failed creating capture graph builder");
-                }
-
-                captureGraphObject = Activator.CreateInstance(type);
+                captureGraphObject = ComFactory.Create(Clsid.CaptureGraphBuilder2);
                 captureGraph = (ICaptureGraphBuilder2)captureGraphObject;
 
-                type = Type.GetTypeFromCLSID(Clsid.FilterGraph);
-                if (type == null)
-                {
-                    throw new ApplicationException("Failed creating filter graph");
-                }
-
-                graphObject = Activator.CreateInstance(type);
+                graphObject = ComFactory.Create(Clsid.FilterGraph);
                 graph = (IFilterGraph2)graphObject;
 
                 captureGraph.SetFiltergraph((IGraphBuilder)graph);
@@ -209,13 +195,8 @@ namespace fr.ipmfrance.webcam
                 {
                 }
 
-                type = Type.GetTypeFromCLSID(Clsid.SampleGrabber);
-                if (type == null)
-                {
-                    throw new ApplicationException("Failed creating sample grabber");
-                }
+                videoGrabberObject = ComFactory.Create(Clsid.SampleGrabber);
 
-                videoGrabberObject = Activator.CreateInstance(type);
                 videoSampleGrabber = (ISampleGrabber)videoGrabberObject;
                 videoGrabberBase = (IBaseFilter)videoGrabberObject;
 
@@ -234,7 +215,6 @@ namespace fr.ipmfrance.webcam
                     crossbar = (IAMCrossbar)crossbarObject;
                 }
                 isCrossbarAvailable = (crossbar != null);
-        //        crossbarVideoInputs = ColletCrossbarVideoInputs(crossbar);
 
                 if (videoControl != null)
                 {
@@ -394,48 +374,6 @@ namespace fr.ipmfrance.webcam
             }
             catch
             {
-            }
-        }
-
-        private VideoInput[] ColletCrossbarVideoInputs(IAMCrossbar crossbar)
-        {
-            lock (cacheCrossbarVideoInputs)
-            {
-                if (cacheCrossbarVideoInputs.ContainsKey(deviceMoniker))
-                {
-                    return cacheCrossbarVideoInputs[deviceMoniker];
-                }
-
-                List<VideoInput> videoInputsList = new List<VideoInput>();
-
-                if (crossbar != null)
-                {
-                    int inPinsCount, outPinsCount;
-
-                    if (crossbar.get_PinCounts(out outPinsCount, out inPinsCount) == 0)
-                    {
-                        for (int i = 0; i < inPinsCount; i++)
-                        {
-                            int pinIndexRelated;
-                            PhysicalConnectorType type;
-
-                            if (crossbar.get_CrossbarPinInfo(true, i, out pinIndexRelated, out type) != 0)
-                                continue;
-
-                            if (type < PhysicalConnectorType.AudioTuner)
-                            {
-                                videoInputsList.Add(new VideoInput(i, type));
-                            }
-                        }
-                    }
-                }
-
-                VideoInput[] videoInputs = new VideoInput[videoInputsList.Count];
-                videoInputsList.CopyTo(videoInputs);
-
-                cacheCrossbarVideoInputs.Add(deviceMoniker, videoInputs);
-
-                return videoInputs;
             }
         }
 
