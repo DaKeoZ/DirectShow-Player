@@ -1,14 +1,8 @@
-// AForge Direct Show Library
-// AForge.NET framework
-//
-// Copyright © Andrew Kirillov, 2007
-// andrew.kirillov@gmail.com
-//
+using System;
+using System.Runtime.InteropServices;
 
 namespace fr.ipmfrance.webcam.com
 {
-    using System;
-    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Enumerates pins on a filter.

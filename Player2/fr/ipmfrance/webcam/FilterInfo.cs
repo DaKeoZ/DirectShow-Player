@@ -1,9 +1,10 @@
+using fr.ipmfrance.webcam.com;
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+
 namespace fr.ipmfrance.webcam
 {
-    using fr.ipmfrance.webcam.com;
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
 
     /// <summary>
     /// DirectShow filter information.

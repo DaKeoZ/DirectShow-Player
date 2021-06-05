@@ -1,14 +1,8 @@
-﻿// AForge Direct Show Library
-// AForge.NET framework
-// http://www.aforgenet.com/framework/
-//
-// Copyright © AForge.NET, 2009-2012
-// contacts@aforgenet.com
-//
+﻿using System;
 
 namespace fr.ipmfrance.webcam
 {
-    using System;
+
 
     /// <summary>
     /// Video input of a capture board.

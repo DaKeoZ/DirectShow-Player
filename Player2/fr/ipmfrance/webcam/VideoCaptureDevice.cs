@@ -1,13 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Threading;
+using System.Runtime.InteropServices;
+using fr.ipmfrance.webcam.com;
+
 namespace fr.ipmfrance.webcam
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Drawing.Imaging;
-    using System.Threading;
-    using System.Runtime.InteropServices;
-    using fr.ipmfrance.webcam.com;
-
     public class VideoCaptureDevice : IVideoSource
     {
         private string deviceMoniker;
