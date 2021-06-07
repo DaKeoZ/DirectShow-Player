@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1300
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPMFranceCam", "IPMFranceCam.csproj", "{EF58D3A6-4690-4481-9DA8-BADD059D8B2B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF58D3A6-4690-4481-9DA8-BADD059D8B2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF58D3A6-4690-4481-9DA8-BADD059D8B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF58D3A6-4690-4481-9DA8-BADD059D8B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF58D3A6-4690-4481-9DA8-BADD059D8B2B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB68110D-FC6C-4076-B272-AAA90F8FDCF3}
+	EndGlobalSection
+EndGlobal
