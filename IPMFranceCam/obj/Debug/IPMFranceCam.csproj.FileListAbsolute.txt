@@ -35,7 +35,6 @@ D:\Development\IPM_Stage\aforge\Samples\Video\IPMFranceCam\obj\Debug\IPMFranceCa
 D:\Development\IPM_Stage\aforge\Samples\Video\IPMFranceCam\obj\Debug\IPMFranceCam.csproj.CopyComplete
 D:\Development\IPM_Stage\aforge\Samples\Video\IPMFranceCam\obj\Debug\IPMFranceCam.dll
 D:\Development\IPM_Stage\aforge\Samples\Video\IPMFranceCam\obj\Debug\IPMFranceCam.pdb
-D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\IPMFranceCam.csprojAssemblyReference.cache
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\fr.ipmfrance.webcam.AboutForm.resources
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\VirtualCam.Properties.Resources.resources
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\IPMFranceCam.csproj.GenerateResource.cache
@@ -48,5 +47,7 @@ D:\Development\IPM_Stage\Workspace\IPMFranceCam\bin\Debug\IPMFranceCam.dll.confi
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\bin\Debug\IPMFranceCam.dll
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\bin\Debug\IPMFranceCam.pdb
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\bin\Debug\IPMFranceCam.tlb
-D:\Development\IPM_Stage\Workspace\IPMFranceCam\bin\Debug\log4net.xml
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\IPMFranceCam.csproj.CopyComplete
+D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\fr.ipmfrance.gui.MainForm.resources
+D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\fr.ipmfrance.gui.VideoSourcePlayer.resources
+D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\IPMFranceCam.csprojAssemblyReference.cache

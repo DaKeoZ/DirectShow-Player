@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace fr.ipmfrance.win32
 {
@@ -75,6 +76,15 @@ namespace fr.ipmfrance.win32
             }
             return dst;
         }
+
+        [DllImport("ole32.dll", CharSet = CharSet.Unicode)]
+        public static extern
+        int MkParseDisplayName(IBindCtx pbc, string szUserName,
+            ref int pchEaten, out IMoniker ppmk);
+
+        [DllImport("ole32.dll")]
+        public static extern
+        int CreateBindCtx(int reserved, out IBindCtx ppbc);
 
         /// <summary>
         /// Fill memory region with specified value.

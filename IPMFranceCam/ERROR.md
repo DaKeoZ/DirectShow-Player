@@ -1,0 +1,1 @@
+﻿Exception levée à 0x00007FFF99FD0E7F dans obs64.exe : 0xC0000005 : Violation d'accès lors de la lecture de l'emplacement 0x0000000000000000

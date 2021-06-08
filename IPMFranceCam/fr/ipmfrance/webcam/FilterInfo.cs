@@ -1,4 +1,4 @@
-using fr.ipmfrance.webcam.com;
+﻿using fr.ipmfrance.win32;
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -21,7 +21,7 @@ namespace fr.ipmfrance.webcam
         /// chaine de persistance
         /// </summary>
         public string MonikerString { get; private set; }
- 
+
         /// <summary>
         /// Constructeur
         /// </summary>
@@ -85,10 +85,10 @@ namespace fr.ipmfrance.webcam
             int n = 0;
 
             // create bind context
-            if (Win32.CreateBindCtx(0, out bindCtx) == 0)
+            if (NativeAPI.CreateBindCtx(0, out bindCtx) == 0)
             {
                 // convert moniker`s string to a moniker
-                if (Win32.MkParseDisplayName(bindCtx, filterMoniker, ref n, out moniker) == 0)
+                if (NativeAPI.MkParseDisplayName(bindCtx, filterMoniker, ref n, out moniker) == 0)
                 {
                     // get device base filter
                     Guid filterId = typeof(IBaseFilter).GUID;
@@ -172,10 +172,10 @@ namespace fr.ipmfrance.webcam
             int n = 0;
 
             // create bind context
-            if (Win32.CreateBindCtx(0, out bindCtx) == 0)
+            if (NativeAPI.CreateBindCtx(0, out bindCtx) == 0)
             {
                 // convert moniker`s string to a moniker
-                if (Win32.MkParseDisplayName(bindCtx, monikerString, ref n, out moniker) == 0)
+                if (NativeAPI.MkParseDisplayName(bindCtx, monikerString, ref n, out moniker) == 0)
                 {
                     // get device name
                     name = GetName(moniker);

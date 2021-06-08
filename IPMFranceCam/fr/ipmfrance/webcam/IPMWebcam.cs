@@ -1,6 +1,5 @@
-﻿using fr.ipmfrance.webcam.com;
-using fr.ipmfrance.webcam.tools;
-using fr.ipmfrance.webcam.win32;
+﻿using fr.ipmfrance.webcam.tools;
+using fr.ipmfrance.win32;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -14,7 +13,7 @@ namespace fr.ipmfrance.webcam
         private Thread imageProcessingThread = null;
         private Thread threadCapture = null;
 
-        private Bitmap lastVideoFrame = null;
+        public Bitmap lastVideoFrame = null;
         private AutoResetEvent isNewFrameAvailable = null;
         private AutoResetEvent isProcessingThreadAvailable = null;
         private bool skipFramesIfBusy = false;
@@ -300,7 +299,7 @@ namespace fr.ipmfrance.webcam
 
                 if (videoSampleGrabber.GetConnectedMediaType(mediaType) == 0)
                 {
-                    VideoInfoHeader vih = (VideoInfoHeader)Marshal.PtrToStructure(mediaType.FormatPtr, typeof(VideoInfoHeader));
+                    VideoInfoHeader vih = (VideoInfoHeader)Marshal.PtrToStructure(mediaType.formatPtr, typeof(VideoInfoHeader));
                     videoGrabber.Width = vih.BmiHeader.Width;
                     videoGrabber.Height = vih.BmiHeader.Height;
                     mediaType.Dispose();
@@ -309,7 +308,7 @@ namespace fr.ipmfrance.webcam
                 mediaControl = (IMediaControl)graphObject;
                 mediaEvent = (IMediaEventEx)graphObject;
                 int p1, p2;
-                DsEvCode code;
+                EventCode code;
                 mediaControl.Run();
 
                 do
@@ -320,7 +319,7 @@ namespace fr.ipmfrance.webcam
                         {
                             mediaEvent.FreeEventParams(code, p1, p2);
 
-                            if (code == DsEvCode.DeviceLost)
+                            if (code == EventCode.DeviceLost)
                             {
                                 reasonToStop = ReasonToFinishPlaying.DeviceLost;
                                 break;
@@ -387,8 +386,8 @@ namespace fr.ipmfrance.webcam
         private static AMMediaType SetVideoRGB24(ISampleGrabber videoSampleGrabber)
         {
             AMMediaType mediaType = new AMMediaType();
-            mediaType.MajorType = MediaType.Video;
-            mediaType.SubType = MediaSubType.RGB24;
+            mediaType.majorType = MediaType.Video;
+            mediaType.subType = MediaSubType.RGB24;
             videoSampleGrabber.SetMediaType(mediaType);
             return mediaType;
         }

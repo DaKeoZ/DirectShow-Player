@@ -1,4 +1,4 @@
-﻿using fr.ipmfrance.webcam.com;
+﻿using fr.ipmfrance.win32;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -52,7 +52,7 @@ namespace fr.ipmfrance.webcam
 
                     for (int y = 0; y < height; y++)
                     {
-                        Win32.memcpy(dst, src, srcStride);
+                        NativeAPI.CopyUnmanagedMemory(dst, src, srcStride);
                         dst -= dstStride;
                         src += srcStride;
                     }

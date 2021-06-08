@@ -1,4 +1,4 @@
-﻿using fr.ipmfrance.webcam.com;
+﻿using fr.ipmfrance.win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

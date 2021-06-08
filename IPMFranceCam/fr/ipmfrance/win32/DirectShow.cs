@@ -73,6 +73,24 @@ namespace fr.ipmfrance.win32
         public static readonly Guid CC_Container = new Guid(0xaeb312e9, 0x3357, 0x43ca, 0xb7, 0x1, 0x97, 0xec, 0x19, 0x8e, 0x2b, 0x62);
 
     }
+    [ComVisible(false)]
+    static internal class Clsid
+    {
+        public static readonly Guid SystemDeviceEnum =
+            new Guid(0x62BE5D10, 0x60EB, 0x11D0, 0xBD, 0x3B, 0x00, 0xA0, 0xC9, 0x11, 0xCE, 0x86);
+        
+        public static readonly Guid FilterGraph =
+            new Guid(0xE436EBB3, 0x524F, 0x11CE, 0x9F, 0x53, 0x00, 0x20, 0xAF, 0x0B, 0xA7, 0x70);
+        
+        public static readonly Guid SampleGrabber =
+            new Guid(0xC1F400A0, 0x3F08, 0x11D3, 0x9F, 0x0B, 0x00, 0x60, 0x08, 0x03, 0x9E, 0x37);
+        
+        public static readonly Guid CaptureGraphBuilder2 =
+            new Guid(0xBF87B6E1, 0x8C27, 0x11D0, 0xB3, 0xF0, 0x00, 0xAA, 0x00, 0x37, 0x61, 0xC5);
+        
+        public static readonly Guid AsyncReader =
+            new Guid(0xE436EBB5, 0x524F, 0x11CE, 0x9F, 0x53, 0x00, 0x20, 0xAF, 0x0B, 0xA7, 0x70);
+    }
 
     [ComVisible(false)]
     public static class MediaSubType
@@ -1945,6 +1963,43 @@ namespace fr.ipmfrance.win32
         }
 
         #endregion
+
+        ~AMMediaType()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Dispose the object.
+        /// </summary>
+        ///
+        public void Dispose()
+        {
+            Dispose(true);
+            // remove me from the Finalization queue 
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose the object
+        /// </summary>
+        /// 
+        /// <param name="disposing">Indicates if disposing was initiated manually.</param>
+        /// 
+        protected virtual void Dispose(bool disposing)
+        {
+            if ((formatSize != 0) && (formatPtr != IntPtr.Zero))
+            {
+                Marshal.FreeCoTaskMem(formatPtr);
+                formatSize = 0;
+            }
+
+            if (unkPtr != IntPtr.Zero)
+            {
+                Marshal.Release(unkPtr);
+                unkPtr = IntPtr.Zero;
+            }
+        }
     }
 
     [ComVisible(false)]
