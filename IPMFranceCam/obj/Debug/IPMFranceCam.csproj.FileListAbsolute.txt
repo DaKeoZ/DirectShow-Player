@@ -50,4 +50,3 @@ D:\Development\IPM_Stage\Workspace\IPMFranceCam\bin\Debug\IPMFranceCam.tlb
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\IPMFranceCam.csproj.CopyComplete
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\fr.ipmfrance.gui.MainForm.resources
 D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\fr.ipmfrance.gui.VideoSourcePlayer.resources
-D:\Development\IPM_Stage\Workspace\IPMFranceCam\obj\Debug\IPMFranceCam.csprojAssemblyReference.cache

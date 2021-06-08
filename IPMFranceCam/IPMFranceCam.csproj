@@ -123,6 +123,7 @@
     <None Include="bin\Release\IPMFranceCam.dll.config" />
     <None Include="bin\Release\IPMFranceCam.tlb" />
     <None Include="bin\Release\uninstall.bat" />
+    <None Include="ERROR.md" />
     <None Include="install.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
