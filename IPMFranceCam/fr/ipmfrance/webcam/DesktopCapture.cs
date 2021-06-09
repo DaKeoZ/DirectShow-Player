@@ -18,6 +18,7 @@ namespace fr.ipmfrance.webcam
         public IntPtr handleDesktop = IntPtr.Zero;
         public int m_nWidth = CamConst.c_iDefaultWidth;
         public int m_nHeight = CamConst.c_iDefaultHeight;
+        public Bitmap imageBitmap;
         public IPMWebcam videoSource;
         public FilterInfo filter;
         public Bitmap currentFrame = null;
@@ -112,6 +113,7 @@ namespace fr.ipmfrance.webcam
             if (!requestedToStop)
             {
                 Bitmap newFrame = (Bitmap)eventArgs.Frame.Clone();
+                imageBitmap = newFrame;
 
                 // let user process the frame first
                 if (NewFrame != null)
@@ -198,7 +200,7 @@ namespace fr.ipmfrance.webcam
             m_nMaxHeight = Gdi32.GetDeviceCaps(handleDesktop, 10);
             m_hMemDC = Gdi32.CreateCompatibleDC(handleDesktop);
             // m_hBitmap = Gdi32.CreateCompatibleBitmap(handleDesktop, m_nWidth, Math.Abs(m_nHeight));
-            m_hBitmap = convertedFrame.GetHbitmap();
+            m_hBitmap = imageBitmap.GetHbitmap();
         }
 
         public void DeleteBitmap()
