@@ -26,6 +26,9 @@ namespace fr.ipmfrance.webcam
         public string lastMessage = null;
         public bool firstFrameNotProcessed = true;
         public volatile bool requestedToStop = false;
+        private object verrou = new object();
+        private int width, height;
+        private Graphics bmp;
 
         public DesktopCapture()
         {
@@ -141,8 +144,16 @@ namespace fr.ipmfrance.webcam
                 {
                     convertedFrame = webcam.Image.Convert16bppTo8bpp(currentFrame);
                 }
-                imageBitmap = currentFrame;
-                //imageBitmap.Save("image" + DateTimeOffset.Now.ToUnixTimeMilliseconds(), ImageFormat.Jpeg);
+                
+                lock (verrou)
+                {
+                    height = eventArgs.Frame.Height;
+                    width = eventArgs.Frame.Width;
+                    bmp = Graphics.FromImage(eventArgs.Frame);
+                    imageBitmap = currentFrame;
+                }
+
+                // imageBitmap.Save("image" + DateTimeOffset.Now.ToUnixTimeMilliseconds(), ImageFormat.Jpeg);
             }
         }
 
@@ -201,7 +212,7 @@ namespace fr.ipmfrance.webcam
             m_nMaxHeight = Gdi32.GetDeviceCaps(handleDesktop, 10);
             m_hMemDC = Gdi32.CreateCompatibleDC(handleDesktop);
             // m_hBitmap = Gdi32.CreateCompatibleBitmap(handleDesktop, m_nWidth, Math.Abs(m_nHeight));
-            // m_hBitmap = imageBitmap.GetHbitmap();
+            m_hBitmap = imageBitmap.GetHbitmap();
         }
 
         public void DeleteBitmap()
@@ -227,22 +238,29 @@ namespace fr.ipmfrance.webcam
             IntPtr ptrSampleMediaBuffer;
             mediaSample.GetPointer(out ptrSampleMediaBuffer);
 
-            if (m_hBitmap == IntPtr.Zero)
+            /*if (m_hBitmap == IntPtr.Zero)
             {
                 m_hBitmap = Gdi32.CreateCompatibleBitmap(handleDesktop, m_nWidth, Math.Abs(m_nHeight));
+            }*/
+            
+            // IntPtr hOldBitmap = Gdi32.SelectObject(m_hMemDC, m_hBitmap);
+            // Gdi32.SelectObject(m_hMemDC, hOldBitmap);
+
+            if (imageBitmap != null)
+            {
+                lock (verrou)
+                {
+                    IntPtr srcHdc = bmp.GetHdc();
+                    m_hBitmap = imageBitmap.GetHbitmap();
+                    if (Gdi32.StretchBlt(m_hMemDC, 0, 0, m_nWidth, Math.Abs(m_nHeight), srcHdc, 0, 0, width, height, TernaryRasterOperations.SRCCOPY))
+                    {
+                        Gdi32.GetDIBits(m_hMemDC, m_hBitmap, 0, (uint)Math.Abs(m_nHeight), ptrSampleMediaBuffer, ref m_bmi, 0);
+                    } else
+                    {
+                        Marshal.GetLastWin32Error();
+                    }
+                }
             }
-
-
-            IntPtr hOldBitmap = Gdi32.SelectObject(m_hMemDC, m_hBitmap);
-
-            Gdi32.StretchBlt(m_hMemDC, 0, 0, m_nWidth, Math.Abs(m_nHeight), handleDesktop, 0, 0, m_nMaxWidth, m_nMaxHeight, TernaryRasterOperations.SRCCOPY);
-
-
-            Gdi32.SelectObject(m_hMemDC, hOldBitmap);
-
-         
-
-            Gdi32.GetDIBits(m_hMemDC, m_hBitmap, 0, (uint)Math.Abs(m_nHeight), ptrSampleMediaBuffer, ref m_bmi, 0);
         }
 
         public void WriteHello()
