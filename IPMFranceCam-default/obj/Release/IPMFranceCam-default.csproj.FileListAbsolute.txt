@@ -1,0 +1,6 @@
+D:\Development\IPM_Stage\Workspace\IPMFranceCam-default\obj\Release\IPMFranceCam-default.csprojAssemblyReference.cache
+D:\Development\IPM_Stage\Workspace\IPMFranceCam-default\obj\Release\ExampleFilters.AboutForm.resources
+D:\Development\IPM_Stage\Workspace\IPMFranceCam-default\obj\Release\VirtualCam.Properties.Resources.resources
+D:\Development\IPM_Stage\Workspace\IPMFranceCam-default\obj\Release\IPMFranceCam-default.csproj.GenerateResource.cache
+D:\Development\IPM_Stage\Workspace\IPMFranceCam-default\obj\Release\IPMFranceCam-default.csproj.CoreCompileInputs.cache
+D:\Development\IPM_Stage\Workspace\IPMFranceCam-default\obj\Release\fr.ipmfrance.webcam.AboutForm.resources

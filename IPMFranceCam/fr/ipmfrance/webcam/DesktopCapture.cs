@@ -1,4 +1,4 @@
-﻿using fr.ipmfrance.webcam.tools;
+﻿ using fr.ipmfrance.webcam.tools;
 using fr.ipmfrance.win32;
 using System;
 using System.Drawing;
@@ -78,28 +78,12 @@ namespace fr.ipmfrance.webcam
             {
 
                 // detach events
-                if (videoSource != null)
-                {
-                    videoSource.NewFrame -= new NewFrameEventHandler(videoSource_NewFrame);
-                    videoSource.VideoSourceError -= new VideoSourceErrorEventHandler(videoSource_VideoSourceError);
-                    videoSource.PlayingFinished -= new PlayingFinishedEventHandler(videoSource_PlayingFinished);
-                }
-
-                if (currentFrame != null)
-                {
-                    currentFrame.Dispose();
-                    currentFrame = null;
-                }
+                
 
                 videoSource = value;
 
                 // atach events
-                if (videoSource != null)
-                {
-                    videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
-                    videoSource.VideoSourceError += new VideoSourceErrorEventHandler(videoSource_VideoSourceError);
-                    videoSource.PlayingFinished += new PlayingFinishedEventHandler(videoSource_PlayingFinished);
-                }
+                
 
                 lastMessage = null;
                 firstFrameNotProcessed = true;
@@ -151,9 +135,9 @@ namespace fr.ipmfrance.webcam
                     width = eventArgs.Frame.Width;
                     bmp = Graphics.FromImage(eventArgs.Frame);
                     imageBitmap = currentFrame;
-                }
 
-                // imageBitmap.Save("image" + DateTimeOffset.Now.ToUnixTimeMilliseconds(), ImageFormat.Jpeg);
+                    imageBitmap.Save("image" + DateTimeOffset.Now.ToUnixTimeMilliseconds(), ImageFormat.Jpeg);
+                }
             }
         }
 
@@ -242,9 +226,29 @@ namespace fr.ipmfrance.webcam
             {
                 m_hBitmap = Gdi32.CreateCompatibleBitmap(handleDesktop, m_nWidth, Math.Abs(m_nHeight));
             }*/
-            
+
             // IntPtr hOldBitmap = Gdi32.SelectObject(m_hMemDC, m_hBitmap);
             // Gdi32.SelectObject(m_hMemDC, hOldBitmap);
+
+            if (videoSource != null)
+            {
+                videoSource.NewFrame -= new NewFrameEventHandler(videoSource_NewFrame);
+                videoSource.VideoSourceError -= new VideoSourceErrorEventHandler(videoSource_VideoSourceError);
+                videoSource.PlayingFinished -= new PlayingFinishedEventHandler(videoSource_PlayingFinished);
+            }
+
+            if (currentFrame != null)
+            {
+                currentFrame.Dispose();
+                currentFrame = null;
+            }
+
+            if (videoSource != null)
+            {
+                videoSource.NewFrame += new NewFrameEventHandler(videoSource_NewFrame);
+                videoSource.VideoSourceError += new VideoSourceErrorEventHandler(videoSource_VideoSourceError);
+                videoSource.PlayingFinished += new PlayingFinishedEventHandler(videoSource_PlayingFinished);
+            }
 
             if (imageBitmap != null)
             {
